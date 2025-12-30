@@ -66,14 +66,18 @@ serve(async (req) => {
 
     let yPosition = height - 60
 
-    // Try to embed logo
+    // Try to embed logo from production site
     try {
-      const logoUrl = `${SITE_URL}/InsuraGuard-logo-transparent-1200.png`
+      const logoUrl = 'https://insura-guard-app.vercel.app/InsuraGuard-logo-transparent-1200.png'
+      console.log('Fetching logo from:', logoUrl)
       const logoResponse = await fetch(logoUrl)
+      console.log('Logo response status:', logoResponse.status)
+      
       if (logoResponse.ok) {
         const logoBytes = await logoResponse.arrayBuffer()
+        console.log('Logo bytes received:', logoBytes.byteLength)
         const logoImage = await pdfDoc.embedPng(new Uint8Array(logoBytes))
-        const logoDims = logoImage.scale(0.08)
+        const logoDims = logoImage.scale(0.1) // Slightly larger scale
         page.drawImage(logoImage, {
           x: 50,
           y: yPosition - logoDims.height + 20,
@@ -81,9 +85,12 @@ serve(async (req) => {
           height: logoDims.height,
         })
         yPosition -= logoDims.height + 10
+        console.log('Logo embedded successfully')
+      } else {
+        throw new Error(`Logo fetch failed with status ${logoResponse.status}`)
       }
     } catch (logoError) {
-      console.log('Logo embedding skipped:', logoError.message)
+      console.log('Logo embedding failed:', logoError.message)
       // Fallback to text logo
       page.drawText('Insura', {
         x: 50,
