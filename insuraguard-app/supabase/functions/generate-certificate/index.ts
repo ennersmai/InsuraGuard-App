@@ -11,14 +11,21 @@ const supabase = createClient(
 const SITE_URL = Deno.env.get('SITE_URL') || 'https://insuraguard.com'
 
 serve(async (req) => {
+  console.log('=== Certificate Generation Function Called ===')
+  console.log('Method:', req.method)
+  console.log('Headers:', Object.fromEntries(req.headers.entries()))
+  
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
+    console.log('Handling OPTIONS request')
     return new Response('ok', { headers: corsHeaders })
   }
 
   try {
     // Parse request body first (can only be read once)
+    console.log('Parsing request body...')
     const { registrationId } = await req.json()
+    console.log('Registration ID:', registrationId)
 
     if (!registrationId) {
       return new Response(
