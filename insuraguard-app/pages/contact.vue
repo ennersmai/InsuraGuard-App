@@ -39,7 +39,7 @@
                 </div>
                 <div>
                   <h3 class="font-semibold text-charcoal mb-1">Phone</h3>
-                  <p class="text-gray-600">+44 (0) 20 XXXX XXXX</p>
+                  <p class="text-gray-600"><a href="tel:+441615201169" class="hover:text-amber">+44 (0)161 520 1169</a></p>
                   <p class="text-sm text-gray-500 mt-1">Mon-Fri, 9am-5pm GMT</p>
                 </div>
               </div>
@@ -65,9 +65,9 @@
             <div class="mt-8 pt-8 border-t border-gray-100">
               <h3 class="font-semibold text-charcoal mb-4">Specific Enquiries</h3>
               <div class="space-y-2 text-sm text-gray-600">
-                <p><span class="font-medium text-charcoal">Claims:</span> claims@insuraguard.com</p>
-                <p><span class="font-medium text-charcoal">Privacy/GDPR:</span> privacy@insuraguard.com</p>
-                <p><span class="font-medium text-charcoal">Technical Support:</span> support@insuraguard.com</p>
+                <p><span class="font-medium text-charcoal">Claims:</span> <a href="mailto:claims@insuraguard.com" class="hover:text-amber">claims@insuraguard.com</a> | <a href="tel:+441615201169" class="hover:text-amber">+44 (0)161 520 1169</a></p>
+                <p><span class="font-medium text-charcoal">Privacy/GDPR:</span> <a href="mailto:privacy@insuraguard.com" class="hover:text-amber">privacy@insuraguard.com</a> | <a href="tel:+441615201169" class="hover:text-amber">+44 (0)161 520 1169</a></p>
+                <p><span class="font-medium text-charcoal">Technical Support:</span> <a href="mailto:support@insuraguard.com" class="hover:text-amber">support@insuraguard.com</a></p>
               </div>
             </div>
           </div>

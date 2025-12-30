@@ -201,7 +201,7 @@ const faqs = [
       <li>Visit our <a href="/dsar" class="text-amber hover:text-amber/90 underline">DSAR page</a> and download the form</li>
       <li>Complete the form with your request details</li>
       <li>Provide proof of identity</li>
-      <li>Email to privacy@insuraguard.com</li>
+      <li>Email to privacy@insuraguard.com or call +44 (0)161 520 1169</li>
     </ol>
     <p class="mt-2">We will respond to your request within 30 days.</p>`
   }
