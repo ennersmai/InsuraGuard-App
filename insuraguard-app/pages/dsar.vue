@@ -138,6 +138,13 @@ const downloadDSARForm = async () => {
   const maxWidth = pageWidth - (margin * 2);
   let yPosition = logoHeight + 25;
   
+  // Helper to draw a form field line
+  const drawFieldLine = (x: number, y: number, width: number) => {
+    doc.setDrawColor(0);
+    doc.setLineWidth(0.3);
+    doc.line(x, y, x + width, y);
+  };
+  
   const lines = dsarTemplate.value.split('\n');
   
   for (let i = 0; i < lines.length; i++) {
@@ -148,8 +155,9 @@ const downloadDSARForm = async () => {
     const isMainTitle = i < 3 && trimmedLine.length > 0;
     const isSection = trimmedLine.startsWith('SECTION');
     const isEmpty = trimmedLine.length === 0;
+    const hasUnderscore = trimmedLine.includes('_');
     
-    // Prevent section headers from being orphaned (need 40mm space)
+    // Prevent section headers from being orphaned
     if (isSection && yPosition > pageHeight - 40) {
       doc.addPage();
       yPosition = 20;
@@ -163,23 +171,44 @@ const downloadDSARForm = async () => {
     
     // Render based on line type
     if (isEmpty) {
-      yPosition += 3;
+      yPosition += 4;
     } else if (isMainTitle) {
       doc.setFontSize(14);
       doc.setFont('helvetica', 'bold');
       doc.text(trimmedLine, pageWidth / 2, yPosition, { align: 'center' });
-      yPosition += 7;
+      yPosition += 8;
     } else if (isSection) {
-      doc.setFontSize(11);
+      yPosition += 3;
+      doc.setFontSize(12);
       doc.setFont('helvetica', 'bold');
       doc.text(trimmedLine, margin, yPosition);
-      yPosition += 6;
+      yPosition += 8;
+    } else if (hasUnderscore) {
+      // This is a form field - replace underscores with a line
+      const parts = trimmedLine.split(':');
+      if (parts.length > 1) {
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'normal');
+        const label = parts[0].trim() + ':';
+        doc.text(label, margin, yPosition);
+        const labelWidth = doc.getTextWidth(label);
+        drawFieldLine(margin + labelWidth + 2, yPosition + 0.5, maxWidth - labelWidth - 2);
+        yPosition += 7;
+      } else {
+        // Multi-line field
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'normal');
+        doc.text(trimmedLine.replace(/_+/g, ''), margin, yPosition);
+        yPosition += 2;
+        drawFieldLine(margin, yPosition, maxWidth);
+        yPosition += 6;
+      }
     } else {
-      doc.setFontSize(9);
+      doc.setFontSize(10);
       doc.setFont('helvetica', 'normal');
       const wrappedLines = doc.splitTextToSize(trimmedLine, maxWidth);
       doc.text(wrappedLines, margin, yPosition);
-      yPosition += wrappedLines.length * 5;
+      yPosition += wrappedLines.length * 5.5;
     }
   }
   
