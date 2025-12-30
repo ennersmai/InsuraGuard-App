@@ -61,20 +61,307 @@
           </div>
 
           <div>
-            <label for="claim_description" class="block text-sm font-medium text-charcoal mb-2">Claim Description *</label>
+            <label for="installation_address" class="block text-sm font-medium text-charcoal mb-2">Installation Address (if different)</label>
             <textarea
-              id="claim_description"
-              v-model="formData.claim_description"
-              required
-              rows="6"
-              placeholder="Please provide a detailed description of your claim, including dates, issues encountered, and any relevant information..."
+              id="installation_address"
+              v-model="formData.installation_address"
+              rows="2"
               class="input-field"
             ></textarea>
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-charcoal mb-2">Supporting Documents</label>
-            <p class="text-sm text-gray-600 mb-3">Upload evidence such as photos, Companies House records, correspondence, etc. (Max 10 files, 5MB each)</p>
+            <label for="postcode" class="block text-sm font-medium text-charcoal mb-2">Postcode</label>
+            <input
+              id="postcode"
+              v-model="formData.postcode"
+              type="text"
+              class="input-field"
+            />
+          </div>
+
+          <!-- SECTION 2: INSTALLATION DETAILS -->
+          <div class="pt-6 border-t border-gray-200">
+            <h3 class="text-lg font-semibold text-charcoal mb-4">Section 2: Installation Details</h3>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-charcoal mb-3">System Type (select all that apply) *</label>
+            <div class="space-y-2">
+              <label class="flex items-center">
+                <input type="checkbox" v-model="formData.system_type_solar_pv" class="mr-2">
+                <span class="text-gray-700">Solar PV System</span>
+              </label>
+              <label class="flex items-center">
+                <input type="checkbox" v-model="formData.system_type_battery" class="mr-2">
+                <span class="text-gray-700">Battery Storage System</span>
+              </label>
+              <label class="flex items-center">
+                <input type="checkbox" v-model="formData.system_type_solar_thermal" class="mr-2">
+                <span class="text-gray-700">Solar Thermal</span>
+              </label>
+              <label class="flex items-center">
+                <input type="checkbox" v-model="formData.system_type_other" class="mr-2">
+                <span class="text-gray-700">Other</span>
+              </label>
+              <input
+                v-if="formData.system_type_other"
+                v-model="formData.system_type_other"
+                type="text"
+                placeholder="Please specify"
+                class="input-field ml-6 mt-2"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label for="installer_company" class="block text-sm font-medium text-charcoal mb-2">Original Installer Company Name *</label>
+            <input
+              id="installer_company"
+              v-model="formData.installer_company"
+              type="text"
+              required
+              class="input-field"
+            />
+          </div>
+
+          <div>
+            <label for="installer_contact" class="block text-sm font-medium text-charcoal mb-2">Installer Contact Details (if known)</label>
+            <input
+              id="installer_contact"
+              v-model="formData.installer_contact"
+              type="text"
+              class="input-field"
+            />
+          </div>
+
+          <div>
+            <label for="installation_date" class="block text-sm font-medium text-charcoal mb-2">Installation/Commissioning Date *</label>
+            <input
+              id="installation_date"
+              v-model="formData.installation_date"
+              type="date"
+              required
+              class="input-field"
+            />
+          </div>
+
+          <div>
+            <label for="system_size" class="block text-sm font-medium text-charcoal mb-2">System Size/Capacity</label>
+            <input
+              id="system_size"
+              v-model="formData.system_size"
+              type="text"
+              placeholder="e.g., 4kW"
+              class="input-field"
+            />
+          </div>
+
+          <div>
+            <label for="inverter_serial" class="block text-sm font-medium text-charcoal mb-2">Inverter Serial Number</label>
+            <input
+              id="inverter_serial"
+              v-model="formData.inverter_serial"
+              type="text"
+              class="input-field"
+            />
+          </div>
+
+          <div>
+            <label for="battery_serial" class="block text-sm font-medium text-charcoal mb-2">Battery Serial Number (if applicable)</label>
+            <input
+              id="battery_serial"
+              v-model="formData.battery_serial"
+              type="text"
+              class="input-field"
+            />
+          </div>
+
+          <!-- SECTION 3: CLAIM DETAILS -->
+          <div class="pt-6 border-t border-gray-200">
+            <h3 class="text-lg font-semibold text-charcoal mb-4">Section 3: Claim Details</h3>
+          </div>
+
+          <div>
+            <label for="issue_first_noticed" class="block text-sm font-medium text-charcoal mb-2">Date Issue First Noticed *</label>
+            <input
+              id="issue_first_noticed"
+              v-model="formData.issue_first_noticed"
+              type="date"
+              required
+              class="input-field"
+            />
+          </div>
+
+          <div>
+            <label for="installer_contacted_date" class="block text-sm font-medium text-charcoal mb-2">Date Installer Contacted (if applicable)</label>
+            <input
+              id="installer_contacted_date"
+              v-model="formData.installer_contacted_date"
+              type="date"
+              class="input-field"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-charcoal mb-2">Has the installer ceased trading? *</label>
+            <div class="flex gap-4">
+              <label class="flex items-center">
+                <input type="radio" v-model="formData.installer_ceased_trading" value="yes" required class="mr-2">
+                <span class="text-gray-700">Yes</span>
+              </label>
+              <label class="flex items-center">
+                <input type="radio" v-model="formData.installer_ceased_trading" value="no" required class="mr-2">
+                <span class="text-gray-700">No</span>
+              </label>
+              <label class="flex items-center">
+                <input type="radio" v-model="formData.installer_ceased_trading" value="unknown" required class="mr-2">
+                <span class="text-gray-700">Unknown</span>
+              </label>
+            </div>
+          </div>
+
+          <div v-if="formData.installer_ceased_trading === 'yes'">
+            <label for="cessation_evidence" class="block text-sm font-medium text-charcoal mb-2">Evidence of Cessation (Companies House, etc.)</label>
+            <textarea
+              id="cessation_evidence"
+              v-model="formData.cessation_evidence"
+              rows="3"
+              placeholder="Please describe evidence (e.g., Companies House dissolution notice, administrator appointment, website closure)"
+              class="input-field"
+            ></textarea>
+          </div>
+
+          <div>
+            <label for="nature_of_issue" class="block text-sm font-medium text-charcoal mb-2">Nature of Defect/Issue (please describe in detail) *</label>
+            <textarea
+              id="nature_of_issue"
+              v-model="formData.nature_of_issue"
+              required
+              rows="6"
+              placeholder="Please provide a detailed description of the defect or issue..."
+              class="input-field"
+            ></textarea>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-charcoal mb-2">Has the issue affected system performance?</label>
+            <div class="flex gap-4">
+              <label class="flex items-center">
+                <input type="radio" v-model="formData.issue_affected_performance" :value="true" class="mr-2">
+                <span class="text-gray-700">Yes</span>
+              </label>
+              <label class="flex items-center">
+                <input type="radio" v-model="formData.issue_affected_performance" :value="false" class="mr-2">
+                <span class="text-gray-700">No</span>
+              </label>
+            </div>
+          </div>
+
+          <div v-if="formData.issue_affected_performance">
+            <label for="performance_impact" class="block text-sm font-medium text-charcoal mb-2">Please describe impact</label>
+            <textarea
+              id="performance_impact"
+              v-model="formData.performance_impact"
+              rows="3"
+              class="input-field"
+            ></textarea>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-charcoal mb-2">Current System Status *</label>
+            <div class="space-y-2">
+              <label class="flex items-center">
+                <input type="radio" v-model="formData.system_status" value="not_operational" required class="mr-2">
+                <span class="text-gray-700">Not operational</span>
+              </label>
+              <label class="flex items-center">
+                <input type="radio" v-model="formData.system_status" value="partially_operational" required class="mr-2">
+                <span class="text-gray-700">Partially operational</span>
+              </label>
+              <label class="flex items-center">
+                <input type="radio" v-model="formData.system_status" value="fully_operational" required class="mr-2">
+                <span class="text-gray-700">Fully operational</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- SECTION 4: PREVIOUS ACTIONS -->
+          <div class="pt-6 border-t border-gray-200">
+            <h3 class="text-lg font-semibold text-charcoal mb-4">Section 4: Previous Actions Taken</h3>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-charcoal mb-2">Have you contacted the original installer about this issue?</label>
+            <div class="flex gap-4">
+              <label class="flex items-center">
+                <input type="radio" v-model="formData.contacted_installer" :value="true" class="mr-2">
+                <span class="text-gray-700">Yes</span>
+              </label>
+              <label class="flex items-center">
+                <input type="radio" v-model="formData.contacted_installer" :value="false" class="mr-2">
+                <span class="text-gray-700">No</span>
+              </label>
+            </div>
+          </div>
+
+          <div v-if="formData.contacted_installer">
+            <label for="installer_contact_details" class="block text-sm font-medium text-charcoal mb-2">Please provide details and dates</label>
+            <textarea
+              id="installer_contact_details"
+              v-model="formData.installer_contact_details"
+              rows="3"
+              class="input-field"
+            ></textarea>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-charcoal mb-2">Have you obtained any quotes for repair work?</label>
+            <div class="flex gap-4">
+              <label class="flex items-center">
+                <input type="radio" v-model="formData.obtained_quotes" :value="true" class="mr-2">
+                <span class="text-gray-700">Yes</span>
+              </label>
+              <label class="flex items-center">
+                <input type="radio" v-model="formData.obtained_quotes" :value="false" class="mr-2">
+                <span class="text-gray-700">No</span>
+              </label>
+            </div>
+            <p v-if="formData.obtained_quotes" class="text-sm text-gray-600 mt-2">Please attach copies of all quotes in the supporting documents section below.</p>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-charcoal mb-2">Have you made any temporary repairs?</label>
+            <div class="flex gap-4">
+              <label class="flex items-center">
+                <input type="radio" v-model="formData.temporary_repairs" :value="true" class="mr-2">
+                <span class="text-gray-700">Yes</span>
+              </label>
+              <label class="flex items-center">
+                <input type="radio" v-model="formData.temporary_repairs" :value="false" class="mr-2">
+                <span class="text-gray-700">No</span>
+              </label>
+            </div>
+          </div>
+
+          <div v-if="formData.temporary_repairs">
+            <label for="temporary_repairs_details" class="block text-sm font-medium text-charcoal mb-2">Please provide details and retain all receipts</label>
+            <textarea
+              id="temporary_repairs_details"
+              v-model="formData.temporary_repairs_details"
+              rows="3"
+              class="input-field"
+            ></textarea>
+          </div>
+
+          <!-- SECTION 5: SUPPORTING DOCUMENTATION -->
+          <div class="pt-6 border-t border-gray-200">
+            <h3 class="text-lg font-semibold text-charcoal mb-4">Section 5: Supporting Documentation</h3>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-charcoal mb-2">Supporting Documents *</label>
+            <p class="text-sm text-gray-600 mb-3">Please attach: InsuraGuard certificate, photos of defect (min 3), evidence of installer cessation, installation docs, correspondence, repair quotes, performance data. (Max 10 files, 5MB each)</p>
             <input
               type="file"
               @change="handleFileChange"
@@ -94,6 +381,27 @@
             </div>
           </div>
 
+          <!-- SECTION 6: DECLARATION -->
+          <div class="pt-6 border-t border-gray-200">
+            <h3 class="text-lg font-semibold text-charcoal mb-4">Section 6: Declaration</h3>
+          </div>
+
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <label class="flex items-start">
+              <input type="checkbox" v-model="formData.declaration_accepted" required class="mr-3 mt-1">
+              <span class="text-sm text-gray-700">
+                I declare that:
+                <ul class="list-disc ml-5 mt-2 space-y-1">
+                  <li>The information provided in this claim form is true and accurate</li>
+                  <li>I have not made any fraudulent statements</li>
+                  <li>I understand that providing false information may invalidate my claim</li>
+                  <li>I authorize InsuraGuard to contact relevant parties to verify this claim</li>
+                  <li>I have read and understood the terms and conditions of my policy</li>
+                </ul>
+              </span>
+            </label>
+          </div>
+
           <div v-if="submitError" class="p-4 bg-red-50 border border-red-200 rounded-lg text-red-800 text-sm">
             {{ submitError }}
           </div>
@@ -104,7 +412,7 @@
 
           <button
             type="submit"
-            :disabled="submitting"
+            :disabled="submitting || !formData.declaration_accepted"
             class="btn-primary w-full"
           >
             <span v-if="submitting">Submitting...</span>
@@ -188,7 +496,32 @@ const formData = ref({
   full_name: '',
   email: '',
   phone: '',
-  claim_description: ''
+  installation_address: '',
+  postcode: '',
+  system_type_solar_pv: false,
+  system_type_battery: false,
+  system_type_solar_thermal: false,
+  system_type_other: '',
+  installer_company: '',
+  installer_contact: '',
+  installation_date: '',
+  system_size: '',
+  inverter_serial: '',
+  battery_serial: '',
+  issue_first_noticed: '',
+  installer_contacted_date: '',
+  installer_ceased_trading: '',
+  cessation_evidence: '',
+  nature_of_issue: '',
+  issue_affected_performance: false,
+  performance_impact: '',
+  system_status: '',
+  contacted_installer: false,
+  installer_contact_details: '',
+  obtained_quotes: false,
+  temporary_repairs: false,
+  temporary_repairs_details: '',
+  declaration_accepted: false
 });
 
 const fetchClaimTemplate = async () => {
@@ -381,7 +714,32 @@ const submitClaim = async () => {
         full_name: formData.value.full_name,
         email: formData.value.email,
         phone: formData.value.phone,
-        claim_description: formData.value.claim_description,
+        installation_address: formData.value.installation_address,
+        postcode: formData.value.postcode,
+        system_type_solar_pv: formData.value.system_type_solar_pv,
+        system_type_battery: formData.value.system_type_battery,
+        system_type_solar_thermal: formData.value.system_type_solar_thermal,
+        system_type_other: formData.value.system_type_other,
+        installer_company: formData.value.installer_company,
+        installer_contact: formData.value.installer_contact,
+        installation_date: formData.value.installation_date,
+        system_size: formData.value.system_size,
+        inverter_serial: formData.value.inverter_serial,
+        battery_serial: formData.value.battery_serial,
+        issue_first_noticed: formData.value.issue_first_noticed,
+        installer_contacted_date: formData.value.installer_contacted_date,
+        installer_ceased_trading: formData.value.installer_ceased_trading,
+        cessation_evidence: formData.value.cessation_evidence,
+        nature_of_issue: formData.value.nature_of_issue,
+        issue_affected_performance: formData.value.issue_affected_performance,
+        performance_impact: formData.value.performance_impact,
+        system_status: formData.value.system_status,
+        contacted_installer: formData.value.contacted_installer,
+        installer_contact_details: formData.value.installer_contact_details,
+        obtained_quotes: formData.value.obtained_quotes,
+        temporary_repairs: formData.value.temporary_repairs,
+        temporary_repairs_details: formData.value.temporary_repairs_details,
+        declaration_accepted: formData.value.declaration_accepted,
         document_urls: documentUrls,
         status: 'pending'
       });
@@ -396,7 +754,32 @@ const submitClaim = async () => {
       full_name: '',
       email: '',
       phone: '',
-      claim_description: ''
+      installation_address: '',
+      postcode: '',
+      system_type_solar_pv: false,
+      system_type_battery: false,
+      system_type_solar_thermal: false,
+      system_type_other: '',
+      installer_company: '',
+      installer_contact: '',
+      installation_date: '',
+      system_size: '',
+      inverter_serial: '',
+      battery_serial: '',
+      issue_first_noticed: '',
+      installer_contacted_date: '',
+      installer_ceased_trading: '',
+      cessation_evidence: '',
+      nature_of_issue: '',
+      issue_affected_performance: false,
+      performance_impact: '',
+      system_status: '',
+      contacted_installer: false,
+      installer_contact_details: '',
+      obtained_quotes: false,
+      temporary_repairs: false,
+      temporary_repairs_details: '',
+      declaration_accepted: false
     };
     selectedFiles.value = [];
   } catch (e: any) {
