@@ -296,6 +296,13 @@ const handleSubmit = async () => {
     }
 
     const registrationId = crypto.randomUUID();
+    
+    // Generate unique URN (format: URN-YYYYMMDD-XXXXX)
+    const date = new Date();
+    const dateStr = date.toISOString().slice(0, 10).replace(/-/g, '');
+    const randomPart = Math.random().toString(36).substring(2, 7).toUpperCase();
+    const urn = `URN-${dateStr}-${randomPart}`;
+    
     const documentUrls: string[] = [];
 
     for (let i = 0; i < selectedFiles.value.length; i++) {
@@ -322,7 +329,7 @@ const handleSubmit = async () => {
       .insert({
         id: registrationId,
         user_id: user.value?.id,
-        urn: 'PENDING',
+        urn: urn,
         full_name: formData.value.full_name,
         email: formData.value.email,
         phone: formData.value.phone,
