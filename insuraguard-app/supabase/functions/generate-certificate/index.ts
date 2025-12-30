@@ -82,6 +82,9 @@ serve(async (req) => {
       const sanitizedValue = value.replace(/\r\n/g, ' ').replace(/\n/g, ' ').replace(/\r/g, ' ')
       certificateContent = certificateContent.replace(new RegExp(`{{${key}}}`, 'g'), sanitizedValue)
     }
+    
+    // Normalize line endings in the entire template
+    certificateContent = certificateContent.replace(/\r\n/g, '\n').replace(/\r/g, '\n')
 
     // Create PDF
     const pdfDoc = await PDFDocument.create()
@@ -145,7 +148,10 @@ serve(async (req) => {
     const lines = certificateContent.split('\n')
     const maxWidth = width - 100
 
-    for (const line of lines) {
+    for (let line of lines) {
+      // Remove any remaining control characters (carriage returns, etc.)
+      line = line.replace(/[\r\x00-\x1F]/g, '')
+      
       if (line.trim() === '') {
         yPosition -= 15
         continue
