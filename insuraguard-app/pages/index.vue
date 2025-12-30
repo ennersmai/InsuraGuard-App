@@ -25,7 +25,7 @@
             Insurance-Backed Protection<br class="hidden md:block" />
             <span class="text-charcoal/80 block md:inline">for Your Clean Energy System</span>
           </h1>
-          <p class="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+          <p class="text-lg md:text-xl text-charcoal font-medium mb-10 max-w-2xl mx-auto leading-relaxed drop-shadow-sm">
             10-year guarantee protection if your installer ceases to trade. Register in minutes, protected for a decade.
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
@@ -36,24 +36,24 @@
               Learn More
             </NuxtLink>
           </div>
-          <div class="flex flex-wrap justify-center gap-8 text-sm text-gray-500">
+          <div class="flex flex-wrap justify-center gap-8 text-sm">
             <div class="flex items-center gap-2">
               <svg class="w-5 h-5 text-amber" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
               </svg>
-              <span>Insurance-backed</span>
+              <span class="text-charcoal font-medium">Insurance-backed</span>
             </div>
             <div class="flex items-center gap-2">
               <svg class="w-5 h-5 text-amber" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
               </svg>
-              <span>10-year coverage</span>
+              <span class="text-charcoal font-medium">10-year coverage</span>
             </div>
             <div class="flex items-center gap-2">
               <svg class="w-5 h-5 text-amber" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
               </svg>
-              <span>Instant certification</span>
+              <span class="text-charcoal font-medium">Instant certification</span>
             </div>
           </div>
         </div>
