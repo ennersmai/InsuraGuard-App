@@ -138,11 +138,17 @@
             <p class="text-sm font-medium text-gray-500 mb-2">Proof of Purchase Documents:</p>
             <ul class="space-y-2">
               <li v-for="(url, index) in registration.document_urls" :key="index">
-                <a :href="url" target="_blank" class="text-sm text-amber hover:text-amber/90">
-                  Document {{ index + 1 }}
-                </a>
+                <button 
+                  @click="downloadDocument(url, index)"
+                  :disabled="downloadingDoc === index"
+                  class="text-sm text-amber hover:text-amber/90 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <span v-if="downloadingDoc === index">Downloading...</span>
+                  <span v-else>Document {{ index + 1 }}</span>
+                </button>
               </li>
             </ul>
+            <p v-if="downloadError" class="text-red-600 text-xs mt-2">{{ downloadError }}</p>
           </div>
         </div>
       </div>
@@ -199,6 +205,8 @@ const loading = ref(true);
 const error = ref('');
 const showDeleteModal = ref(false);
 const deleting = ref(false);
+const downloadingDoc = ref<number | null>(null);
+const downloadError = ref('');
 
 const formatDate = (date: string) => {
   return format(new Date(date), 'MMM dd, yyyy');
@@ -219,6 +227,36 @@ const fetchRegistration = async () => {
     error.value = e.message || 'Failed to load registration';
   } finally {
     loading.value = false;
+  }
+};
+
+const downloadDocument = async (publicUrl: string, index: number) => {
+  downloadingDoc.value = index;
+  downloadError.value = '';
+
+  try {
+    // Extract the file path from the public URL
+    // URL format: https://.../storage/v1/object/public/bucket/path
+    const urlParts = publicUrl.split('/storage/v1/object/public/');
+    if (urlParts.length < 2) throw new Error('Invalid document URL');
+    
+    const [bucket, ...pathParts] = urlParts[1].split('/');
+    const filePath = pathParts.join('/');
+
+    // Get signed URL for private bucket (expires in 1 hour)
+    const { data, error: signError } = await supabase.storage
+      .from(bucket)
+      .createSignedUrl(filePath, 3600);
+
+    if (signError) throw signError;
+    if (!data?.signedUrl) throw new Error('Failed to generate download link');
+
+    // Open PDF in new tab
+    window.open(data.signedUrl, '_blank');
+  } catch (e: any) {
+    downloadError.value = e.message || 'Failed to download document';
+  } finally {
+    downloadingDoc.value = null;
   }
 };
 
