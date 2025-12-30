@@ -105,41 +105,47 @@ const toggleFaq = (index: number) => {
 
 const faqs = [
   {
-    question: "What does InsuraGuard cover?",
+    question: "What does the Insura Guard guarantee cover?",
     category: 'coverage',
-    answer: `<p>InsuraGuard provides insurance-backed protection for your clean energy installation guarantee. If your original installer ceases to trade within 10 years of your system's commissioning date, your guarantee remains valid and protected.</p>
-    <p class="mt-2">This covers defects in workmanship and materials for solar PV systems, battery storage systems, and related clean energy installations.</p>`
+    answer: `<p>The guarantee covers labour and workmanship only, relating to the installation of your battery system. It does not cover faults with the battery itself or other equipment—these are covered separately by the manufacturer's warranty, not by Insura Guard.</p>`
   },
   {
-    question: "How do I register my system?",
+    question: "How long does the guarantee last?",
+    category: 'coverage',
+    answer: `<p>Up to 10 years from the system's original commissioning date. The remaining period depends on the age of your battery when you register.</p>`
+  },
+  {
+    question: "Who is eligible?",
     category: 'registration',
-    answer: `<p>Registration is simple and takes just a few minutes:</p>
-    <ol class="list-decimal ml-5 mt-2 space-y-1">
-      <li>Create an account or log in</li>
-      <li>Complete the registration form with your system details</li>
-      <li>Upload proof of purchase documents</li>
-      <li>Make a one-time payment of £99</li>
-      <li>Receive your insurance certificate instantly via email</li>
-    </ol>
+    answer: `<p>Your battery system must be less than 4 years old at the time of registration. Systems that are 4 years or older are not eligible for the guarantee.</p>`
+  },
+  {
+    question: "How much does it cost?",
+    category: 'registration',
+    answer: `<p>Pricing depends on your battery's age at registration:</p>
+    <ul class="list-disc ml-5 mt-2 space-y-1">
+      <li><strong>Under 12 months old:</strong> £99.99 (10 years of cover)</li>
+      <li><strong>12–24 months old:</strong> £199.99 (up to 9 years left)</li>
+      <li><strong>2–3 years old:</strong> £289.00 (up to 8 years left)</li>
+      <li><strong>3 years old:</strong> £499.99 (up to 7 years left)</li>
+    </ul>`
+  },
+  {
+    question: "What fees apply?",
+    category: 'coverage',
+    answer: `<p>There is an excess of £29.95 for each claim. If system ownership changes, a £49.95 admin fee applies.</p>`
+  },
+  {
+    question: "How do I register?",
+    category: 'registration',
+    answer: `<p>Register any time within 3 years of the original commissioning date. Registration is not possible after your system turns 4 years old.</p>
+    <p class="mt-2">To register, upload your proof of purchase (such as invoice or contract) and commissioning date through our online form.</p>
     <p class="mt-2"><a href="/register" class="text-amber hover:text-amber/90 underline font-medium">Start your registration now →</a></p>`
   },
   {
-    question: "What if my installer goes out of business?",
+    question: "What happens if my installer goes out of business?",
     category: 'coverage',
-    answer: `<p>If your installer ceases to trade during the 10-year coverage period, your guarantee remains fully protected under our insurance-backed scheme.</p>
-    <p class="mt-2">You can submit a claim through our claims process, and we'll ensure your guarantee is honored according to the policy terms.</p>`
-  },
-  {
-    question: "How long does registration take?",
-    category: 'registration',
-    answer: `<p>The entire registration process typically takes 5-10 minutes. Once you complete payment, you'll receive your insurance certificate immediately via email.</p>
-    <p class="mt-2">Your unique reference number (URN) is generated instantly and can be used to verify your coverage at any time.</p>`
-  },
-  {
-    question: "Can I register an existing installation?",
-    category: 'registration',
-    answer: `<p>Yes, you can register existing installations as long as your system was commissioned within the last 12 months.</p>
-    <p class="mt-2">You'll need to provide proof of purchase and the original commissioning date. The 10-year coverage period starts from your system's commissioning date.</p>`
+    answer: `<p>Your guarantee remains valid for the rest of the cover period, even if your original installer ceases trading.</p>`
   },
   {
     question: "How do I make a claim?",
@@ -154,43 +160,38 @@ const faqs = [
     <p class="mt-2">Our team will review your claim and respond within 10 working days.</p>`
   },
   {
-    question: "What documents do I need to register?",
+    question: "What documents are required?",
     category: 'registration',
-    answer: `<p>You'll need to upload proof of purchase for your clean energy system. Acceptable documents include:</p>
-    <ul class="list-disc ml-5 mt-2 space-y-1">
-      <li>Invoice from your installer</li>
-      <li>Purchase agreement or contract</li>
-      <li>Receipt showing payment</li>
-      <li>MCS certificate (if applicable)</li>
-    </ul>
-    <p class="mt-2">Documents can be uploaded as PDF, JPG, or PNG files (max 10MB each, up to 5 files).</p>`
+    answer: `<p>You must provide proof of purchase and confirmation of the original commissioning date.</p>`
   },
   {
-    question: "Is my data secure?",
+    question: "How is my data used?",
     category: 'account',
-    answer: `<p>Yes, we take data security seriously. InsuraGuard is fully GDPR compliant and uses industry-standard encryption to protect your personal information.</p>
-    <p class="mt-2">Your data is stored securely and only used for the purposes of providing your insurance-backed guarantee. We never share your information with third parties without your consent.</p>
+    answer: `<p>We handle all personal information in line with UK GDPR and our Privacy Policy. Data is securely stored and used only for processing your registration and managing your guarantee.</p>
     <p class="mt-2">For more information, see our <a href="/privacy" class="text-amber hover:text-amber/90 underline">Privacy Policy</a>.</p>`
   },
   {
-    question: "What is a URN and why do I need it?",
-    category: 'account',
-    answer: `<p>Your URN (Unique Reference Number) is a unique identifier for your insurance policy, formatted as IG-YYYY-XXXXX.</p>
-    <p class="mt-2">You'll need your URN to:</p>
+    question: "Are there any important exclusions?",
+    category: 'coverage',
+    answer: `<p>Yes. This guarantee excludes:</p>
     <ul class="list-disc ml-5 mt-2 space-y-1">
-      <li>Verify your coverage status</li>
-      <li>Make a claim</li>
-      <li>Access your policy documents</li>
-      <li>Contact our support team about your policy</li>
-    </ul>
-    <p class="mt-2">Keep your URN safe and include it in all correspondence with us.</p>`
+      <li>Hardware or equipment faults (manufacturer's warranty only)</li>
+      <li>Any indirect or consequential losses or damages</li>
+      <li>Pre-existing faults or defects</li>
+      <li>Issues resulting from improper use, lack of maintenance, unauthorised modifications, or deliberate damage</li>
+      <li>Claims made where false or misleading information is provided</li>
+    </ul>`
   },
   {
-    question: "Can I cancel my registration?",
+    question: "What else should I know?",
+    category: 'coverage',
+    answer: `<p>All claims and cover are subject to our full Terms & Conditions, available on request.</p>
+    <p class="mt-2">Ongoing maintenance as recommended by your installer/manufacturer may be required to keep your cover valid. The guarantee may be voided in cases of fraud or misrepresentation.</p>`
+  },
+  {
+    question: "Can I cancel?",
     category: 'account',
-    answer: `<p>You have a 14-day cooling-off period from the date of registration during which you can cancel for a full refund.</p>
-    <p class="mt-2">After the cooling-off period, the registration fee is non-refundable as your coverage is active and your certificate has been issued.</p>
-    <p class="mt-2">To request a cancellation, please contact us at support@insuraguard.co.uk with your URN.</p>`
+    answer: `<p>You have a 14-day cooling-off period after registering to cancel and receive a full refund. After this period, all fees are non-refundable.</p>`
   },
   {
     question: "How can I access my personal data?",
