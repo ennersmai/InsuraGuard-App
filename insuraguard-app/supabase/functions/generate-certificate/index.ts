@@ -17,6 +17,31 @@ serve(async (req) => {
   }
 
   try {
+    // Get the authorization header
+    const authHeader = req.headers.get('Authorization')
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: 'Missing authorization header' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
+    // Create a client with the user's token for verification
+    const userSupabase = createClient(
+      Deno.env.get('SUPABASE_URL') || '',
+      Deno.env.get('SUPABASE_ANON_KEY') || '',
+      { global: { headers: { Authorization: authHeader } } }
+    )
+
+    // Verify the user is authenticated
+    const { data: { user }, error: authError } = await userSupabase.auth.getUser()
+    if (authError || !user) {
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
     const { registrationId } = await req.json()
 
     if (!registrationId) {
@@ -26,7 +51,7 @@ serve(async (req) => {
       )
     }
 
-    // Fetch registration data
+    // Fetch registration data using service role (has full access)
     const { data: registration, error: fetchError } = await supabase
       .from('registrations')
       .select('*')
@@ -35,6 +60,14 @@ serve(async (req) => {
 
     if (fetchError || !registration) {
       throw new Error('Registration not found')
+    }
+
+    // Verify the registration belongs to the authenticated user
+    if (registration.user_id !== user.id) {
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized access to registration' }),
+        { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
     }
 
     // Fetch templates
