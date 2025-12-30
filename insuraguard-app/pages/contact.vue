@@ -83,7 +83,7 @@
 
               <NuxtLink to="/claim" class="block p-4 border border-gray-200 rounded-xl hover:border-amber hover:bg-amber/5 transition-all duration-200">
                 <h3 class="font-semibold text-charcoal mb-1">Make a Claim</h3>
-                <p class="text-sm text-gray-600">Download the claim form</p>
+                <p class="text-sm text-gray-600">Submit your claim online</p>
               </NuxtLink>
 
               <NuxtLink to="/dsar" class="block p-4 border border-gray-200 rounded-xl hover:border-amber hover:bg-amber/5 transition-all duration-200">

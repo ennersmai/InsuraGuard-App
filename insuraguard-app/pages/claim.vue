@@ -2,7 +2,7 @@
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="mb-12">
       <h1 class="text-4xl font-semibold text-charcoal mb-4">Make a Claim</h1>
-      <p class="text-xl text-gray-600">Download and submit your claim form</p>
+      <p class="text-xl text-gray-600">Submit your claim online</p>
     </div>
 
     <div v-if="loading" class="text-center py-12">
@@ -10,43 +10,127 @@
     </div>
 
     <div v-else class="space-y-8">
+      <!-- Claim Form Content from Template -->
       <div class="bg-white shadow rounded-lg p-8">
-        <h2 class="text-2xl font-semibold text-charcoal mb-4">Before You Start</h2>
-        <p class="text-gray-600 mb-4">To make a claim under your InsuraGuard policy, you'll need:</p>
-        <ul class="list-disc ml-6 space-y-2 text-gray-600">
-          <li>Your Unique Reference Number (URN)</li>
-          <li>Evidence that your installer has ceased trading (e.g., Companies House records)</li>
-          <li>Description and photos of the defect or issue</li>
-          <li>Your original insurance certificate</li>
-        </ul>
+        <div v-if="claimTemplate" class="prose max-w-none mb-8">
+          <div class="whitespace-pre-wrap text-gray-700" v-html="claimTemplate"></div>
+        </div>
       </div>
 
+      <!-- Online Claim Form -->
       <div class="bg-white shadow rounded-lg p-8">
-        <h2 class="text-2xl font-semibold text-charcoal mb-4">Claim Form</h2>
-        <div v-if="claimTemplate" class="prose max-w-none mb-6">
-          <div class="bg-gray-50 p-6 rounded-lg whitespace-pre-wrap font-mono text-sm">{{ claimTemplate }}</div>
-        </div>
-        <button @click="downloadClaimForm" class="btn-primary" :disabled="!claimTemplate">
+        <h2 class="text-2xl font-semibold text-charcoal mb-6">Submit Your Claim</h2>
+        
+        <form @submit.prevent="submitClaim" class="space-y-6">
+          <div>
+            <label for="urn" class="block text-sm font-medium text-charcoal mb-2">Unique Reference Number (URN) *</label>
+            <input
+              id="urn"
+              v-model="formData.urn"
+              type="text"
+              required
+              placeholder="e.g., IG-2025-XXXXX"
+              class="input-field"
+            />
+          </div>
+
+          <div>
+            <label for="full_name" class="block text-sm font-medium text-charcoal mb-2">Full Name *</label>
+            <input
+              id="full_name"
+              v-model="formData.full_name"
+              type="text"
+              required
+              class="input-field"
+            />
+          </div>
+
+          <div>
+            <label for="email" class="block text-sm font-medium text-charcoal mb-2">Email Address *</label>
+            <input
+              id="email"
+              v-model="formData.email"
+              type="email"
+              required
+              class="input-field"
+            />
+          </div>
+
+          <div>
+            <label for="phone" class="block text-sm font-medium text-charcoal mb-2">Phone Number *</label>
+            <input
+              id="phone"
+              v-model="formData.phone"
+              type="tel"
+              required
+              class="input-field"
+            />
+          </div>
+
+          <div>
+            <label for="claim_description" class="block text-sm font-medium text-charcoal mb-2">Claim Description *</label>
+            <textarea
+              id="claim_description"
+              v-model="formData.claim_description"
+              required
+              rows="6"
+              placeholder="Please provide a detailed description of your claim, including dates, issues encountered, and any relevant information..."
+              class="input-field"
+            ></textarea>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-charcoal mb-2">Supporting Documents</label>
+            <p class="text-sm text-gray-600 mb-3">Upload evidence such as photos, Companies House records, correspondence, etc. (Max 10 files, 5MB each)</p>
+            <input
+              type="file"
+              @change="handleFileChange"
+              multiple
+              accept="image/*,.pdf,.doc,.docx"
+              class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-amber/10 file:text-amber hover:file:bg-amber/20"
+            />
+            <div v-if="selectedFiles.length > 0" class="mt-3 space-y-2">
+              <div v-for="(file, index) in selectedFiles" :key="index" class="flex items-center justify-between text-sm text-gray-600 bg-gray-50 p-2 rounded">
+                <span class="truncate">{{ file.name }} ({{ formatFileSize(file.size) }})</span>
+                <button type="button" @click="removeFile(index)" class="text-red-600 hover:text-red-700 ml-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div v-if="submitError" class="p-4 bg-red-50 border border-red-200 rounded-lg text-red-800 text-sm">
+            {{ submitError }}
+          </div>
+
+          <div v-if="submitSuccess" class="p-4 bg-green-50 border border-green-200 rounded-lg text-green-800 text-sm">
+            {{ submitSuccess }}
+          </div>
+
+          <button
+            type="submit"
+            :disabled="submitting"
+            class="btn-primary w-full"
+          >
+            <span v-if="submitting">Submitting...</span>
+            <span v-else>Submit Claim</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Download PDF Option -->
+      <div class="bg-gray-50 rounded-lg p-6 text-center">
+        <h3 class="font-medium text-charcoal mb-2">Prefer a PDF Form?</h3>
+        <p class="text-gray-600 text-sm mb-4">You can download a PDF version of the claim form if you prefer to submit via email.</p>
+        <button @click="downloadClaimForm" class="btn-outline" :disabled="!claimTemplate">
           <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
-          Download Claim Form
+          Download PDF Claim Form
         </button>
-      </div>
-
-      <div class="bg-white shadow rounded-lg p-8">
-        <h2 class="text-2xl font-semibold text-charcoal mb-4">How to Submit</h2>
-        <ol class="list-decimal ml-6 space-y-3 text-gray-600">
-          <li>Download and complete the claim form above</li>
-          <li>Gather all required supporting documentation</li>
-          <li>Email everything to: <a href="mailto:claims@insuraguard.com" class="text-amber hover:text-amber/90">claims@insuraguard.com</a> or call <a href="tel:+441615201169" class="text-amber hover:text-amber/90">+44 (0)161 520 1169</a></li>
-          <li>Include your URN in the email subject line</li>
-        </ol>
-        <div class="mt-6 p-4 bg-amber/10 border border-amber/20 rounded-lg">
-          <p class="text-sm text-charcoal">
-            <strong>Response Time:</strong> We aim to acknowledge all claims within 2 working days and provide an initial assessment within 10 working days.
-          </p>
-        </div>
+        <p class="text-xs text-gray-500 mt-3">Email completed form to: <a href="mailto:claims@insuraguard.com" class="text-amber hover:text-amber/90">claims@insuraguard.com</a></p>
       </div>
 
       <div class="bg-white shadow rounded-lg p-8">
@@ -98,8 +182,21 @@
 
 <script setup lang="ts">
 const supabase = useSupabaseClient();
+const user = useSupabaseUser();
 const loading = ref(true);
 const claimTemplate = ref('');
+const submitting = ref(false);
+const submitError = ref('');
+const submitSuccess = ref('');
+const selectedFiles = ref<File[]>([]);
+
+const formData = ref({
+  urn: '',
+  full_name: '',
+  email: '',
+  phone: '',
+  claim_description: ''
+});
 
 const fetchClaimTemplate = async () => {
   try {
@@ -231,6 +328,89 @@ const downloadClaimForm = async () => {
   }
   
   doc.save('InsuraGuard_Claim_Form.pdf');
+};
+
+const handleFileChange = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  if (target.files) {
+    const files = Array.from(target.files);
+    const validFiles = files.filter(file => file.size <= 5 * 1024 * 1024);
+    if (validFiles.length < files.length) {
+      submitError.value = 'Some files were too large (max 5MB each)';
+    }
+    selectedFiles.value = [...selectedFiles.value, ...validFiles].slice(0, 10);
+  }
+};
+
+const removeFile = (index: number) => {
+  selectedFiles.value.splice(index, 1);
+};
+
+const formatFileSize = (bytes: number) => {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+};
+
+const submitClaim = async () => {
+  if (!user.value) {
+    submitError.value = 'You must be logged in to submit a claim';
+    return;
+  }
+
+  submitting.value = true;
+  submitError.value = '';
+  submitSuccess.value = '';
+
+  try {
+    const documentUrls: string[] = [];
+
+    // Upload files to storage
+    for (const file of selectedFiles.value) {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+      const filePath = `${user.value.id}/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('claim-documents')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+      documentUrls.push(filePath);
+    }
+
+    // Insert claim into database
+    const { error: insertError } = await supabase
+      .from('claims')
+      .insert({
+        user_id: user.value.id,
+        urn: formData.value.urn,
+        full_name: formData.value.full_name,
+        email: formData.value.email,
+        phone: formData.value.phone,
+        claim_description: formData.value.claim_description,
+        document_urls: documentUrls,
+        status: 'pending'
+      });
+
+    if (insertError) throw insertError;
+
+    submitSuccess.value = 'Your claim has been submitted successfully! We will review it and contact you within 2 working days.';
+    
+    // Reset form
+    formData.value = {
+      urn: '',
+      full_name: '',
+      email: '',
+      phone: '',
+      claim_description: ''
+    };
+    selectedFiles.value = [];
+  } catch (e: any) {
+    submitError.value = e.message || 'Failed to submit claim. Please try again.';
+  } finally {
+    submitting.value = false;
+  }
 };
 
 onMounted(() => {
