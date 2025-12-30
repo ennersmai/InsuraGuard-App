@@ -1,5 +1,4 @@
 {
-  "buildCommand": "cd insuraguard-app && npx nuxt prepare && npm run build",
-  "outputDirectory": "insuraguard-app/.output/public",
-  "installCommand": "cd insuraguard-app && npm ci"
+  "buildCommand": "npm run build",
+  "outputDirectory": ".output/public"
 }
