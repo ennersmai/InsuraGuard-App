@@ -78,7 +78,9 @@ serve(async (req) => {
     
     let certificateContent = certificateTemplate
     for (const [key, value] of Object.entries(templateData)) {
-      certificateContent = certificateContent.replace(new RegExp(`{{${key}}}`, 'g'), value)
+      // Sanitize value to remove problematic characters for PDF encoding
+      const sanitizedValue = value.replace(/\r\n/g, ' ').replace(/\n/g, ' ').replace(/\r/g, ' ')
+      certificateContent = certificateContent.replace(new RegExp(`{{${key}}}`, 'g'), sanitizedValue)
     }
 
     // Create PDF
