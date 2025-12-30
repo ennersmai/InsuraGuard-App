@@ -2,5 +2,4 @@
   "buildCommand": "cd insuraguard-app && npm run build",
   "outputDirectory": "insuraguard-app/.output", 
   "installCommand": "cd insuraguard-app && npm install",
-  "framework": "nuxt3"
 }
