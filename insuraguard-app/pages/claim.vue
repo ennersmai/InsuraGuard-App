@@ -128,18 +128,41 @@ const downloadClaimForm = async () => {
     logoImg.onload = resolve;
   });
   
-  // Add logo centered at top
-  const logoWidth = 50;
+  // Add logo centered at top of first page
+  const logoWidth = 40;
   const logoHeight = (logoImg.height / logoImg.width) * logoWidth;
   const logoX = (doc.internal.pageSize.getWidth() - logoWidth) / 2;
   doc.addImage(logoImg, 'PNG', logoX, 10, logoWidth, logoHeight);
   
-  // Add form content
-  const lines = doc.splitTextToSize(claimTemplate.value, 180);
-  doc.setFontSize(10);
-  doc.text(lines, 15, logoHeight + 20);
+  // Page settings
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const margin = 15;
+  const maxWidth = pageWidth - (margin * 2);
+  const lineHeight = 5;
+  let yPosition = logoHeight + 25;
   
-  // Add footer with date
+  // Split content into lines
+  doc.setFontSize(9);
+  const lines = claimTemplate.value.split('\n');
+  
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const wrappedLines = doc.splitTextToSize(line || ' ', maxWidth);
+    
+    for (const wrappedLine of wrappedLines) {
+      // Check if we need a new page
+      if (yPosition > pageHeight - 30) {
+        doc.addPage();
+        yPosition = 20;
+      }
+      
+      doc.text(wrappedLine, margin, yPosition);
+      yPosition += lineHeight;
+    }
+  }
+  
+  // Add footer with date and page numbers
   const pageCount = doc.internal.pages.length - 1;
   for (let i = 1; i <= pageCount; i++) {
     doc.setPage(i);
@@ -147,8 +170,8 @@ const downloadClaimForm = async () => {
     doc.setTextColor(128);
     doc.text(
       `InsuraGuard Claim Form - Downloaded: ${new Date().toLocaleDateString('en-GB')} - Page ${i} of ${pageCount}`,
-      doc.internal.pageSize.getWidth() / 2,
-      doc.internal.pageSize.getHeight() - 10,
+      pageWidth / 2,
+      pageHeight - 10,
       { align: 'center' }
     );
   }
