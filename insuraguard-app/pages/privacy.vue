@@ -15,8 +15,10 @@
       <section>
         <h2 class="text-2xl font-semibold text-charcoal mt-8 mb-4">2. Data Controller</h2>
         <p><strong>InsuraGuard</strong><br>
-        [Company Address]<br>
-        Company Number: [XXXXXXXX]<br>
+        Floor 10, City Tower<br>
+        Piccadilly Plaza<br>
+        New York Street<br>
+        Manchester, M1 4BT<br>
         Email: privacy@insuraguard.com</p>
       </section>
 

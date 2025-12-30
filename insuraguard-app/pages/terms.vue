@@ -186,8 +186,7 @@
         <p>For questions about these Terms:</p>
         <p class="mt-2">
           <strong>Email:</strong> support@insuraguard.co.uk<br>
-          <strong>Address:</strong> [Company Address]<br>
-          <strong>Company Number:</strong> [XXXXXXXX]
+          <strong>Address:</strong> InsuraGuard, Floor 10, City Tower, Piccadilly Plaza, New York Street, Manchester, M1 4BT
         </p>
       </section>
 

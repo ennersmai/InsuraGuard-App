@@ -30,11 +30,21 @@
             <li class="py-1">Phone: <a href="tel:+441615201169" class="hover:text-amber">+44 (0)161 520 1169</a></li>
           </ul>
         </div>
+        
+        <div class="col-span-2 sm:col-span-1">
+          <h3 class="font-semibold mb-4 text-base">Address</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">
+            InsuraGuard<br>
+            Floor 10, City Tower<br>
+            Piccadilly Plaza<br>
+            New York Street<br>
+            Manchester, M1 4BT
+          </p>
+        </div>
       </div>
 
-      <div class="border-t border-gray-700 mt-8 pt-6 pb-16 sm:pb-0 flex flex-col-reverse sm:flex-row justify-between items-start sm:items-center text-xs text-gray-400 gap-2">
-        <p class="text-left">&copy; {{ currentYear }} InsuraGuard. All rights reserved.</p>
-        <p class="sm:text-right text-left sm:pr-16">Company Registration Number: XXXXXXXX</p>
+      <div class="border-t border-gray-700 mt-8 pt-6 pb-16 sm:pb-0 text-center text-xs text-gray-400">
+        <p>&copy; {{ currentYear }} InsuraGuard. All rights reserved.</p>
       </div>
     </div>
   </footer>
