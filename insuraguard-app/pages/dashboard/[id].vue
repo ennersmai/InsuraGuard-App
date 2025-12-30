@@ -101,16 +101,18 @@
         <div class="px-4 py-5 sm:px-6">
           <h4 class="text-sm font-medium text-gray-900 mb-4">Documents</h4>
           <div v-if="registration.pdf_url" class="mb-4">
-            <a 
-              :href="registration.pdf_url" 
-              target="_blank"
-              class="inline-flex items-center gap-2 text-amber hover:text-amber/90"
+            <button
+              @click="downloadCertificate"
+              :disabled="downloadLoading"
+              class="inline-flex items-center gap-2 text-amber hover:text-amber/90 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
-              Download Insurance Certificate
-            </a>
+              <span v-if="downloadLoading">Downloading...</span>
+              <span v-else>Download Insurance Certificate</span>
+            </button>
+            <p v-if="downloadError" class="text-red-600 text-xs mt-2">{{ downloadError }}</p>
           </div>
           <div v-else class="text-sm text-gray-500">
             Certificate will be available after payment confirmation
@@ -135,6 +137,8 @@ const user = useSupabaseUser();
 const registration = ref<Registration | null>(null);
 const loading = ref(true);
 const error = ref('');
+const downloadLoading = ref(false);
+const downloadError = ref('');
 
 const formatDate = (date: string) => {
   return format(new Date(date), 'MMM dd, yyyy');
@@ -142,11 +146,13 @@ const formatDate = (date: string) => {
 
 const fetchRegistration = async () => {
   try {
+    if (!user.value?.id) throw new Error('User not authenticated');
+
     const { data, error: fetchError } = await supabase
       .from('registrations')
       .select('*')
       .eq('id', route.params.id)
-      .eq('user_id', user.value?.id)
+      .eq('user_id', user.value.id)
       .single();
 
     if (fetchError) throw fetchError;
@@ -156,6 +162,30 @@ const fetchRegistration = async () => {
     error.value = e.message || 'Failed to load registration';
   } finally {
     loading.value = false;
+  }
+};
+
+const downloadCertificate = async () => {
+  downloadLoading.value = true;
+  downloadError.value = '';
+
+  try {
+    if (!registration.value?.pdf_url) throw new Error('Certificate not available');
+
+    // Get signed URL for private bucket (expires in 1 hour)
+    const { data, error: signError } = await supabase.storage
+      .from('insuraguard-documents')
+      .createSignedUrl(registration.value.pdf_url, 3600);
+
+    if (signError) throw signError;
+    if (!data?.signedUrl) throw new Error('Failed to generate download link');
+
+    // Open PDF in new tab
+    window.open(data.signedUrl, '_blank');
+  } catch (e: any) {
+    downloadError.value = e.message || 'Failed to download certificate';
+  } finally {
+    downloadLoading.value = false;
   }
 };
 

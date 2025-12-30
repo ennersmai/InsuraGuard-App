@@ -74,27 +74,32 @@ const downloadCertificate = async () => {
   downloadError.value = '';
 
   try {
+    if (!user.value?.id) throw new Error('User not authenticated');
+
     // Get the most recent registration for this user
     const { data: registrations, error: fetchError } = await supabase
       .from('registrations')
       .select('*')
-      .eq('user_id', user.value?.id)
+      .eq('user_id', user.value.id)
       .order('created_at', { ascending: false })
       .limit(1);
 
     if (fetchError) throw fetchError;
     if (!registrations || registrations.length === 0) throw new Error('No registration found');
 
-    const registration = registrations[0];
+    const registration = registrations[0] as any;
     
-    // Get PDF URL
+    // Get signed URL for private bucket (expires in 1 hour)
     const pdfPath = `certificates/${registration.id}/certificate.pdf`;
-    const { data } = supabase.storage
+    const { data, error: signError } = await supabase.storage
       .from('insuraguard-documents')
-      .getPublicUrl(pdfPath);
+      .createSignedUrl(pdfPath, 3600);
+
+    if (signError) throw signError;
+    if (!data?.signedUrl) throw new Error('Failed to generate download link');
 
     // Open PDF in new tab
-    window.open(data.publicUrl, '_blank');
+    window.open(data.signedUrl, '_blank');
   } catch (e: any) {
     downloadError.value = e.message || 'Failed to download certificate';
   } finally {

@@ -333,21 +333,22 @@ serve(async (req) => {
 
     if (uploadError) throw uploadError
 
-    // Get public URL
-    const { data: { publicUrl } } = supabase.storage
-      .from('insuraguard-documents')
-      .getPublicUrl(filePath)
-
-    // Update registration with PDF URL
+    // Update registration with certificate path (not URL, since bucket is private)
     const { error: updateError } = await supabase
       .from('registrations')
-      .update({ pdf_url: publicUrl })
+      .update({ 
+        pdf_url: filePath,
+        certificate_generated: true 
+      })
       .eq('id', registrationId)
 
     if (updateError) throw updateError
 
     return new Response(
-      JSON.stringify({ pdfUrl: publicUrl }),
+      JSON.stringify({ 
+        success: true,
+        certificatePath: filePath 
+      }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
   } catch (error) {
