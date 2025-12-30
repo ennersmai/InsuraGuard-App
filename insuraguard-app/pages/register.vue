@@ -5,6 +5,23 @@
       <p class="mt-2 text-gray-600">Complete the form below to register your clean energy system</p>
     </div>
 
+    <!-- Selected Pricing Tier Banner -->
+    <div v-if="selectedTier" class="mb-6 bg-amber/10 border-2 border-amber rounded-lg px-6 py-4">
+      <div class="flex items-center gap-3">
+        <div class="flex-shrink-0">
+          <svg class="w-6 h-6 text-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <div class="flex-1">
+          <h3 class="text-lg font-semibold text-charcoal">{{ selectedTier.name }} Selected</h3>
+          <p class="text-sm text-gray-700 mt-1">
+            <span class="font-semibold text-amber">{{ selectedTier.price }}</span> for {{ selectedTier.coverage }}
+          </p>
+        </div>
+      </div>
+    </div>
+
     <div v-if="error" class="mb-6 bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded">
       {{ error }}
     </div>
@@ -222,6 +239,21 @@ useSeoMeta({
 const supabase = useSupabaseClient();
 const user = useSupabaseUser();
 const config = useRuntimeConfig();
+const route = useRoute();
+
+const selectedTier = computed(() => {
+  const age = route.query.age as string;
+  if (!age) return null;
+  
+  const tiers: Record<string, { name: string; price: string; coverage: string }> = {
+    '0-12': { name: 'Under 12 Months', price: '£99.99', coverage: '10 years coverage' },
+    '12-24': { name: '1-2 Years Old', price: '£199.99', coverage: '8-9 years coverage' },
+    '24-36': { name: '2-3 Years Old', price: '£289.00', coverage: '7-8 years coverage' },
+    '36-48': { name: '3-4 Years Old', price: '£499.99', coverage: '6-7 years coverage' }
+  };
+  
+  return tiers[age] || null;
+});
 
 const formData = ref({
   full_name: '',

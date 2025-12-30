@@ -14,6 +14,27 @@
         <p class="mt-2 text-gray-600">Review your details and proceed to payment</p>
       </div>
 
+      <!-- Selected Pricing Tier Confirmation -->
+      <div class="mb-6 bg-gradient-to-r from-amber/10 to-amber/5 border-2 border-amber rounded-lg px-6 py-5">
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 mt-1">
+            <svg class="w-7 h-7 text-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-xl font-semibold text-charcoal mb-2">{{ systemAgeText }} - {{ coverageYears }} Years Coverage</h3>
+            <div class="flex items-baseline gap-2">
+              <span class="text-3xl font-bold text-amber">£{{ calculatedPrice.toFixed(2) }}</span>
+              <span class="text-sm text-gray-600">one-time payment</span>
+            </div>
+            <p class="text-sm text-gray-600 mt-2">
+              Coverage runs until 10 years from your system's original commissioning date
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div class="bg-white shadow sm:rounded-lg mb-6">
         <div class="px-4 py-5 sm:p-6">
           <h3 class="text-lg font-medium text-charcoal mb-4">Registration Summary</h3>
