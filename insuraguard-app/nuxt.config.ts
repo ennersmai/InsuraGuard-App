@@ -31,6 +31,10 @@ export default defineNuxtConfig({
     public: {
       siteUrl: process.env.SITE_URL || 'http://localhost:3000',
       stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY || '',
+      stripePrice0_12: process.env.STRIPE_PRICE_0_12 || '',
+      stripePrice12_24: process.env.STRIPE_PRICE_12_24 || '',
+      stripePrice24_36: process.env.STRIPE_PRICE_24_36 || '',
+      stripePrice36_48: process.env.STRIPE_PRICE_36_48 || '',
     },
     stripeSecretKey: process.env.STRIPE_SECRET_KEY || '',
     stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET || '',

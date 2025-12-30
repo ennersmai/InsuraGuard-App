@@ -8,7 +8,7 @@ const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') || '', {
 
 serve(async (req) => {
   try {
-    const { registrationId, amount } = await req.json()
+    const { registrationId, priceId } = await req.json()
 
     if (!registrationId) {
       return new Response(
@@ -17,21 +17,18 @@ serve(async (req) => {
       )
     }
 
-    // Convert amount to pence (Stripe uses smallest currency unit)
-    const unitAmount = Math.round((amount || 99.99) * 100)
+    if (!priceId) {
+      return new Response(
+        JSON.stringify({ error: 'Price ID is required' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
 
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       line_items: [
         {
-          price_data: {
-            currency: 'gbp',
-            product_data: {
-              name: 'InsuraGuard Registration',
-              description: '10-year insurance-backed guarantee for clean energy system',
-            },
-            unit_amount: unitAmount,
-          },
+          price: priceId,
           quantity: 1,
         },
       ],

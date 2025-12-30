@@ -160,6 +160,16 @@ const calculatedPrice = computed(() => {
   return 0; // Not eligible
 });
 
+const stripePriceId = computed(() => {
+  const months = systemAgeMonths.value;
+  const config = useRuntimeConfig();
+  if (months < 12) return config.public.stripePrice0_12;
+  if (months < 24) return config.public.stripePrice12_24;
+  if (months < 36) return config.public.stripePrice24_36;
+  if (months < 48) return config.public.stripePrice36_48;
+  return null; // Not eligible
+});
+
 const coverageYears = computed(() => {
   const months = systemAgeMonths.value;
   const yearsFromCommissioning = Math.floor(months / 12);
@@ -206,7 +216,7 @@ const handleCheckout = async () => {
     const { data, error: functionError } = await supabase.functions.invoke('create-checkout-session', {
       body: {
         registrationId: route.params.id,
-        amount: calculatedPrice.value,
+        priceId: stripePriceId.value,
       },
     });
 
