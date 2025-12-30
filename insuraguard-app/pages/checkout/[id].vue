@@ -58,15 +58,22 @@
             :disabled="checkoutLoading"
             class="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <span v-if="checkoutLoading">Redirecting to payment...</span>
+            <span v-if="checkoutLoading">Processing payment...</span>
+            <span v-else-if="!config.public.stripePublishableKey || config.public.stripePublishableKey === 'pk_test_xxxxx'">
+              Complete Registration (Test Mode)
+            </span>
             <span v-else>Proceed to Secure Payment</span>
           </button>
 
-          <div class="mt-4 flex items-center justify-center gap-2 text-sm text-gray-500">
+          <div class="mt-4 flex items-center justify-center gap-2 text-sm" 
+               :class="!config.public.stripePublishableKey || config.public.stripePublishableKey === 'pk_test_xxxxx' ? 'text-amber' : 'text-gray-500'">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
-            <span>Secure payment powered by Stripe</span>
+            <span v-if="!config.public.stripePublishableKey || config.public.stripePublishableKey === 'pk_test_xxxxx'">
+              Test mode - No actual payment required
+            </span>
+            <span v-else>Secure payment powered by Stripe</span>
           </div>
         </div>
       </div>
@@ -121,6 +128,14 @@ const handleCheckout = async () => {
   error.value = '';
 
   try {
+    // Check if Stripe is configured
+    if (!config.public.stripePublishableKey || config.public.stripePublishableKey === 'pk_test_xxxxx') {
+      // Mock payment flow
+      await mockPayment();
+      return;
+    }
+
+    // Real Stripe payment flow
     const { data, error: functionError } = await supabase.functions.invoke('create-checkout-session', {
       body: {
         registrationId: route.params.id,
@@ -139,6 +154,49 @@ const handleCheckout = async () => {
     if (stripeError) throw stripeError;
   } catch (e: any) {
     error.value = e.message || 'Failed to initiate checkout';
+    checkoutLoading.value = false;
+  }
+};
+
+const mockPayment = async () => {
+  try {
+    // Simulate payment processing delay
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    // Update registration with mock payment data
+    const { data: templates } = await supabase
+      .from('admin_templates')
+      .select('*');
+
+    const pdfLegalText = templates?.find(t => t.template_type === 'pdf_legal_text')?.content || 'Standard terms apply.';
+    const underwriterInfo = templates?.find(t => t.template_type === 'underwriter_info')?.content || 'Underwriter information';
+
+    // Generate mock URN
+    const year = new Date().getFullYear();
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    let code = '';
+    for (let i = 0; i < 5; i++) {
+      code += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    const urn = `IG-${year}-${code}`;
+
+    // Update registration
+    const { error: updateError } = await supabase
+      .from('registrations')
+      .update({
+        urn,
+        stripe_payment_id: `mock_payment_${Date.now()}`,
+        payment_status: 'completed',
+        payment_amount: 99.00,
+      })
+      .eq('id', route.params.id);
+
+    if (updateError) throw updateError;
+
+    // Redirect to success page
+    navigateTo(`/success?session_id=mock_${route.params.id}`);
+  } catch (e: any) {
+    error.value = e.message || 'Mock payment failed';
     checkoutLoading.value = false;
   }
 };

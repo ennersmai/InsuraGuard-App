@@ -1,5 +1,6 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3'
+import { corsHeaders } from '../_shared/cors.ts'
 
 const supabase = createClient(
   Deno.env.get('SUPABASE_URL') || '',
@@ -13,11 +14,67 @@ serve(async (req) => {
     if (!registrationId) {
       return new Response(
         JSON.stringify({ error: 'Registration ID is required' }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
 
-    // Fetch registration
+    // Check if SendGrid is configured
+    const sendGridKey = Deno.env.get('SENDGRID_API_KEY')
+    if (!sendGridKey || sendGridKey === 'SG.xxxxx') {
+      // Mock mode: Generate certificate and return URL for download
+      const { data: registration, error: fetchError } = await supabase
+        .from('registrations')
+        .select('*')
+        .eq('id', registrationId)
+        .single()
+
+      if (fetchError || !registration) {
+        throw new Error('Registration not found')
+      }
+
+      // Generate certificate if it doesn't exist
+      const pdfPath = `certificates/${registrationId}/certificate.pdf`
+      const { data: existingPdf } = await supabase.storage
+        .from('insuraguard-documents')
+        .getPublicUrl(pdfPath)
+
+      // If PDF doesn't exist, generate it
+      let pdfUrl = existingPdf.publicUrl
+      try {
+        const response = await fetch(existingPdf.publicUrl)
+        if (!response.ok) {
+          // Generate certificate
+          const certResponse = await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/generate-certificate`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
+            },
+            body: JSON.stringify({ registrationId }),
+          })
+          
+          if (certResponse.ok) {
+            const { pdfUrl: newPdfUrl } = await certResponse.json()
+            pdfUrl = newPdfUrl
+          }
+        }
+      } catch (e) {
+        // PDF generation failed, but return what we have
+        console.log('PDF generation skipped in mock mode')
+      }
+
+      return new Response(
+        JSON.stringify({ 
+          sent: true, 
+          mock: true, 
+          pdfUrl,
+          message: 'Test mode - Certificate ready for download'
+        }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
+    // Real SendGrid flow
     const { data: registration, error: fetchError } = await supabase
       .from('registrations')
       .select('*')
@@ -156,13 +213,13 @@ serve(async (req) => {
 
     return new Response(
       JSON.stringify({ sent: true }),
-      { headers: { 'Content-Type': 'application/json' } }
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
   } catch (error) {
     console.error('Email sending error:', error)
     return new Response(
       JSON.stringify({ error: error.message }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
+      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
   }
 })

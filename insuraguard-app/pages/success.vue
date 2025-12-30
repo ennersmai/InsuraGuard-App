@@ -9,12 +9,40 @@
         </div>
         
         <h2 class="text-2xl font-semibold text-charcoal mb-2">
-          Payment Successful!
+          Registration Complete!
         </h2>
         
         <p class="text-gray-600 mb-6">
-          Your registration has been completed successfully. You will receive your insurance certificate via email shortly.
+          Your registration has been completed successfully. Your insurance certificate is ready.
         </p>
+        
+        <!-- Mock payment indicator -->
+        <div v-if="$route.query.session_id && $route.query.session_id.toString().startsWith('mock_')" 
+             class="mb-6 p-3 bg-amber-50 border border-amber-200 rounded text-amber-800 text-sm">
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+            </svg>
+            <span>Test mode completed - No actual payment processed</span>
+          </div>
+        </div>
+
+        <!-- Certificate download section -->
+        <div class="mb-6 p-4 bg-blue-50 border border-blue-200 rounded">
+          <h3 class="text-sm font-semibold text-blue-800 mb-2">📄 Your Insurance Certificate</h3>
+          <p class="text-blue-700 text-sm mb-3">
+            Download your certificate for your records
+          </p>
+          <button 
+            @click="downloadCertificate" 
+            :disabled="downloadLoading"
+            class="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+          >
+            <span v-if="downloadLoading">Downloading...</span>
+            <span v-else>📥 Download Certificate</span>
+          </button>
+          <p v-if="downloadError" class="text-red-600 text-xs mt-2">{{ downloadError }}</p>
+        </div>
 
         <div class="space-y-3">
           <NuxtLink to="/dashboard" class="block w-full btn-primary">
@@ -33,4 +61,44 @@
 definePageMeta({
   layout: false
 });
+
+const route = useRoute();
+const supabase = useSupabaseClient();
+const user = useSupabaseUser();
+
+const downloadLoading = ref(false);
+const downloadError = ref('');
+
+const downloadCertificate = async () => {
+  downloadLoading.value = true;
+  downloadError.value = '';
+
+  try {
+    // Get the most recent registration for this user
+    const { data: registrations, error: fetchError } = await supabase
+      .from('registrations')
+      .select('*')
+      .eq('user_id', user.value?.id)
+      .order('created_at', { ascending: false })
+      .limit(1);
+
+    if (fetchError) throw fetchError;
+    if (!registrations || registrations.length === 0) throw new Error('No registration found');
+
+    const registration = registrations[0];
+    
+    // Get PDF URL
+    const pdfPath = `certificates/${registration.id}/certificate.pdf`;
+    const { data } = supabase.storage
+      .from('insuraguard-documents')
+      .getPublicUrl(pdfPath);
+
+    // Open PDF in new tab
+    window.open(data.publicUrl, '_blank');
+  } catch (e: any) {
+    downloadError.value = e.message || 'Failed to download certificate';
+  } finally {
+    downloadLoading.value = false;
+  }
+};
 </script>
