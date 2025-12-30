@@ -1,6 +1,5 @@
-
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400">
-  <text x="0" y="300" font-size="280" font-family="Arial" font-weight="700" fill="#3A3A3A">Insura</text>
-  <text x="650" y="300" font-size="280" font-family="Arial" font-weight="700" fill="#E67E22">Guard</text>
-  <text x="1080" y="200" font-size="60" font-family="Arial" font-weight="700" fill="#3A3A3A">™</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400">
+  <text x="50" y="280" font-size="240" font-family="Arial, sans-serif" font-weight="700" fill="#3A3A3A">Insura</text>
+  <text x="550" y="280" font-size="240" font-family="Arial, sans-serif" font-weight="700" fill="#E67E22">Guard</text>
+  <text x="1050" y="180" font-size="50" font-family="Arial, sans-serif" font-weight="400" fill="#3A3A3A">™</text>
 </svg>
