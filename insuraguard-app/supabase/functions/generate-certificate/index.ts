@@ -330,14 +330,22 @@ serve(async (req) => {
 
     // Upload to Supabase Storage
     const filePath = `certificates/${registrationId}/certificate.pdf`
-    const { error: uploadError } = await supabase.storage
+    console.log('Uploading PDF to:', filePath)
+    console.log('PDF size:', pdfBytes.length, 'bytes')
+    
+    const { data: uploadData, error: uploadError } = await supabase.storage
       .from('insuraguard-documents')
       .upload(filePath, pdfBytes, {
         contentType: 'application/pdf',
         upsert: true,
       })
 
-    if (uploadError) throw uploadError
+    if (uploadError) {
+      console.error('Upload error:', uploadError)
+      throw uploadError
+    }
+    
+    console.log('Upload successful:', uploadData)
 
     // Update registration with certificate path (not URL, since bucket is private)
     const { error: updateError } = await supabase
