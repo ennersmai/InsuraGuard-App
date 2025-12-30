@@ -5,19 +5,50 @@
       <p class="mt-2 text-gray-600">Complete the form below to register your clean energy system</p>
     </div>
 
-    <!-- Selected Pricing Tier Banner -->
-    <div v-if="selectedTier" class="mb-6 bg-amber/10 border-2 border-amber rounded-lg px-6 py-4">
-      <div class="flex items-center gap-3">
-        <div class="flex-shrink-0">
-          <svg class="w-6 h-6 text-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
+    <!-- Pricing Tier Selection -->
+    <div class="mb-6">
+      <div v-if="selectedTierKey" class="bg-amber/10 border-2 border-amber rounded-lg px-6 py-4 mb-4">
+        <div class="flex items-center gap-3">
+          <div class="flex-shrink-0">
+            <svg class="w-6 h-6 text-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-lg font-semibold text-charcoal">{{ pricingTiers[selectedTierKey].name }} Selected</h3>
+            <p class="text-sm text-gray-700 mt-1">
+              <span class="font-semibold text-amber">{{ pricingTiers[selectedTierKey].price }}</span> for {{ pricingTiers[selectedTierKey].coverage }}
+            </p>
+          </div>
+          <button
+            type="button"
+            @click="selectedTierKey = null"
+            class="text-gray-400 hover:text-gray-600"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
-        <div class="flex-1">
-          <h3 class="text-lg font-semibold text-charcoal">{{ selectedTier.name }} Selected</h3>
-          <p class="text-sm text-gray-700 mt-1">
-            <span class="font-semibold text-amber">{{ selectedTier.price }}</span> for {{ selectedTier.coverage }}
-          </p>
+      </div>
+
+      <div v-else class="bg-white shadow sm:rounded-lg p-6">
+        <h3 class="text-lg font-medium text-charcoal mb-4">Select Your Pricing Tier</h3>
+        <p class="text-sm text-gray-600 mb-4">Choose the pricing tier based on your system's age at registration</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <button
+            v-for="(tier, key) in pricingTiers"
+            :key="key"
+            type="button"
+            @click="selectTier(key)"
+            class="p-4 border-2 rounded-lg text-left hover:border-amber hover:bg-amber/5 transition-all"
+            :class="key === '0-12' ? 'border-amber bg-amber/5' : 'border-gray-200'"
+          >
+            <div v-if="key === '0-12'" class="text-xs font-bold text-amber mb-2">BEST VALUE</div>
+            <div class="text-sm font-semibold text-charcoal mb-1">{{ tier.name }}</div>
+            <div class="text-2xl font-bold text-amber mb-1">{{ tier.price }}</div>
+            <div class="text-xs text-gray-600">{{ tier.coverage }}</div>
+          </button>
         </div>
       </div>
     </div>
@@ -241,19 +272,18 @@ const user = useSupabaseUser();
 const config = useRuntimeConfig();
 const route = useRoute();
 
-const selectedTier = computed(() => {
-  const age = route.query.age as string;
-  if (!age) return null;
-  
-  const tiers: Record<string, { name: string; price: string; coverage: string }> = {
-    '0-12': { name: 'Under 12 Months', price: '£99.99', coverage: '10 years coverage' },
-    '12-24': { name: '1-2 Years Old', price: '£199.99', coverage: '8-9 years coverage' },
-    '24-36': { name: '2-3 Years Old', price: '£289.00', coverage: '7-8 years coverage' },
-    '36-48': { name: '3-4 Years Old', price: '£499.99', coverage: '6-7 years coverage' }
-  };
-  
-  return tiers[age] || null;
-});
+const pricingTiers: Record<string, { name: string; price: string; coverage: string }> = {
+  '0-12': { name: 'Under 12 Months', price: '£99.99', coverage: '10 years coverage' },
+  '12-24': { name: '1-2 Years Old', price: '£199.99', coverage: '8-9 years coverage' },
+  '24-36': { name: '2-3 Years Old', price: '£289.00', coverage: '7-8 years coverage' },
+  '36-48': { name: '3-4 Years Old', price: '£499.99', coverage: '6-7 years coverage' }
+};
+
+const selectedTierKey = ref<string | null>((route.query.age as string) || null);
+
+const selectTier = (key: string) => {
+  selectedTierKey.value = key;
+};
 
 const formData = ref({
   full_name: '',
@@ -313,6 +343,12 @@ const handleSubmit = async () => {
   loading.value = true;
 
   try {
+    if (!selectedTierKey.value) {
+      error.value = 'Please select a pricing tier before proceeding';
+      loading.value = false;
+      return;
+    }
+    
     error.value = '';
     
     if (selectedFiles.value.length === 0) {
