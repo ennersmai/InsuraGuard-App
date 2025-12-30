@@ -1,0 +1,130 @@
+<template>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="mb-12">
+      <h1 class="text-4xl font-semibold text-charcoal mb-4">Make a Claim</h1>
+      <p class="text-xl text-gray-600">Download and submit your claim form</p>
+    </div>
+
+    <div v-if="loading" class="text-center py-12">
+      <p class="text-gray-600">Loading claim form...</p>
+    </div>
+
+    <div v-else class="space-y-8">
+      <div class="bg-white shadow rounded-lg p-8">
+        <h2 class="text-2xl font-semibold text-charcoal mb-4">Before You Start</h2>
+        <p class="text-gray-600 mb-4">To make a claim under your InsuraGuard policy, you'll need:</p>
+        <ul class="list-disc ml-6 space-y-2 text-gray-600">
+          <li>Your Unique Reference Number (URN)</li>
+          <li>Evidence that your installer has ceased trading (e.g., Companies House records)</li>
+          <li>Description and photos of the defect or issue</li>
+          <li>Your original insurance certificate</li>
+        </ul>
+      </div>
+
+      <div class="bg-white shadow rounded-lg p-8">
+        <h2 class="text-2xl font-semibold text-charcoal mb-4">Claim Form</h2>
+        <div v-if="claimTemplate" class="prose max-w-none mb-6">
+          <div class="bg-gray-50 p-6 rounded-lg whitespace-pre-wrap font-mono text-sm">{{ claimTemplate }}</div>
+        </div>
+        <button @click="downloadClaimForm" class="btn-primary">
+          <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          Download Claim Form
+        </button>
+      </div>
+
+      <div class="bg-white shadow rounded-lg p-8">
+        <h2 class="text-2xl font-semibold text-charcoal mb-4">How to Submit</h2>
+        <ol class="list-decimal ml-6 space-y-3 text-gray-600">
+          <li>Download and complete the claim form above</li>
+          <li>Gather all required supporting documentation</li>
+          <li>Email everything to: <a href="mailto:claims@insuraguard.com" class="text-amber hover:text-amber/90">claims@insuraguard.com</a></li>
+          <li>Include your URN in the email subject line</li>
+        </ol>
+        <div class="mt-6 p-4 bg-amber/10 border border-amber/20 rounded-lg">
+          <p class="text-sm text-charcoal">
+            <strong>Response Time:</strong> We aim to acknowledge all claims within 2 working days and provide an initial assessment within 10 working days.
+          </p>
+        </div>
+      </div>
+
+      <div class="bg-white shadow rounded-lg p-8">
+        <h2 class="text-2xl font-semibold text-charcoal mb-4">What Happens Next?</h2>
+        <div class="space-y-4 text-gray-600">
+          <div class="flex gap-4">
+            <div class="flex-shrink-0 w-8 h-8 bg-amber rounded-full flex items-center justify-center text-white font-semibold">1</div>
+            <div>
+              <h3 class="font-medium text-charcoal">Acknowledgment</h3>
+              <p class="text-sm">We'll confirm receipt of your claim within 2 working days</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="flex-shrink-0 w-8 h-8 bg-amber rounded-full flex items-center justify-center text-white font-semibold">2</div>
+            <div>
+              <h3 class="font-medium text-charcoal">Assessment</h3>
+              <p class="text-sm">Our Insurance-backed guarantee protection will review your claim and may request additional information</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="flex-shrink-0 w-8 h-8 bg-amber rounded-full flex items-center justify-center text-white font-semibold">3</div>
+            <div>
+              <h3 class="font-medium text-charcoal">Inspection</h3>
+              <p class="text-sm">We may arrange for an independent inspection of your system</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="flex-shrink-0 w-8 h-8 bg-amber rounded-full flex items-center justify-center text-white font-semibold">4</div>
+            <div>
+              <h3 class="font-medium text-charcoal">Decision</h3>
+              <p class="text-sm">You'll receive our decision and next steps</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gray-50 rounded-lg p-6">
+        <h3 class="font-medium text-charcoal mb-2">Need Help?</h3>
+        <p class="text-gray-600 text-sm">
+          If you have questions about the claims process, please contact us at 
+          <a href="mailto:claims@insuraguard.com" class="text-amber hover:text-amber/90">claims@insuraguard.com</a> or 
+          <NuxtLink to="/contact" class="text-amber hover:text-amber/90">visit our contact page</NuxtLink>.
+        </p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+const loading = ref(true);
+const claimTemplate = ref('');
+
+const fetchClaimTemplate = async () => {
+  try {
+    const response = await fetch('/templates/claim-form-template.txt');
+    if (response.ok) {
+      claimTemplate.value = await response.text();
+    } else {
+      claimTemplate.value = 'Claim form template not available';
+    }
+  } catch (e) {
+    claimTemplate.value = 'Error loading claim form';
+  } finally {
+    loading.value = false;
+  }
+};
+
+const downloadClaimForm = () => {
+  const blob = new Blob([claimTemplate.value], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'InsuraGuard_Claim_Form.txt';
+  link.click();
+  URL.revokeObjectURL(url);
+};
+
+onMounted(() => {
+  fetchClaimTemplate();
+});
+</script>

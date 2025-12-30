@@ -1,0 +1,149 @@
+<template>
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div v-if="loading" class="text-center py-12">
+      <p class="text-gray-600">Loading checkout...</p>
+    </div>
+
+    <div v-else-if="error" class="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded">
+      {{ error }}
+    </div>
+
+    <div v-else-if="registration">
+      <div class="mb-8">
+        <h1 class="text-3xl font-semibold text-charcoal">Complete Your Registration</h1>
+        <p class="mt-2 text-gray-600">Review your details and proceed to payment</p>
+      </div>
+
+      <div class="bg-white shadow sm:rounded-lg mb-6">
+        <div class="px-4 py-5 sm:p-6">
+          <h3 class="text-lg font-medium text-charcoal mb-4">Registration Summary</h3>
+          <dl class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <dt class="text-sm font-medium text-gray-500">Name</dt>
+              <dd class="mt-1 text-sm text-charcoal">{{ registration.full_name }}</dd>
+            </div>
+            <div>
+              <dt class="text-sm font-medium text-gray-500">Email</dt>
+              <dd class="mt-1 text-sm text-charcoal">{{ registration.email }}</dd>
+            </div>
+            <div class="sm:col-span-2">
+              <dt class="text-sm font-medium text-gray-500">System</dt>
+              <dd class="mt-1 text-sm text-charcoal">{{ registration.system_description }}</dd>
+            </div>
+            <div>
+              <dt class="text-sm font-medium text-gray-500">System Cost</dt>
+              <dd class="mt-1 text-sm text-charcoal">£{{ registration.system_cost.toLocaleString() }}</dd>
+            </div>
+            <div>
+              <dt class="text-sm font-medium text-gray-500">Installer</dt>
+              <dd class="mt-1 text-sm text-charcoal">{{ registration.installer_company }}</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+
+      <div class="bg-white shadow sm:rounded-lg mb-6">
+        <div class="px-4 py-5 sm:p-6">
+          <h3 class="text-lg font-medium text-charcoal mb-4">Payment Details</h3>
+          <div class="flex justify-between items-center mb-4">
+            <span class="text-gray-600">Registration Fee</span>
+            <span class="text-2xl font-semibold text-charcoal">£99.00</span>
+          </div>
+          <p class="text-sm text-gray-500 mb-6">
+            One-time payment for 10-year insurance-backed guarantee coverage
+          </p>
+
+          <button
+            @click="handleCheckout"
+            :disabled="checkoutLoading"
+            class="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <span v-if="checkoutLoading">Redirecting to payment...</span>
+            <span v-else>Proceed to Secure Payment</span>
+          </button>
+
+          <div class="mt-4 flex items-center justify-center gap-2 text-sm text-gray-500">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+            <span>Secure payment powered by Stripe</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import type { Registration } from '~/types';
+import { loadStripe } from '@stripe/stripe-js';
+
+definePageMeta({
+  middleware: 'auth'
+});
+
+const route = useRoute();
+const supabase = useSupabaseClient();
+const user = useSupabaseUser();
+const config = useRuntimeConfig();
+
+const registration = ref<Registration | null>(null);
+const loading = ref(true);
+const error = ref('');
+const checkoutLoading = ref(false);
+
+const fetchRegistration = async () => {
+  try {
+    const { data, error: fetchError } = await supabase
+      .from('registrations')
+      .select('*')
+      .eq('id', route.params.id)
+      .eq('user_id', user.value?.id)
+      .single();
+
+    if (fetchError) throw fetchError;
+
+    if (data.payment_status === 'completed') {
+      navigateTo(`/dashboard/${data.id}`);
+      return;
+    }
+
+    registration.value = data;
+  } catch (e: any) {
+    error.value = e.message || 'Failed to load registration';
+  } finally {
+    loading.value = false;
+  }
+};
+
+const handleCheckout = async () => {
+  checkoutLoading.value = true;
+  error.value = '';
+
+  try {
+    const { data, error: functionError } = await supabase.functions.invoke('create-checkout-session', {
+      body: {
+        registrationId: route.params.id,
+      },
+    });
+
+    if (functionError) throw functionError;
+
+    const stripe = await loadStripe(config.public.stripePublishableKey);
+    if (!stripe) throw new Error('Failed to load Stripe');
+
+    const { error: stripeError } = await stripe.redirectToCheckout({
+      sessionId: data.sessionId,
+    });
+
+    if (stripeError) throw stripeError;
+  } catch (e: any) {
+    error.value = e.message || 'Failed to initiate checkout';
+    checkoutLoading.value = false;
+  }
+};
+
+onMounted(() => {
+  fetchRegistration();
+});
+</script>

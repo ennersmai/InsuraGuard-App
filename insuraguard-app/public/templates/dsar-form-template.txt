@@ -1,0 +1,247 @@
+INSURAGUARD
+DATA SUBJECT ACCESS REQUEST (DSAR) FORM
+
+Under Articles 15-22 of the General Data Protection Regulation (GDPR), you have the right to request access to, correction of, or deletion of your personal data.
+
+Please complete this form and return to: privacy@insuraguard.com
+Subject Line: DSAR Request - [Your Name]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 1: YOUR DETAILS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Full Name: _________________________________________________________________
+
+Previous Names (if applicable): ____________________________________________
+
+Date of Birth: ____/____/________
+
+Current Address: ___________________________________________________________
+
+_____________________________________________________________________________
+
+Postcode: _____________________
+
+Previous Addresses (if you have moved in the last 10 years):
+
+_____________________________________________________________________________
+
+_____________________________________________________________________________
+
+Email Address: _____________________________________________________________
+
+Contact Telephone: _________________________________________________________
+
+Your URN (if applicable): __________________________________________________
+
+Account Username (if applicable): __________________________________________
+
+
+SECTION 2: TYPE OF REQUEST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Please tick all that apply:
+
+☐ RIGHT TO ACCESS (Article 15)
+   Request a copy of all personal data held about me
+
+☐ RIGHT TO RECTIFICATION (Article 16)
+   Request correction of inaccurate or incomplete personal data
+
+☐ RIGHT TO ERASURE / "Right to be Forgotten" (Article 17)
+   Request deletion of my personal data
+
+☐ RIGHT TO RESTRICTION OF PROCESSING (Article 18)
+   Request limitation on how my data is processed
+
+☐ RIGHT TO DATA PORTABILITY (Article 20)
+   Request my data in a structured, machine-readable format
+
+☐ RIGHT TO OBJECT (Article 21)
+   Object to processing of my personal data for specific purposes
+
+☐ RIGHT TO WITHDRAW CONSENT
+   Withdraw previously given consent for data processing
+
+☐ RIGHT NOT TO BE SUBJECT TO AUTOMATED DECISION-MAKING (Article 22)
+   Object to automated decisions being made about me
+
+
+SECTION 3: SPECIFIC INFORMATION REQUESTED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+If you are requesting access to your data, please specify what information you would like to receive:
+
+☐ All personal data held about me
+☐ Specific information (please specify below)
+
+Specific data requested:
+
+_____________________________________________________________________________
+
+_____________________________________________________________________________
+
+_____________________________________________________________________________
+
+Time period for data requested:
+
+☐ All data held
+☐ Specific period: From ____/____/________ To ____/____/________
+
+
+SECTION 4: RECTIFICATION REQUEST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+If you are requesting rectification, please specify what information is incorrect and what it should be:
+
+Incorrect Information: _____________________________________________________
+
+_____________________________________________________________________________
+
+Correct Information: _______________________________________________________
+
+_____________________________________________________________________________
+
+
+SECTION 5: ERASURE REQUEST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+If you are requesting erasure, please provide your reason:
+
+☐ The data is no longer necessary for the purpose it was collected
+☐ I withdraw my consent and there is no other legal basis for processing
+☐ I object to the processing and there are no overriding legitimate grounds
+☐ The data has been unlawfully processed
+☐ The data must be erased to comply with a legal obligation
+☐ Other reason: ___________________________________________________________
+
+Please note: We may not be able to delete all data if we have a legal obligation to retain it (e.g., financial records for tax purposes, insurance policy records).
+
+
+SECTION 6: RESTRICTION REQUEST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+If you are requesting restriction of processing, please provide your reason:
+
+☐ I contest the accuracy of the personal data
+☐ The processing is unlawful but I do not want the data erased
+☐ You no longer need the data but I need it for legal claims
+☐ I have objected to processing and await verification of legitimate grounds
+
+Please specify: ____________________________________________________________
+
+_____________________________________________________________________________
+
+
+SECTION 7: DATA PORTABILITY REQUEST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+If you are requesting data portability, please specify:
+
+Preferred format:  ☐ CSV  ☐ JSON  ☐ PDF  ☐ Other: _______________________
+
+Would you like the data:
+☐ Sent directly to me
+☐ Transferred to another organization (please provide details below)
+
+Organization Name: _________________________________________________________
+
+Contact Email: _____________________________________________________________
+
+
+SECTION 8: OBJECTION TO PROCESSING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+If you are objecting to processing, please specify:
+
+☐ Object to direct marketing
+☐ Object to processing based on legitimate interests
+☐ Object to processing for research/statistical purposes
+
+Please provide reasons for your objection:
+
+_____________________________________________________________________________
+
+_____________________________________________________________________________
+
+_____________________________________________________________________________
+
+
+SECTION 9: PROOF OF IDENTITY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+To protect your privacy and prevent unauthorized access to your data, we require proof of identity. Please attach ONE of the following:
+
+☐ Copy of passport (photo page)
+☐ Copy of driving license (both sides)
+☐ Copy of national ID card (both sides)
+
+IMPORTANT: Please redact/cover any sensitive information not needed for identification (e.g., passport number can be partially obscured).
+
+Additional verification may be required if we cannot verify your identity from the documents provided.
+
+
+SECTION 10: AUTHORIZED REPRESENTATIVE (if applicable)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+If you are making this request on behalf of someone else, please provide:
+
+Your Name: _________________________________________________________________
+
+Your Relationship to Data Subject: _________________________________________
+
+Data Subject's Name: _______________________________________________________
+
+Please attach:
+☐ Signed authorization letter from the data subject
+☐ Proof of your identity
+☐ Proof of data subject's identity
+☐ Legal documentation (if applicable, e.g., Power of Attorney)
+
+
+SECTION 11: DECLARATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+I declare that:
+
+• The information provided in this form is true and accurate
+• I am the data subject or authorized representative
+• I understand that providing false information may result in rejection of this request
+• I understand that InsuraGuard will respond within 30 days (extendable to 90 days for complex requests)
+• I understand that InsuraGuard may request additional information to verify my identity
+
+Signature: _________________________________________________________________
+
+Print Name: ________________________________________________________________
+
+Date: ____/____/________
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHAT HAPPENS NEXT?
+
+1. We will acknowledge receipt of your request within 3 working days
+2. We will verify your identity using the documents provided
+3. We will process your request within 30 days (or notify you if extension needed)
+4. You will receive our response via your preferred method
+
+RESPONSE TIME:
+• Standard requests: 30 days
+• Complex requests: Up to 90 days (we will notify you if extension is needed)
+
+CONTACT INFORMATION:
+Data Protection Officer
+InsuraGuard
+Email: privacy@insuraguard.com
+Website: www.insuraguard.com
+
+RIGHT TO COMPLAIN:
+If you are not satisfied with how we handle your request, you have the right to lodge a complaint with the Information Commissioner's Office (ICO):
+
+Website: www.ico.org.uk
+Helpline: 0303 123 1113
+Address: Information Commissioner's Office, Wycliffe House, Water Lane, Wilmslow, Cheshire SK9 5AF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
