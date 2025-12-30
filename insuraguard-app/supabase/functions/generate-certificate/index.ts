@@ -17,9 +17,20 @@ serve(async (req) => {
   }
 
   try {
+    // Parse request body first (can only be read once)
+    const { registrationId } = await req.json()
+
+    if (!registrationId) {
+      return new Response(
+        JSON.stringify({ error: 'Registration ID is required' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
     // Get the authorization header
     const authHeader = req.headers.get('Authorization')
     if (!authHeader) {
+      console.error('Missing authorization header')
       return new Response(
         JSON.stringify({ error: 'Missing authorization header' }),
         { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -35,21 +46,22 @@ serve(async (req) => {
 
     // Verify the user is authenticated
     const { data: { user }, error: authError } = await userSupabase.auth.getUser()
-    if (authError || !user) {
+    if (authError) {
+      console.error('Auth error:', authError)
       return new Response(
-        JSON.stringify({ error: 'Unauthorized' }),
+        JSON.stringify({ error: 'Authentication failed', details: authError.message }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+    if (!user) {
+      console.error('No user found')
+      return new Response(
+        JSON.stringify({ error: 'User not found' }),
         { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
 
-    const { registrationId } = await req.json()
-
-    if (!registrationId) {
-      return new Response(
-        JSON.stringify({ error: 'Registration ID is required' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
-    }
+    console.log('User authenticated:', user.id)
 
     // Fetch registration data using service role (has full access)
     const { data: registration, error: fetchError } = await supabase
