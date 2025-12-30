@@ -50,8 +50,29 @@ serve(async (req) => {
       .from('admin_templates')
       .select('*')
 
-    const pdfLegalText = templates?.find(t => t.template_type === 'pdf_legal_text')?.content || 'Standard terms apply.'
+    const certificateTemplate = templates?.find(t => t.template_type === 'certificate_template')?.content || ''
     const underwriterInfo = templates?.find(t => t.template_type === 'underwriter_info')?.content || 'Underwriter information'
+    
+    // Replace template variables with actual data
+    const templateData: Record<string, string> = {
+      urn: registration.urn,
+      full_name: registration.full_name,
+      email: registration.email,
+      phone: registration.phone,
+      installation_address: registration.installation_address,
+      system_description: registration.system_description,
+      system_cost: registration.system_cost.toString(),
+      commissioning_date: new Date(registration.commissioning_date).toLocaleDateString('en-GB'),
+      installer_company: registration.installer_company,
+      inverter_serial: registration.inverter_serial || 'N/A',
+      battery_serial: registration.battery_serial || 'N/A',
+      registration_date: new Date(registration.created_at).toLocaleDateString('en-GB')
+    }
+    
+    let certificateContent = certificateTemplate
+    for (const [key, value] of Object.entries(templateData)) {
+      certificateContent = certificateContent.replace(new RegExp(`{{${key}}}`, 'g'), value)
+    }
 
     // Create PDF
     const pdfDoc = await PDFDocument.create()
@@ -111,196 +132,61 @@ serve(async (req) => {
 
     yPosition -= 40
 
-    page.drawText('CERTIFICATE OF INSURANCE-BACKED GUARANTEE', {
-      x: 50,
-      y: yPosition,
-      size: 16,
-      font: fontBold,
-      color: charcoal,
-    })
-
-    yPosition -= 30
-
-    page.drawText(`Unique Reference: ${registration.urn}`, {
-      x: 50,
-      y: yPosition,
-      size: 14,
-      font: fontBold,
-      color: amber,
-    })
-
-    yPosition -= 40
-
-    // The Insured
-    page.drawText('THE INSURED', {
-      x: 50,
-      y: yPosition,
-      size: 12,
-      font: fontBold,
-      color: charcoal,
-    })
-
-    page.drawLine({
-      start: { x: 50, y: yPosition - 5 },
-      end: { x: width - 50, y: yPosition - 5 },
-      thickness: 2,
-      color: amber,
-    })
-
-    yPosition -= 25
-
-    const insuredDetails = [
-      `Policyholder Name: ${registration.full_name}`,
-      `Installation Address: ${registration.installation_address}`,
-      `Registration Date: ${new Date(registration.created_at).toLocaleDateString('en-GB')}`,
-      `System Details: ${registration.system_description}`,
-    ]
-
-    for (const detail of insuredDetails) {
-      page.drawText(detail, {
-        x: 50,
-        y: yPosition,
-        size: 10,
-        font: font,
-        color: charcoal,
-      })
-      yPosition -= 20
-    }
-
-    yPosition -= 20
-
-    // Coverage Summary
-    page.drawText('COVERAGE SUMMARY', {
-      x: 50,
-      y: yPosition,
-      size: 12,
-      font: fontBold,
-      color: charcoal,
-    })
-
-    page.drawLine({
-      start: { x: 50, y: yPosition - 5 },
-      end: { x: width - 50, y: yPosition - 5 },
-      thickness: 2,
-      color: amber,
-    })
-
-    yPosition -= 25
-
-    const commissioningDate = new Date(registration.commissioning_date)
-    const coverageEndDate = new Date(commissioningDate)
-    coverageEndDate.setFullYear(coverageEndDate.getFullYear() + 10)
-
-    const coverageDetails = [
-      `Period of Cover: 10 years from ${commissioningDate.toLocaleDateString('en-GB')} to ${coverageEndDate.toLocaleDateString('en-GB')}`,
-      `Insured Value: £${registration.system_cost.toLocaleString('en-GB', { minimumFractionDigits: 2 })}`,
-      `Scope of Cover: This policy protects the guarantee if the original installer ceases to trade.`,
-      '',
-      `Underwriter: ${underwriterInfo}`,
-    ]
-
-    for (const detail of coverageDetails) {
-      page.drawText(detail, {
-        x: 50,
-        y: yPosition,
-        size: 10,
-        font: font,
-        color: charcoal,
-      })
-      yPosition -= 20
-    }
-
-    yPosition -= 20
-
-    // Technical Specifications
-    page.drawText('TECHNICAL SPECIFICATIONS', {
-      x: 50,
-      y: yPosition,
-      size: 12,
-      font: fontBold,
-      color: charcoal,
-    })
-
-    page.drawLine({
-      start: { x: 50, y: yPosition - 5 },
-      end: { x: width - 50, y: yPosition - 5 },
-      thickness: 2,
-      color: amber,
-    })
-
-    yPosition -= 25
-
-    const technicalDetails = [
-      `Installer Company: ${registration.installer_company}`,
-      `Inverter Serial: ${registration.inverter_serial || 'N/A'}`,
-      `Battery Serial: ${registration.battery_serial || 'N/A'}`,
-      `Commissioning Date: ${commissioningDate.toLocaleDateString('en-GB')}`,
-    ]
-
-    for (const detail of technicalDetails) {
-      page.drawText(detail, {
-        x: 50,
-        y: yPosition,
-        size: 10,
-        font: font,
-        color: charcoal,
-      })
-      yPosition -= 20
-    }
-
-    yPosition -= 20
-
-    // Key Policy Terms
-    page.drawText('KEY POLICY TERMS', {
-      x: 50,
-      y: yPosition,
-      size: 12,
-      font: fontBold,
-      color: charcoal,
-    })
-
-    page.drawLine({
-      start: { x: 50, y: yPosition - 5 },
-      end: { x: width - 50, y: yPosition - 5 },
-      thickness: 2,
-      color: amber,
-    })
-
-    yPosition -= 25
-
-    // Wrap legal text
+    // Draw certificate content from template
+    const lines = certificateContent.split('\n')
     const maxWidth = width - 100
-    const words = pdfLegalText.split(' ')
-    let line = ''
 
-    for (const word of words) {
-      const testLine = line + word + ' '
-      const testWidth = font.widthOfTextAtSize(testLine, 9)
-      
-      if (testWidth > maxWidth && line !== '') {
-        page.drawText(line, {
+    for (const line of lines) {
+      if (line.trim() === '') {
+        yPosition -= 15
+        continue
+      }
+
+      if (line.trim() === '---') {
+        // Draw separator line
+        page.drawLine({
+          start: { x: 50, y: yPosition },
+          end: { x: width - 50, y: yPosition },
+          thickness: 1,
+          color: amber,
+        })
+        yPosition -= 20
+        continue
+      }
+
+      // Word wrap long lines
+      const words = line.split(' ')
+      let currentLine = ''
+
+      for (const word of words) {
+        const testLine = currentLine + word + ' '
+        const testWidth = font.widthOfTextAtSize(testLine, 10)
+        
+        if (testWidth > maxWidth && currentLine !== '') {
+          page.drawText(currentLine, {
+            x: 50,
+            y: yPosition,
+            size: 10,
+            font: font,
+            color: charcoal,
+          })
+          yPosition -= 15
+          currentLine = word + ' '
+        } else {
+          currentLine = testLine
+        }
+      }
+
+      if (currentLine.trim() !== '') {
+        page.drawText(currentLine, {
           x: 50,
           y: yPosition,
-          size: 9,
+          size: 10,
           font: font,
           color: charcoal,
         })
-        line = word + ' '
         yPosition -= 15
-      } else {
-        line = testLine
       }
-    }
-
-    if (line !== '') {
-      page.drawText(line, {
-        x: 50,
-        y: yPosition,
-        size: 9,
-        font: font,
-        color: charcoal,
-      })
-      yPosition -= 20
     }
 
     yPosition -= 10

@@ -118,6 +118,7 @@ const supabase = useSupabaseClient();
 const user = useSupabaseUser();
 
 const templateTypes = [
+  { id: 'certificate_template', label: 'Certificate Template' },
   { id: 'pdf_legal_text', label: 'PDF Legal Text' },
   { id: 'claim_form', label: 'Claim Form' },
   { id: 'dsar_form', label: 'DSAR Form' },
@@ -145,6 +146,7 @@ const lastUpdated = computed(() => {
 
 const getPlaceholder = (templateType: string) => {
   const placeholders: Record<string, string> = {
+    certificate_template: 'Enter the certificate template. Use {{variable}} for dynamic fields like {{full_name}}, {{urn}}, {{system_cost}}, etc.',
     pdf_legal_text: 'Enter the legal text that will appear in PDF certificates...',
     claim_form: 'Enter the claim form template content...',
     dsar_form: 'Enter the DSAR form template content...',
