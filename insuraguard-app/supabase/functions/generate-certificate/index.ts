@@ -53,6 +53,11 @@ serve(async (req) => {
     const certificateTemplate = templates?.find(t => t.template_type === 'certificate_template')?.content || ''
     const underwriterInfo = templates?.find(t => t.template_type === 'underwriter_info')?.content || 'Underwriter information'
     
+    // Calculate coverage end date (10 years from commissioning)
+    const commissioningDate = new Date(registration.commissioning_date)
+    const coverageEndDate = new Date(commissioningDate)
+    coverageEndDate.setFullYear(coverageEndDate.getFullYear() + 10)
+    
     // Replace template variables with actual data
     const templateData: Record<string, string> = {
       urn: registration.urn,
@@ -61,12 +66,14 @@ serve(async (req) => {
       phone: registration.phone,
       installation_address: registration.installation_address,
       system_description: registration.system_description,
-      system_cost: registration.system_cost.toString(),
-      commissioning_date: new Date(registration.commissioning_date).toLocaleDateString('en-GB'),
+      system_cost: registration.system_cost.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+      commissioning_date: commissioningDate.toLocaleDateString('en-GB'),
+      coverage_end_date: coverageEndDate.toLocaleDateString('en-GB'),
       installer_company: registration.installer_company,
       inverter_serial: registration.inverter_serial || 'N/A',
       battery_serial: registration.battery_serial || 'N/A',
-      registration_date: new Date(registration.created_at).toLocaleDateString('en-GB')
+      registration_date: new Date(registration.created_at).toLocaleDateString('en-GB'),
+      underwriter_info: underwriterInfo
     }
     
     let certificateContent = certificateTemplate
@@ -189,18 +196,8 @@ serve(async (req) => {
       }
     }
 
-    yPosition -= 10
-
-    page.drawText('How to Claim: Visit insuraguard.com/claim', {
-      x: 50,
-      y: yPosition,
-      size: 9,
-      font: fontBold,
-      color: amber,
-    })
-
     // Footer
-    yPosition = 80
+    yPosition = 60
 
     page.drawLine({
       start: { x: 50, y: yPosition + 20 },

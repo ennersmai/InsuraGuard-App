@@ -1,8 +1,6 @@
--- Add certificate template to admin_templates
-INSERT INTO admin_templates (template_type, content, updated_at)
-VALUES (
-  'certificate_template',
-  'CERTIFICATE OF INSURANCE-BACKED GUARANTEE
+-- Update certificate template with full structure
+UPDATE admin_templates 
+SET content = 'CERTIFICATE OF INSURANCE-BACKED GUARANTEE
 
 Unique Reference: {{urn}}
 
@@ -33,8 +31,5 @@ KEY POLICY TERMS
 This insurance-backed guarantee protects your clean energy installation for 10 years from the commissioning date. Coverage applies if the original installer ceases to trade. Terms and conditions apply.
 
 How to Claim: Visit insuraguard.com/claim',
-  NOW()
-)
-ON CONFLICT (template_type) DO UPDATE
-SET content = EXCLUDED.content,
-    updated_at = NOW();
+    updated_at = NOW()
+WHERE template_type = 'certificate_template';
