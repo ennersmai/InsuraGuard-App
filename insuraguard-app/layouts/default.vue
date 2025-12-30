@@ -6,6 +6,7 @@
     </main>
     <Footer />
     <CookieConsent />
+    <AccessibilityWidget />
   </div>
 </template>
 
