@@ -120,7 +120,8 @@ const faqs = [
       <li>Upload proof of purchase documents</li>
       <li>Make a one-time payment of £99</li>
       <li>Receive your insurance certificate instantly via email</li>
-    </ol>`
+    </ol>
+    <p class="mt-2"><a href="/register" class="text-amber hover:text-amber/90 underline font-medium">Start your registration now →</a></p>`
   },
   {
     question: "What if my installer goes out of business?",
@@ -145,7 +146,7 @@ const faqs = [
     category: 'claims',
     answer: `<p>To make a claim:</p>
     <ol class="list-decimal ml-5 mt-2 space-y-1">
-      <li>Visit our <NuxtLink to="/claim" class="text-amber hover:text-amber/90">claims page</NuxtLink> and download the claim form</li>
+      <li>Visit our <a href="/claim" class="text-amber hover:text-amber/90 underline">claims page</a> and download the claim form</li>
       <li>Complete all required information</li>
       <li>Provide evidence that your installer has ceased trading</li>
       <li>Submit the form to claims@insuraguard.com</li>
@@ -169,7 +170,7 @@ const faqs = [
     category: 'account',
     answer: `<p>Yes, we take data security seriously. InsuraGuard is fully GDPR compliant and uses industry-standard encryption to protect your personal information.</p>
     <p class="mt-2">Your data is stored securely and only used for the purposes of providing your insurance-backed guarantee. We never share your information with third parties without your consent.</p>
-    <p class="mt-2">For more information, see our <NuxtLink to="/privacy" class="text-amber hover:text-amber/90">Privacy Policy</NuxtLink>.</p>`
+    <p class="mt-2">For more information, see our <a href="/privacy" class="text-amber hover:text-amber/90 underline">Privacy Policy</a>.</p>`
   },
   {
     question: "What is a URN and why do I need it?",
@@ -197,7 +198,7 @@ const faqs = [
     answer: `<p>Under GDPR, you have the right to access, correct, or delete your personal data. To exercise these rights, you can submit a Data Subject Access Request (DSAR).</p>
     <p class="mt-2">To make a DSAR:</p>
     <ol class="list-decimal ml-5 mt-2 space-y-1">
-      <li>Visit our <NuxtLink to="/dsar" class="text-amber hover:text-amber/90">DSAR page</NuxtLink> and download the form</li>
+      <li>Visit our <a href="/dsar" class="text-amber hover:text-amber/90 underline">DSAR page</a> and download the form</li>
       <li>Complete the form with your request details</li>
       <li>Provide proof of identity</li>
       <li>Email to privacy@insuraguard.com</li>

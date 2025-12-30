@@ -96,17 +96,20 @@
 </template>
 
 <script setup lang="ts">
+const supabase = useSupabaseClient();
 const loading = ref(true);
 const claimTemplate = ref('');
 
 const fetchClaimTemplate = async () => {
   try {
-    const response = await fetch('/templates/claim-form-template.txt');
-    if (response.ok) {
-      claimTemplate.value = await response.text();
-    } else {
-      claimTemplate.value = 'Claim form template not available';
-    }
+    const { data, error } = await supabase
+      .from('admin_templates')
+      .select('content')
+      .eq('template_type', 'claim_form')
+      .single();
+
+    if (error) throw error;
+    claimTemplate.value = data?.content || 'Claim form template not available';
   } catch (e) {
     claimTemplate.value = 'Error loading claim form';
   } finally {

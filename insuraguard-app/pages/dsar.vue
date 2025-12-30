@@ -93,17 +93,20 @@
 </template>
 
 <script setup lang="ts">
+const supabase = useSupabaseClient();
 const loading = ref(true);
 const dsarTemplate = ref('');
 
 const fetchDSARTemplate = async () => {
   try {
-    const response = await fetch('/templates/dsar-form-template.txt');
-    if (response.ok) {
-      dsarTemplate.value = await response.text();
-    } else {
-      dsarTemplate.value = 'DSAR form template not available';
-    }
+    const { data, error } = await supabase
+      .from('admin_templates')
+      .select('content')
+      .eq('template_type', 'dsar_form')
+      .single();
+
+    if (error) throw error;
+    dsarTemplate.value = data?.content || 'DSAR form template not available';
   } catch (e) {
     dsarTemplate.value = 'Error loading DSAR form';
   } finally {
