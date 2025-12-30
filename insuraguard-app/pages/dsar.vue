@@ -134,44 +134,53 @@ const downloadDSARForm = async () => {
   // Page settings
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
-  const margin = 10;
-  const lineHeight = 4;
-  let yPosition = logoHeight + 20;
-  
-  // Use monospace font to preserve formatting
-  doc.setFont('courier');
-  doc.setFontSize(8);
+  const margin = 20;
+  const maxWidth = pageWidth - (margin * 2);
+  let yPosition = logoHeight + 25;
   
   const lines = dsarTemplate.value.split('\n');
   
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     const trimmedLine = line.trim();
-    const isSection = trimmedLine.startsWith('SECTION');
-    const isBorder = trimmedLine.startsWith('===') || trimmedLine.startsWith('---');
     
-    // Prevent section headers from being orphaned
-    // Check if this is a section header and we're near bottom of page
+    // Detect line types
+    const isMainTitle = i < 3 && trimmedLine.length > 0;
+    const isSection = trimmedLine.startsWith('SECTION');
+    const isEmpty = trimmedLine.length === 0;
+    
+    // Prevent section headers from being orphaned (need 40mm space)
     if (isSection && yPosition > pageHeight - 40) {
       doc.addPage();
       yPosition = 20;
     }
     
-    // Prevent border lines from being orphaned with their section
-    if (isBorder && i > 0 && lines[i-1].trim().startsWith('SECTION') && yPosition > pageHeight - 35) {
+    // Check if we need a new page
+    if (yPosition > pageHeight - 20) {
       doc.addPage();
       yPosition = 20;
     }
     
-    // Check if we need a new page for regular content
-    if (yPosition > pageHeight - 25) {
-      doc.addPage();
-      yPosition = 20;
+    // Render based on line type
+    if (isEmpty) {
+      yPosition += 3;
+    } else if (isMainTitle) {
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.text(trimmedLine, pageWidth / 2, yPosition, { align: 'center' });
+      yPosition += 7;
+    } else if (isSection) {
+      doc.setFontSize(11);
+      doc.setFont('helvetica', 'bold');
+      doc.text(trimmedLine, margin, yPosition);
+      yPosition += 6;
+    } else {
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'normal');
+      const wrappedLines = doc.splitTextToSize(trimmedLine, maxWidth);
+      doc.text(wrappedLines, margin, yPosition);
+      yPosition += wrappedLines.length * 5;
     }
-    
-    // Render line as-is to preserve spacing (monospace font)
-    doc.text(line || ' ', margin, yPosition);
-    yPosition += lineHeight;
   }
   
   // Add footer with date and page numbers
