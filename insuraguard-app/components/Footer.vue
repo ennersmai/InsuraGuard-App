@@ -32,9 +32,9 @@
         </div>
       </div>
 
-      <div class="border-t border-gray-700 mt-8 pt-6 flex flex-col-reverse sm:flex-row justify-between items-start sm:items-center text-xs text-gray-400 gap-2">
+      <div class="border-t border-gray-700 mt-8 pt-6 pb-16 sm:pb-0 flex flex-col-reverse sm:flex-row justify-between items-start sm:items-center text-xs text-gray-400 gap-2">
         <p class="text-left">&copy; {{ currentYear }} InsuraGuard. All rights reserved.</p>
-        <p class="sm:text-right text-left">Company Registration Number: XXXXXXXX</p>
+        <p class="sm:text-right text-left sm:pr-16">Company Registration Number: XXXXXXXX</p>
       </div>
     </div>
   </footer>
