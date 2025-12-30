@@ -148,6 +148,19 @@ const downloadClaimForm = async () => {
   
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
+    const trimmedLine = line.trim();
+    
+    // Check if this is a title/header line (all caps or contains ===)
+    const isTitle = trimmedLine === trimmedLine.toUpperCase() && trimmedLine.length > 0 && !trimmedLine.startsWith('_');
+    const isBorder = trimmedLine.startsWith('===') || trimmedLine.startsWith('---');
+    const isSection = trimmedLine.startsWith('SECTION');
+    
+    // Keep section headers with their content (prevent orphan headers)
+    if (isSection && yPosition > pageHeight - 50) {
+      doc.addPage();
+      yPosition = 20;
+    }
+    
     const wrappedLines = doc.splitTextToSize(line || ' ', maxWidth);
     
     for (const wrappedLine of wrappedLines) {
@@ -157,7 +170,12 @@ const downloadClaimForm = async () => {
         yPosition = 20;
       }
       
-      doc.text(wrappedLine, margin, yPosition);
+      // Center title lines and borders
+      if (isBorder || (isTitle && !line.includes(':'))) {
+        doc.text(wrappedLine, pageWidth / 2, yPosition, { align: 'center' });
+      } else {
+        doc.text(wrappedLine, margin, yPosition);
+      }
       yPosition += lineHeight;
     }
   }
