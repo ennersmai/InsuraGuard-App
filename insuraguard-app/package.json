@@ -3,11 +3,11 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "npx nuxt build",
+    "build": "nuxt prepare && nuxt build",
     "dev": "npx nuxt dev",
     "generate": "npx nuxt generate",
     "preview": "npx nuxt preview",
-    "postinstall": "npx nuxt prepare"
+    "postinstall": "nuxt prepare"
   },
   "dependencies": {
     "@nuxtjs/supabase": "^1.4.0",
