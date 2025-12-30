@@ -193,6 +193,16 @@ const mockPayment = async () => {
 
     if (updateError) throw updateError;
 
+    // Generate certificate
+    const { error: certError } = await supabase.functions.invoke('generate-certificate', {
+      body: { registrationId: route.params.id }
+    });
+
+    if (certError) {
+      console.error('Certificate generation error:', certError);
+      // Don't block success page if certificate fails
+    }
+
     // Redirect to success page
     navigateTo(`/success?session_id=mock_${route.params.id}`);
   } catch (e: any) {
