@@ -66,9 +66,9 @@ serve(async (req) => {
 
     let yPosition = height - 60
 
-    // Try to embed logo from production site
+    // Try to embed logo from site
     try {
-      const logoUrl = 'https://insura-guard-app.vercel.app/InsuraGuard-logo-transparent-1200.png'
+      const logoUrl = `${SITE_URL}/InsuraGuard-logo-transparent-1200.png`
       console.log('Fetching logo from:', logoUrl)
       const logoResponse = await fetch(logoUrl)
       console.log('Logo response status:', logoResponse.status)
