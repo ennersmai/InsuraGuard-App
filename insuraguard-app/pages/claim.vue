@@ -10,13 +10,6 @@
     </div>
 
     <div v-else class="space-y-8">
-      <!-- Claim Form Content from Template -->
-      <div class="bg-white shadow rounded-lg p-8">
-        <div v-if="claimTemplate" class="prose max-w-none mb-8">
-          <div class="whitespace-pre-wrap text-gray-700" v-html="claimTemplate"></div>
-        </div>
-      </div>
-
       <!-- Online Claim Form -->
       <div class="bg-white shadow rounded-lg p-8">
         <h2 class="text-2xl font-semibold text-charcoal mb-6">Submit Your Claim</h2>
