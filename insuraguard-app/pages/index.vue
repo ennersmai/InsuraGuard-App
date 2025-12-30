@@ -109,29 +109,41 @@
           </p>
         </div>
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
-          <div class="card text-center border-2 border-amber relative">
+          <NuxtLink 
+            to="/register?age=0-12" 
+            class="card text-center border-2 border-amber relative hover:shadow-xl transition-shadow cursor-pointer"
+          >
             <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber text-white text-xs font-bold px-3 py-1 rounded-full">
               BEST VALUE
             </div>
             <h3 class="text-lg font-semibold text-charcoal mb-2 mt-2">Under 12 months</h3>
             <div class="text-3xl font-bold text-amber mb-2">£99.99</div>
             <p class="text-sm text-gray-600">10 years coverage</p>
-          </div>
-          <div class="card text-center">
+          </NuxtLink>
+          <NuxtLink 
+            to="/register?age=12-24" 
+            class="card text-center hover:shadow-xl transition-shadow cursor-pointer"
+          >
             <h3 class="text-lg font-semibold text-charcoal mb-2">1-2 years old</h3>
             <div class="text-3xl font-bold text-charcoal mb-2">£199.99</div>
             <p class="text-sm text-gray-600">8-9 years coverage</p>
-          </div>
-          <div class="card text-center">
+          </NuxtLink>
+          <NuxtLink 
+            to="/register?age=24-36" 
+            class="card text-center hover:shadow-xl transition-shadow cursor-pointer"
+          >
             <h3 class="text-lg font-semibold text-charcoal mb-2">2-3 years old</h3>
             <div class="text-3xl font-bold text-charcoal mb-2">£289.00</div>
             <p class="text-sm text-gray-600">7-8 years coverage</p>
-          </div>
-          <div class="card text-center">
+          </NuxtLink>
+          <NuxtLink 
+            to="/register?age=36-48" 
+            class="card text-center hover:shadow-xl transition-shadow cursor-pointer"
+          >
             <h3 class="text-lg font-semibold text-charcoal mb-2">3-4 years old</h3>
             <div class="text-3xl font-bold text-charcoal mb-2">£499.99</div>
             <p class="text-sm text-gray-600">6-7 years coverage</p>
-          </div>
+          </NuxtLink>
         </div>
         <div class="text-center mt-8 text-sm text-gray-500">
           <p>Systems older than 4 years cannot be insured. Coverage runs until 10 years from original commissioning date.</p>

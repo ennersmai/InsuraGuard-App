@@ -45,12 +45,25 @@
       <div class="bg-white shadow sm:rounded-lg mb-6">
         <div class="px-4 py-5 sm:p-6">
           <h3 class="text-lg font-medium text-charcoal mb-4">Payment Details</h3>
-          <div class="flex justify-between items-center mb-4">
-            <span class="text-gray-600">Registration Fee</span>
-            <span class="text-2xl font-semibold text-charcoal">£99.00</span>
+          <div class="space-y-3 mb-4">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-600">System Age</span>
+              <span class="text-sm font-medium text-charcoal">{{ systemAgeText }}</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-600">Coverage Period</span>
+              <span class="text-sm font-medium text-charcoal">{{ coverageYears }} years</span>
+            </div>
+            <div class="border-t border-gray-200 pt-3 flex justify-between items-center">
+              <span class="text-gray-600">Registration Fee</span>
+              <span class="text-2xl font-semibold text-charcoal">£{{ calculatedPrice.toFixed(2) }}</span>
+            </div>
           </div>
-          <p class="text-sm text-gray-500 mb-6">
-            One-time payment for 10-year insurance-backed guarantee coverage
+          <p class="text-sm text-gray-500 mb-2">
+            One-time payment for {{ coverageYears }}-year insurance-backed guarantee coverage
+          </p>
+          <p class="text-xs text-gray-400">
+            * Excess applies £29.95 | ** Change of ownership admin fee £49.95
           </p>
 
           <button
@@ -99,6 +112,39 @@ const loading = ref(true);
 const error = ref('');
 const checkoutLoading = ref(false);
 
+const systemAgeMonths = computed(() => {
+  if (!registration.value?.commissioning_date) return 0;
+  const commissioningDate = new Date(registration.value.commissioning_date);
+  const now = new Date();
+  const diffTime = Math.abs(now.getTime() - commissioningDate.getTime());
+  const diffMonths = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 30.44));
+  return diffMonths;
+});
+
+const systemAgeText = computed(() => {
+  const months = systemAgeMonths.value;
+  if (months < 12) return 'Under 12 months';
+  if (months < 24) return '1-2 years old';
+  if (months < 36) return '2-3 years old';
+  if (months < 48) return '3-4 years old';
+  return 'Over 4 years (not eligible)';
+});
+
+const calculatedPrice = computed(() => {
+  const months = systemAgeMonths.value;
+  if (months < 12) return 99.99;
+  if (months < 24) return 199.99;
+  if (months < 36) return 289.00;
+  if (months < 48) return 499.99;
+  return 0; // Not eligible
+});
+
+const coverageYears = computed(() => {
+  const months = systemAgeMonths.value;
+  const yearsFromCommissioning = Math.floor(months / 12);
+  return Math.max(10 - yearsFromCommissioning, 0);
+});
+
 const fetchRegistration = async () => {
   try {
     const { data, error: fetchError } = await supabase
@@ -139,6 +185,7 @@ const handleCheckout = async () => {
     const { data, error: functionError } = await supabase.functions.invoke('create-checkout-session', {
       body: {
         registrationId: route.params.id,
+        amount: calculatedPrice.value,
       },
     });
 
@@ -187,7 +234,7 @@ const mockPayment = async () => {
         urn,
         stripe_payment_id: `mock_payment_${Date.now()}`,
         payment_status: 'completed',
-        payment_amount: 99.00,
+        payment_amount: calculatedPrice.value,
       })
       .eq('id', route.params.id);
 
