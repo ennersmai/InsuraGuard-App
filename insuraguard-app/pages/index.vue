@@ -60,42 +60,6 @@
       </div>
     </section>
 
-    <!-- URN Verification Section -->
-    <section class="py-12 bg-gray-50">
-      <div class="container-narrow">
-        <div class="card-elevated text-center">
-          <h2 class="text-2xl font-semibold text-charcoal mb-2">
-            Verify Your Certificate
-          </h2>
-          <p class="text-gray-600 mb-6">Enter your Unique Reference Number to check your policy status</p>
-          <form @submit.prevent="verifyURN" class="max-w-lg mx-auto">
-            <div class="flex flex-col sm:flex-row gap-3">
-              <input
-                v-model="urnInput"
-                type="text"
-                placeholder="Enter URN (e.g., IG-2025-XXXXX)"
-                class="input-field flex-1"
-              />
-              <button type="submit" class="btn-primary whitespace-nowrap">
-                Verify
-              </button>
-            </div>
-            <div v-if="verificationResult" class="mt-4 p-4 rounded-lg" :class="verificationResult.valid ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'">
-              <div class="flex items-center justify-center gap-2" :class="verificationResult.valid ? 'text-green-800' : 'text-red-800'">
-                <svg v-if="verificationResult.valid" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                </svg>
-                <svg v-else class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-                </svg>
-                <span class="font-medium">{{ verificationResult.message }}</span>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </section>
-
     <!-- How It Works Section -->
     <section class="section-padding bg-white">
       <div class="container-wide">
@@ -120,7 +84,7 @@
               <IconsAnimatedPaymentIcon />
             </div>
             <h3 class="text-xl font-semibold text-charcoal mb-3">Pay</h3>
-            <p class="text-gray-600 leading-relaxed">Complete secure payment via Stripe — just £99 for 10 years</p>
+            <p class="text-gray-600 leading-relaxed">Complete secure payment via Stripe — from just £99.99</p>
           </div>
           <div class="text-center">
             <div class="w-20 h-20 bg-charcoal rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
@@ -133,8 +97,51 @@
       </div>
     </section>
 
-    <!-- Features Section -->
+    <!-- Pricing Section -->
     <section class="section-padding bg-gray-50">
+      <div class="container-wide">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-semibold text-charcoal mb-4">
+            Simple, Transparent Pricing
+          </h2>
+          <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+            One payment, up to 10 years of protection. Price depends on your system age.
+          </p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+          <div class="card text-center border-2 border-amber relative">
+            <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber text-white text-xs font-bold px-3 py-1 rounded-full">
+              BEST VALUE
+            </div>
+            <h3 class="text-lg font-semibold text-charcoal mb-2 mt-2">Under 12 months</h3>
+            <div class="text-3xl font-bold text-amber mb-2">£99.99</div>
+            <p class="text-sm text-gray-600">10 years coverage</p>
+          </div>
+          <div class="card text-center">
+            <h3 class="text-lg font-semibold text-charcoal mb-2">1-2 years old</h3>
+            <div class="text-3xl font-bold text-charcoal mb-2">£199.99</div>
+            <p class="text-sm text-gray-600">8-9 years coverage</p>
+          </div>
+          <div class="card text-center">
+            <h3 class="text-lg font-semibold text-charcoal mb-2">2-3 years old</h3>
+            <div class="text-3xl font-bold text-charcoal mb-2">£289.00</div>
+            <p class="text-sm text-gray-600">7-8 years coverage</p>
+          </div>
+          <div class="card text-center">
+            <h3 class="text-lg font-semibold text-charcoal mb-2">3-4 years old</h3>
+            <div class="text-3xl font-bold text-charcoal mb-2">£499.99</div>
+            <p class="text-sm text-gray-600">6-7 years coverage</p>
+          </div>
+        </div>
+        <div class="text-center mt-8 text-sm text-gray-500">
+          <p>Systems older than 4 years cannot be insured. Coverage runs until 10 years from original commissioning date.</p>
+          <p class="mt-2">* Excess applies £29.95 | ** Change of ownership admin fee £49.95</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section-padding bg-white">
       <div class="container-wide">
         <div class="text-center mb-16">
           <h2 class="text-3xl md:text-4xl font-semibold text-charcoal mb-4">
@@ -185,6 +192,42 @@
       </div>
     </section>
 
+    <!-- Check Claim Status Section -->
+    <section class="py-12 bg-white">
+      <div class="container-narrow">
+        <div class="card-elevated text-center">
+          <h2 class="text-2xl font-semibold text-charcoal mb-2">
+            Check your Claim Status
+          </h2>
+          <p class="text-gray-600 mb-6">Enter your Unique Reference Number to check your policy status</p>
+          <form @submit.prevent="verifyURN" class="max-w-lg mx-auto">
+            <div class="flex flex-col sm:flex-row gap-3">
+              <input
+                v-model="urnInput"
+                type="text"
+                placeholder="Enter URN (e.g., IG-2025-XXXXX)"
+                class="input-field flex-1"
+              />
+              <button type="submit" class="btn-primary whitespace-nowrap">
+                Verify
+              </button>
+            </div>
+            <div v-if="verificationResult" class="mt-4 p-4 rounded-lg" :class="verificationResult.valid ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'">
+              <div class="flex items-center justify-center gap-2" :class="verificationResult.valid ? 'text-green-800' : 'text-red-800'">
+                <svg v-if="verificationResult.valid" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                <svg v-else class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                </svg>
+                <span class="font-medium">{{ verificationResult.message }}</span>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
     <!-- CTA Section with Logo -->
     <section class="py-8 lg:py-12 bg-charcoal">
       <div class="px-6 lg:relative">
@@ -208,11 +251,15 @@
             Ready to Protect Your Investment?
           </h2>
           <p class="text-base text-gray-300 mb-6">
-            Register your clean energy system today and enjoy 10 years of peace of mind
+            Insure your system today and enjoy 10 years of peace of mind from just £99.99 for 10 years.
           </p>
           <NuxtLink to="/register" class="btn-primary text-base px-8 py-3 inline-block">
-            Get Started — £99
+            Get Started — £99.99
           </NuxtLink>
+          <div class="mt-4 text-xs text-gray-400 space-y-1">
+            <p>* Excess applies £29.95</p>
+            <p>** Change of ownership admin fee applies £49.95</p>
+          </div>
         </div>
       </div>
     </section>
