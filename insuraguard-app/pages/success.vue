@@ -76,21 +76,32 @@ const downloadCertificate = async () => {
   try {
     if (!user.value?.id) throw new Error('User not authenticated');
 
-    // Get the most recent registration for this user
-    const { data: registrations, error: fetchError } = await supabase
-      .from('registrations')
-      .select('*')
-      .eq('user_id', user.value.id)
-      .order('created_at', { ascending: false })
-      .limit(1);
+    // Extract registration ID from session_id query parameter
+    const sessionId = route.query.session_id as string;
+    let registrationId = '';
+    
+    if (sessionId && sessionId.startsWith('mock_')) {
+      // Extract ID from mock_<uuid> format
+      registrationId = sessionId.replace('mock_', '');
+    } else {
+      // For real Stripe sessions, get the most recent registration
+      const { data: registrations, error: fetchError } = await supabase
+        .from('registrations')
+        .select('*')
+        .eq('user_id', user.value.id)
+        .order('created_at', { ascending: false })
+        .limit(1);
 
-    if (fetchError) throw fetchError;
-    if (!registrations || registrations.length === 0) throw new Error('No registration found');
+      if (fetchError) throw fetchError;
+      if (!registrations || registrations.length === 0) throw new Error('No registration found');
+      
+      registrationId = (registrations[0] as any).id;
+    }
 
-    const registration = registrations[0] as any;
+    if (!registrationId) throw new Error('Registration ID not found');
     
     // Get signed URL for private bucket (expires in 1 hour)
-    const pdfPath = `certificates/${registration.id}/certificate.pdf`;
+    const pdfPath = `certificates/${registrationId}/certificate.pdf`;
     const { data, error: signError } = await supabase.storage
       .from('insuraguard-documents')
       .createSignedUrl(pdfPath, 3600);
