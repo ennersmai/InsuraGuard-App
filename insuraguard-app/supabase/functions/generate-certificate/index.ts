@@ -27,42 +27,6 @@ serve(async (req) => {
       )
     }
 
-    // Get the authorization header
-    const authHeader = req.headers.get('Authorization')
-    if (!authHeader) {
-      console.error('Missing authorization header')
-      return new Response(
-        JSON.stringify({ error: 'Missing authorization header' }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
-    }
-
-    // Create a client with the user's token for verification
-    const userSupabase = createClient(
-      Deno.env.get('SUPABASE_URL') || '',
-      Deno.env.get('SUPABASE_ANON_KEY') || '',
-      { global: { headers: { Authorization: authHeader } } }
-    )
-
-    // Verify the user is authenticated
-    const { data: { user }, error: authError } = await userSupabase.auth.getUser()
-    if (authError) {
-      console.error('Auth error:', authError)
-      return new Response(
-        JSON.stringify({ error: 'Authentication failed', details: authError.message }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
-    }
-    if (!user) {
-      console.error('No user found')
-      return new Response(
-        JSON.stringify({ error: 'User not found' }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
-    }
-
-    console.log('User authenticated:', user.id)
-
     // Fetch registration data using service role (has full access)
     const { data: registration, error: fetchError } = await supabase
       .from('registrations')
@@ -72,14 +36,6 @@ serve(async (req) => {
 
     if (fetchError || !registration) {
       throw new Error('Registration not found')
-    }
-
-    // Verify the registration belongs to the authenticated user
-    if (registration.user_id !== user.id) {
-      return new Response(
-        JSON.stringify({ error: 'Unauthorized access to registration' }),
-        { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
     }
 
     // Fetch templates
