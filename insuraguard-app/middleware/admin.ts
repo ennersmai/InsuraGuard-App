@@ -1,5 +1,11 @@
-export default defineNuxtRouteMiddleware((to, from) => {
+export default defineNuxtRouteMiddleware(async (to, from) => {
   const user = useSupabaseUser();
+  
+  // Wait for user to be loaded
+  if (process.client) {
+    // On client side, wait a bit for session to load
+    await new Promise(resolve => setTimeout(resolve, 100));
+  }
 
   if (!user.value) {
     return navigateTo('/login');
@@ -9,6 +15,6 @@ export default defineNuxtRouteMiddleware((to, from) => {
   const isAdmin = (user.value.user_metadata as any)?.role === 'admin';
 
   if (!isAdmin) {
-    return abortNavigation('Unauthorized - Admin access required');
+    return navigateTo('/dashboard');
   }
 });
