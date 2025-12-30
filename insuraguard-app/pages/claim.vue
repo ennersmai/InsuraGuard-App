@@ -26,7 +26,7 @@
         <div v-if="claimTemplate" class="prose max-w-none mb-6">
           <div class="bg-gray-50 p-6 rounded-lg whitespace-pre-wrap font-mono text-sm">{{ claimTemplate }}</div>
         </div>
-        <button @click="downloadClaimForm" class="btn-primary">
+        <button @click="downloadClaimForm" class="btn-primary" :disabled="!claimTemplate">
           <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
@@ -117,14 +117,43 @@ const fetchClaimTemplate = async () => {
   }
 };
 
-const downloadClaimForm = () => {
-  const blob = new Blob([claimTemplate.value], { type: 'text/plain' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = 'InsuraGuard_Claim_Form.txt';
-  link.click();
-  URL.revokeObjectURL(url);
+const downloadClaimForm = async () => {
+  const { jsPDF } = await import('jspdf');
+  const doc = new jsPDF();
+  
+  // Add logo
+  const logoImg = new Image();
+  logoImg.src = '/InsuraGuard-logo-transparent-1200.png';
+  await new Promise((resolve) => {
+    logoImg.onload = resolve;
+  });
+  
+  // Add logo centered at top
+  const logoWidth = 50;
+  const logoHeight = (logoImg.height / logoImg.width) * logoWidth;
+  const logoX = (doc.internal.pageSize.getWidth() - logoWidth) / 2;
+  doc.addImage(logoImg, 'PNG', logoX, 10, logoWidth, logoHeight);
+  
+  // Add form content
+  const lines = doc.splitTextToSize(claimTemplate.value, 180);
+  doc.setFontSize(10);
+  doc.text(lines, 15, logoHeight + 20);
+  
+  // Add footer with date
+  const pageCount = doc.internal.pages.length - 1;
+  for (let i = 1; i <= pageCount; i++) {
+    doc.setPage(i);
+    doc.setFontSize(8);
+    doc.setTextColor(128);
+    doc.text(
+      `InsuraGuard Claim Form - Downloaded: ${new Date().toLocaleDateString('en-GB')} - Page ${i} of ${pageCount}`,
+      doc.internal.pageSize.getWidth() / 2,
+      doc.internal.pageSize.getHeight() - 10,
+      { align: 'center' }
+    );
+  }
+  
+  doc.save('InsuraGuard_Claim_Form.pdf');
 };
 
 onMounted(() => {
