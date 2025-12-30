@@ -39,7 +39,7 @@
         <ol class="list-decimal ml-6 space-y-3 text-gray-600">
           <li>Download and complete the claim form above</li>
           <li>Gather all required supporting documentation</li>
-          <li>Email everything to: <a href="mailto:claims@insuraguard.com" class="text-amber hover:text-amber/90">claims@insuraguard.com</a></li>
+          <li>Email everything to: <a href="mailto:claims@insuraguard.com" class="text-amber hover:text-amber/90">claims@insuraguard.com</a> or call <a href="tel:+441615201169" class="text-amber hover:text-amber/90">+44 (0)161 520 1169</a></li>
           <li>Include your URN in the email subject line</li>
         </ol>
         <div class="mt-6 p-4 bg-amber/10 border border-amber/20 rounded-lg">
@@ -87,7 +87,8 @@
         <h3 class="font-medium text-charcoal mb-2">Need Help?</h3>
         <p class="text-gray-600 text-sm">
           If you have questions about the claims process, please contact us at 
-          <a href="mailto:claims@insuraguard.com" class="text-amber hover:text-amber/90">claims@insuraguard.com</a> or 
+          <a href="mailto:claims@insuraguard.com" class="text-amber hover:text-amber/90">claims@insuraguard.com</a>, 
+          call <a href="tel:+441615201169" class="text-amber hover:text-amber/90">+44 (0)161 520 1169</a>, or 
           <NuxtLink to="/contact" class="text-amber hover:text-amber/90">visit our contact page</NuxtLink>.
         </p>
       </div>
