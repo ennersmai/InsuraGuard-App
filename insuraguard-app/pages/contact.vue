@@ -1,20 +1,29 @@
 <template>
   <div>
     <!-- Hero Section -->
-    <section class="section-padding bg-white">
-      <div class="container-narrow text-center">
+    <section class="section-padding bg-white relative">
+      <div class="container-narrow text-center relative z-10">
         <h1 class="text-4xl md:text-5xl font-semibold text-charcoal mb-6">Contact Us</h1>
-        <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
           Have a question or need assistance? Our team is here to help.
         </p>
-        <div class="flex justify-center md:absolute md:bottom-0 md:right-0">
-          <img 
-            src="/woman_shield.webp" 
-            alt="InsuraGuard Support" 
-            class="w-full h-auto object-contain"
-            style="max-height: 300px; max-width: 400px;"
-          />
-        </div>
+      </div>
+      <div class="absolute bottom-0 right-0 hidden md:block">
+        <img 
+          src="/woman_shield.webp" 
+          alt="InsuraGuard Support" 
+          class="w-full h-auto object-contain pt-4"
+          style="max-height: 300px; max-width: 400px;"
+        />
+      </div>
+      <!-- Mobile image below text -->
+      <div class="flex justify-center md:hidden mt-8">
+        <img 
+          src="/woman_shield.webp" 
+          alt="InsuraGuard Support" 
+          class="w-full h-auto object-contain"
+          style="max-height: 300px; max-width: 400px;"
+        />
       </div>
     </section>
 
