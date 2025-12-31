@@ -126,9 +126,9 @@
         <div class="lg:absolute lg:left-6 lg:top-0 text-left mb-6 lg:mb-0">
           <div class="inline-block bg-white rounded-lg px-4 py-2.5 mb-2">
             <img 
-              src="/InsuraGuard-logo-primary.svg" 
+              src="/InsuraGuard-logo-transparent-1200.png" 
               alt="InsuraGuard" 
-              class="h-12 w-auto min-w-[120px]"
+              class="h-12 w-auto max-w-[120px] object-contain"
             />
           </div>
           <p class="text-gray-400 text-sm leading-relaxed max-w-xs">
