@@ -4,7 +4,7 @@
       <div class="flex justify-between items-center h-18 py-4">
         <NuxtLink to="/" class="flex items-center">
           <img 
-            src="/InsuraGuard-logo-primary.svg" 
+            src="/InsuraGuard-logo-transparent-1200.png" 
             alt="InsuraGuard" 
             class="h-10 w-auto max-w-[120px] object-contain"
           />

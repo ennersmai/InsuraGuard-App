@@ -2,6 +2,15 @@
   <footer class="bg-charcoal text-white">
     <div class="px-6 py-8">
       
+      <!-- Logo -->
+      <div class="text-center mb-8">
+        <img 
+          src="/InsuraGuard-logo-transparent-1200.png" 
+          alt="InsuraGuard" 
+          class="h-12 w-auto max-w-[150px] mx-auto object-contain"
+        />
+      </div>
+      
       <!-- Links Grid -->
       <div class="grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-8 text-center">
         <div>
