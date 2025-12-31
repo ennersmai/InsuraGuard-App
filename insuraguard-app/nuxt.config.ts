@@ -67,11 +67,6 @@ export default defineNuxtConfig({
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico?v=20251231' },
-        { rel: 'icon', type: 'image/svg+xml', href: '/InsuraGuard-logo-primary.svg' },
-        { rel: 'icon', type: 'image/png', href: '/InsuraGuard-logo-transparent-1200.png', sizes: '32x32' },
-        { rel: 'icon', type: 'image/png', href: '/InsuraGuard-logo-transparent-1200.png', sizes: '16x16' },
-        { rel: 'icon', type: 'image/png', href: '/InsuraGuard-logo-transparent-1200.png', sizes: '192x192' },
-        { rel: 'apple-touch-icon', href: '/InsuraGuard-logo-transparent-1200.png', sizes: '180x180' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'dns-prefetch', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
