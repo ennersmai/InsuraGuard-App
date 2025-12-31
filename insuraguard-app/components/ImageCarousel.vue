@@ -119,19 +119,39 @@ onUnmounted(() => {
 
 .previous-image {
   opacity: 1;
-  transition: opacity 0.8s ease-in-out;
+  transition: opacity 0.6s ease-in-out;
 }
 
 .current-image {
   opacity: 0;
-  transition: opacity 0.8s ease-in-out;
-  animation: fadeIn 0.8s ease-in-out forwards;
-  animation-delay: 0.1s;
+  transition: opacity 0.6s ease-in-out;
+  animation: fadeIn 0.6s ease-in-out forwards;
 }
 
 @keyframes fadeIn {
   to {
     opacity: 1;
+  }
+}
+
+/* Mobile: Simple fade without crossfade to prevent flashing */
+@media (max-width: 639px) {
+  .previous-image {
+    display: none;
+  }
+  
+  .current-image {
+    opacity: 1;
+    animation: mobileFadeIn 0.6s ease-in-out;
+  }
+  
+  @keyframes mobileFadeIn {
+    from {
+      opacity: 0.7;
+    }
+    to {
+      opacity: 1;
+    }
   }
 }
 
