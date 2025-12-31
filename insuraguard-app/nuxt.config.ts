@@ -66,9 +66,11 @@ export default defineNuxtConfig({
         { name: 'twitter:card', content: 'summary_large_image' }
       ],
       link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
         { rel: 'icon', type: 'image/webp', href: '/favico.webp', sizes: '32x32' },
         { rel: 'icon', type: 'image/webp', href: '/favico.webp', sizes: '16x16' },
         { rel: 'icon', type: 'image/webp', href: '/favico.webp', sizes: '192x192' },
+        { rel: 'apple-touch-icon', href: '/favico.webp', sizes: '180x180' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'dns-prefetch', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
