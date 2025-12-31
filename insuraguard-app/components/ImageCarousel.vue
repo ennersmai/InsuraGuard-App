@@ -78,6 +78,19 @@ onUnmounted(() => {
 .carousel-container {
   width: 100%;
   overflow: hidden;
+  min-height: 300px;
+}
+
+@media (min-width: 640px) {
+  .carousel-container {
+    min-height: 250px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .carousel-container {
+    min-height: 200px;
+  }
 }
 
 .image-grid {
