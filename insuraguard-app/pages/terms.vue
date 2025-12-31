@@ -60,8 +60,8 @@
         <h3 class="text-xl font-semibold text-charcoal mt-6 mb-3">4.2 Payment Processing</h3>
         <p>Payments are processed securely through Stripe. We do not store your payment card details.</p>
 
-        <h3 class="text-xl font-semibold text-charcoal mt-6 mb-3">4.3 Certificate Issuance</h3>
-        <p>Upon successful payment, your insurance certificate will be generated and emailed to you immediately.</p>
+        <h3 class="text-xl font-semibold text-charcoal mt-6 mb-3">4.3 Cover Issuance</h3>
+        <p>Upon successful payment, your insurance cover will be generated immediately and sent to your registered email address.</p>
       </section>
 
       <section>
@@ -121,7 +121,7 @@
           <li>Provide accurate information during registration</li>
           <li>Maintain your System in accordance with manufacturer guidelines</li>
           <li>Notify us of any changes to your contact details</li>
-          <li>Keep your URN and certificate safe</li>
+          <li>Keep your URN and cover safe</li>
           <li>Report claims promptly</li>
         </ul>
       </section>
@@ -148,7 +148,7 @@
         <p class="mt-2">Whilst we reserve the right to correct any errors or omissions and make changes to the features, functionality or content of the Website, the Website is provided without any guarantees, conditions or warranties. As such, we cannot guarantee that the Website is or will be error free, free of viruses or other harmful components or that defects will be corrected.</p>
         <p class="mt-2">As far as the law allows, we exclude all statements, terms and warranties that may be implied. We will not, under any circumstances, be responsible for any losses you suffer as a result of using the Website that are not as a direct consequence of our behaviour and that we could not have been expected to foresee. In particular, we will not be responsible for losses related to any business (including profits), loss of data or loss of goodwill, whether these losses are direct, indirect, or for any indirect financial losses.</p>
         <p class="mt-2">This does not affect our liability for death or personal injury arising from our negligence, our liability for fraudulent misrepresentation or misrepresentation as to a fundamental matter, or for any other liability which cannot be excluded or limited under applicable law.</p>
-        <p class="mt-2">Our liability in respect of each insurance-backed guarantee purchased is limited to the coverage amount specified in your certificate.</p>
+        <p class="mt-2">Our liability in respect of each insurance-backed guarantee purchased is limited to the coverage amount specified in your cover.</p>
         <p class="mt-2">Your statutory rights are not affected by anything in this Agreement.</p>
       </section>
 

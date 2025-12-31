@@ -22,11 +22,11 @@
             <span class="text-sm text-charcoal font-medium">Trusted by homeowners across the UK</span>
           </div>
           <h1 class="text-4xl md:text-5xl lg:text-6xl font-semibold text-charcoal mb-6 leading-tight">
-            Insurance-Backed Protection<br class="hidden md:block" />
+            Insurance Backed Protection<br class="hidden md:block" />
             <span class="text-charcoal/80 block md:inline">for Your Clean Energy System</span>
           </h1>
           <p class="text-lg md:text-xl text-charcoal font-medium mb-10 max-w-2xl mx-auto leading-relaxed drop-shadow-sm">
-            10-year guarantee protection if your installer ceases to trade. Register in minutes, protected for a decade.
+            10 year guarantee protection if your installer ceases to trade. Register in minutes, protected for a decade.
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <NuxtLink to="/register" class="btn-primary text-lg px-8 py-4">
@@ -41,19 +41,19 @@
               <svg class="w-5 h-5 text-amber" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
               </svg>
-              <span class="text-charcoal font-medium">Insurance-backed</span>
+              <span class="text-charcoal font-medium">Insurance backed</span>
             </div>
             <div class="flex items-center gap-2">
               <svg class="w-5 h-5 text-amber" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
               </svg>
-              <span class="text-charcoal font-medium">10-year coverage</span>
+              <span class="text-charcoal font-medium">10 year coverage</span>
             </div>
             <div class="flex items-center gap-2">
               <svg class="w-5 h-5 text-amber" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
               </svg>
-              <span class="text-charcoal font-medium">Instant certification</span>
+              <span class="text-charcoal font-medium">Instant cover</span>
             </div>
           </div>
         </div>
@@ -77,21 +77,21 @@
               <IconsAnimatedFormIcon />
             </div>
             <h3 class="text-xl font-semibold text-charcoal mb-3">Register</h3>
-            <p class="text-gray-600 leading-relaxed">Upload your system details and proof of purchase documentation</p>
+            <p class="text-gray-600 leading-relaxed">Upload your system details<br>and proof of purchase documentation</p>
           </div>
           <div class="text-center">
             <div class="w-20 h-20 bg-charcoal rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
               <IconsAnimatedPaymentIcon />
             </div>
             <h3 class="text-xl font-semibold text-charcoal mb-3">Pay</h3>
-            <p class="text-gray-600 leading-relaxed">Complete secure payment via Stripe — from just £99.99</p>
+            <p class="text-gray-600 leading-relaxed">Complete secure payment via Stripe<br>from just £99.99</p>
           </div>
           <div class="text-center">
             <div class="w-20 h-20 bg-charcoal rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
               <IconsAnimatedLockIcon />
             </div>
             <h3 class="text-xl font-semibold text-charcoal mb-3">Protected</h3>
-            <p class="text-gray-600 leading-relaxed">Receive your insurance certificate instantly via email</p>
+            <p class="text-gray-600 leading-relaxed">Receive your insurance certificate<br>instantly via email</p>
           </div>
         </div>
       </div>
@@ -170,8 +170,8 @@
                 <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
               </svg>
             </div>
-            <h3 class="text-lg font-semibold text-charcoal mb-2">Insurance-Backed</h3>
-            <p class="text-gray-600 text-sm leading-relaxed">10-year guarantee backed by insurance protection.</p>
+            <h3 class="text-lg font-semibold text-charcoal mb-2">Insurance Backed</h3>
+            <p class="text-gray-600 text-sm leading-relaxed">10 year guarantee backed by insurance protection.</p>
           </div>
           <div class="card text-center hover:shadow-lg transition-shadow duration-300">
             <div class="w-14 h-14 bg-amber/10 rounded-xl flex items-center justify-center mx-auto mb-5">
@@ -179,7 +179,7 @@
                 <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
               </svg>
             </div>
-            <h3 class="text-lg font-semibold text-charcoal mb-2">10-Year Coverage</h3>
+            <h3 class="text-lg font-semibold text-charcoal mb-2">10 Year Coverage</h3>
             <p class="text-gray-600 text-sm leading-relaxed">Long-term peace of mind for solar and battery systems</p>
           </div>
           <div class="card text-center hover:shadow-lg transition-shadow duration-300">
@@ -188,8 +188,8 @@
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
               </svg>
             </div>
-            <h3 class="text-lg font-semibold text-charcoal mb-2">Instant Certification</h3>
-            <p class="text-gray-600 text-sm leading-relaxed">Receive your certificate immediately after registration</p>
+            <h3 class="text-lg font-semibold text-charcoal mb-2">Instant Cover</h3>
+            <p class="text-gray-600 text-sm leading-relaxed">Receive your insurance immediately after registration</p>
           </div>
           <div class="card text-center hover:shadow-lg transition-shadow duration-300">
             <div class="w-14 h-14 bg-amber/10 rounded-xl flex items-center justify-center mx-auto mb-5">
@@ -240,6 +240,13 @@
       </div>
     </section>
 
+    <!-- Image Carousel Section -->
+    <section class="py-12 bg-white">
+      <div class="container-wide">
+        <ImageCarousel />
+      </div>
+    </section>
+
     <!-- CTA Section with Logo -->
     <section class="py-8 lg:py-12 bg-charcoal">
       <div class="px-6 lg:relative">
@@ -247,9 +254,9 @@
         <div class="lg:absolute lg:left-6 lg:top-0 text-left mb-6 lg:mb-0">
           <div class="inline-block bg-white rounded-lg px-4 py-2.5 mb-2">
             <img 
-              src="/InsuraGuard-logo-transparent-1200.png" 
+              src="/InsuraGuard-logo-primary.svg" 
               alt="InsuraGuard" 
-              class="h-10 w-auto"
+              class="h-12 w-auto min-w-[120px]"
             />
           </div>
           <p class="text-gray-400 text-sm leading-relaxed max-w-xs">
@@ -266,7 +273,7 @@
             Insure your system today and enjoy 10 years of peace of mind from just £99.99 for 10 years.
           </p>
           <NuxtLink to="/register" class="btn-primary text-base px-8 py-3 inline-block">
-            Get Started — £99.99
+            Get Started  £99.99
           </NuxtLink>
           <div class="mt-4 text-xs text-gray-400 space-y-1">
             <p>* Excess applies £29.95</p>

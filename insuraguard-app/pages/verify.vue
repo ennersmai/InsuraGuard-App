@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="mb-12 text-center">
-      <h1 class="text-4xl font-semibold text-charcoal mb-4">Verify Your Insurance Certificate</h1>
+      <h1 class="text-3xl font-semibold text-charcoal mb-6">Verify Cover</h1>
       <p class="text-xl text-gray-600">Check the status of your InsuraGuard policy</p>
     </div>
 
@@ -20,7 +20,7 @@
             required
           />
           <p class="mt-2 text-sm text-gray-500">
-            Your URN can be found on your insurance certificate
+            Your URN can be found on your insurance cover
           </p>
         </div>
 
@@ -63,17 +63,18 @@
 
     <div class="mt-8 bg-gray-50 rounded-lg p-6">
       <h2 class="text-lg font-semibold text-charcoal mb-4">What is a URN?</h2>
-      <p class="text-gray-600 mb-4">
-        Your Unique Reference Number (URN) is a unique identifier for your InsuraGuard policy. It's formatted as <code class="bg-gray-200 px-2 py-1 rounded">IG-YYYY-XXXXX</code> where YYYY is the year and XXXXX is a unique code.
+      <p class="text-gray-600 mb-8">Enter your Unique Reference Number (URN) to verify your insurance cover.</p>
+      <p class="text-gray-600">
+        Your URN is a unique identifier for your InsuraGuard policy. It's formatted as <code class="bg-gray-200 px-2 py-1 rounded">IG-YYYY-XXXXX</code> where YYYY is the year and XXXXX is a unique code.
       </p>
       <p class="text-gray-600">
-        You can find your URN on your insurance certificate, which was emailed to you after registration.
+        You can find your URN on your insurance cover, which was emailed to you after registration.
       </p>
     </div>
 
     <div class="mt-6 text-center">
       <p class="text-gray-600 text-sm">
-        Lost your certificate? 
+        Lost your cover? 
         <NuxtLink to="/contact" class="text-amber hover:text-amber/90">Contact us</NuxtLink> for assistance.
       </p>
     </div>
@@ -84,9 +85,9 @@
 import { format } from 'date-fns';
 
 useSeoMeta({
-  title: 'Verify Your Insurance Certificate - InsuraGuard',
+  title: 'Verify Your Insurance Cover - InsuraGuard',
   description: 'Verify your InsuraGuard policy status using your Unique Reference Number (URN).',
-  ogTitle: 'Verify InsuraGuard Certificate',
+  ogTitle: 'Verify InsuraGuard Cover',
   ogDescription: 'Check your policy status online'
 });
 

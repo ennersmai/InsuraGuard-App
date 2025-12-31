@@ -1,6 +1,7 @@
 <template>
   <footer class="bg-charcoal text-white">
     <div class="px-6 py-8">
+      
       <!-- Links Grid -->
       <div class="grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-8 text-center">
         <div>

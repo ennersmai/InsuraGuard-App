@@ -6,7 +6,7 @@
           <img 
             src="/InsuraGuard-logo-primary.svg" 
             alt="InsuraGuard" 
-            class="h-10 w-auto min-w-[120px]"
+            class="h-10 w-auto min-w-[120px] max-w-[200px]"
           />
         </NuxtLink>
 

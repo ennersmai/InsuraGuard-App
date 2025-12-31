@@ -1,2 +1,11 @@
 User-Agent: *
-Disallow:
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /checkout/
+Disallow: /success
+Disallow: /_nuxt/
+Disallow: /api/
+
+Allow: /
+
+Sitemap: https://insuraguard.co.uk/sitemap.xml

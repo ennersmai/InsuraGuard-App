@@ -17,12 +17,10 @@
           </svg>
         </div>
         
-        <h2 class="text-2xl font-semibold text-charcoal mb-2">
-          Registration Complete!
-        </h2>
+        <h1 class="text-4xl md:text-5xl font-semibold text-charcoal mb-6">Cover Generated!</h1>
         
         <p class="text-gray-600 mb-6">
-          Your registration has been completed successfully. Your insurance certificate is ready.
+          Your registration has been completed successfully. Your insurance cover is ready.
         </p>
         
         <!-- Mock payment indicator -->
@@ -38,17 +36,14 @@
 
         <!-- Certificate download section -->
         <div class="mb-6 p-4 bg-blue-50 border border-blue-200 rounded">
-          <h3 class="text-sm font-semibold text-blue-800 mb-2">📄 Your Insurance Certificate</h3>
-          <p class="text-blue-700 text-sm mb-3">
-            Download your certificate for your records
-          </p>
+          <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-8">Your insurance cover has been generated and sent to your email.</p>
           <button 
             @click="downloadCertificate" 
             :disabled="downloadLoading"
             class="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
           >
             <span v-if="downloadLoading">Downloading...</span>
-            <span v-else>📥 Download Certificate</span>
+            <span v-else>📥 Download Cover</span>
           </button>
           <p v-if="downloadError" class="text-red-600 text-xs mt-2">{{ downloadError }}</p>
         </div>
@@ -121,7 +116,7 @@ const downloadCertificate = async () => {
     // Open PDF in new tab
     window.open(data.signedUrl, '_blank');
   } catch (e: any) {
-    downloadError.value = e.message || 'Failed to download certificate';
+    downloadError.value = e.message || 'Failed to download cover';
   } finally {
     downloadLoading.value = false;
   }

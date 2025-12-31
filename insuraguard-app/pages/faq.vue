@@ -62,18 +62,35 @@
 
     <!-- CTA Section -->
     <section class="section-padding bg-charcoal">
-      <div class="container-narrow text-center">
-        <h2 class="text-3xl font-semibold text-white mb-4">Still have questions?</h2>
-        <p class="text-gray-300 mb-8 max-w-xl mx-auto">
-          Can't find the answer you're looking for? Our team is here to help.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <NuxtLink to="/contact" class="btn-primary px-8 py-4">
-            Contact Us
-          </NuxtLink>
-          <NuxtLink to="/register" class="bg-white/10 text-white px-8 py-4 rounded-lg font-medium hover:bg-white/20 transition-all duration-200">
-            Register Your System
-          </NuxtLink>
+      <div class="px-6 lg:relative">
+        <!-- Logo - static on mobile, absolute on desktop -->
+        <div class="lg:absolute lg:left-6 lg:top-0 text-left mb-6 lg:mb-0">
+          <div class="inline-block bg-white rounded-lg px-4 py-2.5 mb-2">
+            <img 
+              src="/InsuraGuard-logo-primary.svg" 
+              alt="InsuraGuard" 
+              class="h-12 w-auto min-w-[120px]"
+            />
+          </div>
+          <p class="text-gray-400 text-sm leading-relaxed max-w-xs">
+            Insurance-backed protection for your clean energy investment.
+          </p>
+        </div>
+
+        <!-- CTA Content centered relative to full width -->
+        <div class="text-center lg:relative">
+          <h2 class="text-3xl font-semibold text-white mb-4">Still have questions?</h2>
+          <p class="text-gray-300 mb-8 max-w-xl mx-auto">
+            Can't find the answer you're looking for? Our team is here to help.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <NuxtLink to="/contact" class="btn-primary px-8 py-4">
+              Contact Us
+            </NuxtLink>
+            <NuxtLink to="/register" class="bg-white/10 text-white px-8 py-4 rounded-lg font-medium hover:bg-white/20 transition-all duration-200">
+              Register Your System
+            </NuxtLink>
+          </div>
         </div>
       </div>
     </section>
@@ -83,7 +100,7 @@
 <script setup lang="ts">
 useSeoMeta({
   title: 'FAQ - InsuraGuard Clean Energy Protection',
-  description: 'Frequently asked questions about InsuraGuard insurance-backed guarantees for solar and battery storage systems.',
+  description: 'Frequently asked questions about InsuraGuard insurance backed guarantees for solar and battery storage systems.',
   ogTitle: 'InsuraGuard FAQ',
   ogDescription: 'Common questions about clean energy insurance protection'
 });
@@ -107,7 +124,7 @@ const faqs = [
   {
     question: "What does the Insura Guard guarantee cover?",
     category: 'coverage',
-    answer: `<p>The guarantee covers labour and workmanship only, relating to the installation of your battery system. It does not cover faults with the battery itself or other equipment—these are covered separately by the manufacturer's warranty, not by Insura Guard.</p>`
+    answer: `<p>The guarantee covers labour and workmanship only, relating to the installation of your battery system. It does not cover faults with the battery itself or other equipment - these are covered separately by the manufacturer's warranty, not by Insura Guard.</p>`
   },
   {
     question: "How long does the guarantee last?",
@@ -125,8 +142,8 @@ const faqs = [
     answer: `<p>Pricing depends on your battery's age at registration:</p>
     <ul class="list-disc ml-5 mt-2 space-y-1">
       <li><strong>Under 12 months old:</strong> £99.99 (10 years of cover)</li>
-      <li><strong>12–24 months old:</strong> £199.99 (up to 9 years left)</li>
-      <li><strong>2–3 years old:</strong> £289.00 (up to 8 years left)</li>
+      <li><strong>12-24 months old:</strong> £199.99 (up to 9 years left)</li>
+      <li><strong>2-3 years old:</strong> £289.00 (up to 8 years left)</li>
       <li><strong>3 years old:</strong> £499.99 (up to 7 years left)</li>
     </ul>`
   },
@@ -152,11 +169,12 @@ const faqs = [
     category: 'claims',
     answer: `<p>To make a claim:</p>
     <ol class="list-decimal ml-5 mt-2 space-y-1">
-      <li>Visit our <a href="/claim" class="text-amber hover:text-amber/90 underline">claims page</a> and download the claim form</li>
-      <li>Complete all required information</li>
-      <li>Provide evidence that your installer has ceased trading</li>
-      <li>Submit the form to claims@insuraguard.com</li>
+      <li>Visit our <a href="/claim" class="text-amber hover:text-amber/90 underline">online claim form</a></li>
+      <li>Complete all required information in the web form</li>
+      <li>Upload supporting documents (evidence that your installer has ceased trading)</li>
+      <li>Submit the form online</li>
     </ol>
+    <p class="mt-2">Alternatively, you can download the PDF claim form and submit it via email to claims@insuraguard.com.</p>
     <p class="mt-2">Our team will review your claim and respond within 10 working days.</p>`
   },
   {

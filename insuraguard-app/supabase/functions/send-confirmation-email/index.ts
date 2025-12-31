@@ -85,6 +85,13 @@ serve(async (req) => {
       throw new Error('Registration not found')
     }
 
+    // Format payment date
+    const paymentDate = new Date(registration.created_at).toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric'
+    })
+
     // Download PDF from storage
     const pdfPath = `certificates/${registrationId}/certificate.pdf`
     const { data: pdfBlob, error: downloadError } = await supabase.storage
@@ -145,6 +152,28 @@ serve(async (req) => {
     
     <p>Your insurance certificate is attached to this email. Please keep it safe for your records.</p>
     
+    <p><strong>Payment Receipt:</strong></p>
+    <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin: 20px 0;">
+      <table style="width: 100%; border-collapse: collapse;">
+        <tr>
+          <td style="padding: 8px 0; color: #666;">Payment Date:</td>
+          <td style="padding: 8px 0; text-align: right; font-weight: bold;">${paymentDate}</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0; color: #666;">Amount Paid:</td>
+          <td style="padding: 8px 0; text-align: right; font-weight: bold;">£${registration.payment_amount.toFixed(2)}</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0; color: #666;">Transaction ID:</td>
+          <td style="padding: 8px 0; text-align: right; font-weight: bold; font-size: 12px;">${registration.stripe_payment_id}</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0; color: #666;">Invoice Number:</td>
+          <td style="padding: 8px 0; text-align: right; font-weight: bold;">${registration.urn}</td>
+        </tr>
+      </table>
+    </div>
+    
     <p><strong>Coverage Details:</strong></p>
     <ul>
       <li>Period: 10 years from ${new Date(registration.commissioning_date).toLocaleDateString('en-GB')}</li>
@@ -192,7 +221,7 @@ serve(async (req) => {
           email: 'noreply@insuraguard.com', 
           name: 'InsuraGuard' 
         },
-        subject: `Your InsuraGuard Certificate - ${registration.urn}`,
+        subject: `Your InsuraGuard Certificate & Receipt - ${registration.urn}`,
         content: [{ 
           type: 'text/html', 
           value: emailHtml 

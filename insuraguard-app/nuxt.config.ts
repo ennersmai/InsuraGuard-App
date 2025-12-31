@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   
+    
   modules: [
     '@nuxtjs/tailwindcss',
     '@nuxtjs/supabase'
@@ -12,6 +13,9 @@ export default defineNuxtConfig({
   experimental: {
     payloadExtraction: false,
   },
+
+  // Ensure CSS is loaded early
+  css: ['~/assets/css/main.css'],
 
   tailwindcss: {
     cssPath: '~/assets/css/main.css',
@@ -42,8 +46,10 @@ export default defineNuxtConfig({
   },
 
   app: {
+    // Fix manifest import error
+    buildAssetsDir: '/_nuxt/',
     head: {
-      title: 'InsuraGuard - Insurance-Backed Clean Energy Protection',
+      title: 'InsuraGuard - Insurance Backed Clean Energy Protection',
       htmlAttrs: {
         lang: 'en'
       },
@@ -52,7 +58,7 @@ export default defineNuxtConfig({
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { 
           name: 'description', 
-          content: '10-year insurance-backed guarantee for solar and battery storage systems. Protect your clean energy investment with InsuraGuard.' 
+          content: '10 year insurance backed guarantee for solar and battery storage systems. Protect your clean energy investment with InsuraGuard.' 
         },
         { name: 'format-detection', content: 'telephone=no' },
         { property: 'og:site_name', content: 'InsuraGuard' },
@@ -60,7 +66,9 @@ export default defineNuxtConfig({
         { name: 'twitter:card', content: 'summary_large_image' }
       ],
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'icon', type: 'image/webp', href: '/favico.webp', sizes: '32x32' },
+        { rel: 'icon', type: 'image/webp', href: '/favico.webp', sizes: '16x16' },
+        { rel: 'icon', type: 'image/webp', href: '/favico.webp', sizes: '192x192' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'dns-prefetch', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },

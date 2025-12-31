@@ -1,12 +1,20 @@
 <template>
   <div>
     <!-- Hero Section -->
-    <section class="section-padding bg-white">
-      <div class="container-narrow text-center">
+    <section class="section-padding bg-white relative">
+      <div class="container-narrow text-center relative z-10">
         <h1 class="text-4xl md:text-5xl font-semibold text-charcoal mb-6">Contact Us</h1>
         <p class="text-xl text-gray-600 max-w-2xl mx-auto">
           Have a question or need assistance? Our team is here to help.
         </p>
+      </div>
+      <div class="absolute bottom-0 right-0">
+        <img 
+          src="/woman_shield.webp" 
+          alt="InsuraGuard Support" 
+          class="w-full h-auto object-contain pt-4"
+          style="max-height: 300px; max-width: 400px;"
+        />
       </div>
     </section>
 
@@ -54,9 +62,11 @@
                 <div>
                   <h3 class="font-semibold text-charcoal mb-1">Address</h3>
                   <p class="text-gray-600">
-                    [Company Address]<br>
-                    [City, Postcode]<br>
-                    United Kingdom
+                    InsuraGuard<br>
+                    Floor 10, City Tower<br>
+                    Piccadilly Plaza<br>
+                    New York Street<br>
+                    Manchester, M1 4BT
                   </p>
                 </div>
               </div>
@@ -102,9 +112,43 @@
               <div class="text-sm text-gray-600 space-y-1">
                 <p><span class="font-medium">Monday - Friday:</span> 9:00 AM - 5:00 PM</p>
                 <p><span class="font-medium">Saturday - Sunday:</span> Closed</p>
-                <p class="text-xs text-gray-500 mt-2">All times are in GMT/BST</p>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section-padding bg-charcoal">
+      <div class="px-6 lg:relative">
+        <!-- Logo - static on mobile, absolute on desktop -->
+        <div class="lg:absolute lg:left-6 lg:top-0 text-left mb-6 lg:mb-0">
+          <div class="inline-block bg-white rounded-lg px-4 py-2.5 mb-2">
+            <img 
+              src="/InsuraGuard-logo-primary.svg" 
+              alt="InsuraGuard" 
+              class="h-12 w-auto min-w-[120px]"
+            />
+          </div>
+          <p class="text-gray-400 text-sm leading-relaxed max-w-xs">
+            Insurance-backed protection for your clean energy investment.
+          </p>
+        </div>
+
+        <!-- CTA Content centered relative to full width -->
+        <div class="text-center lg:relative">
+          <h2 class="text-3xl font-semibold text-white mb-4">Still have questions?</h2>
+          <p class="text-gray-300 mb-8 max-w-xl mx-auto">
+            Need help with your policy or have questions about our service? Our team is here to help.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <NuxtLink to="/faq" class="btn-primary px-8 py-4">
+              View FAQ
+            </NuxtLink>
+            <NuxtLink to="/register" class="bg-white/10 text-white px-8 py-4 rounded-lg font-medium hover:bg-white/20 transition-all duration-200">
+              Register Your System
+            </NuxtLink>
           </div>
         </div>
       </div>
