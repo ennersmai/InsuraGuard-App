@@ -62,8 +62,22 @@
 
     <!-- CTA Section -->
     <section class="section-padding bg-charcoal">
-      <div class="px-6 text-center">
-        <!-- CTA Content centered -->
+      <div class="px-6 lg:relative">
+        <!-- Logo - static on mobile, absolute on desktop -->
+        <div class="lg:absolute lg:left-6 lg:top-0 text-left mb-6 lg:mb-0">
+          <div class="inline-block bg-white rounded-lg px-4 py-2.5 mb-2">
+            <img 
+              src="/InsuraGuard-logo-transparent-1200.png" 
+              alt="InsuraGuard" 
+              class="h-12 w-auto max-w-[120px] object-contain"
+            />
+          </div>
+          <p class="text-gray-400 text-sm leading-relaxed max-w-xs">
+            Insurance-backed protection for your clean energy investment.
+          </p>
+        </div>
+
+        <!-- CTA Content centered relative to full width -->
         <div class="text-center lg:relative">
           <h2 class="text-3xl font-semibold text-white mb-4">Still have questions?</h2>
           <p class="text-gray-300 mb-8 max-w-xl mx-auto">
