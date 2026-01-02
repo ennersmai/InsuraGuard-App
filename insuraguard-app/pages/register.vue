@@ -363,6 +363,15 @@ const removeFile = (index: number) => {
   selectedFiles.value.splice(index, 1);
 };
 
+const scrollToError = () => {
+  setTimeout(() => {
+    const errorElement = document.querySelector('[role="alert"]') || document.querySelector('.bg-red-50');
+    if (errorElement) {
+      errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, 100);
+};
+
 const formatFileSize = (bytes: number): string => {
   if (bytes < 1024) return bytes + ' B';
   if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
@@ -377,6 +386,7 @@ const handleSubmit = async () => {
     if (!selectedTierKey.value) {
       error.value = 'Please select a pricing tier before proceeding';
       loading.value = false;
+      scrollToError();
       return;
     }
     
@@ -398,12 +408,14 @@ const handleSubmit = async () => {
       if (diffMonths < range.min || diffMonths > range.max) {
         error.value = `Your system age (${Math.floor(diffMonths / 12)} years, ${diffMonths % 12} months) does not match the selected pricing tier. Please select the correct tier for your system age.`;
         loading.value = false;
+        scrollToError();
         return;
       }
       
-      if (diffMonths >= 48) {
-        error.value = 'Systems older than 4 years are not eligible for registration.';
+      if (diffMonths > 48) {
+        error.value = 'Systems older than 48 months (4 years) are not eligible for registration.';
         loading.value = false;
+        scrollToError();
         return;
       }
     }
@@ -413,12 +425,14 @@ const handleSubmit = async () => {
     if (selectedFiles.value.length === 0) {
       error.value = 'Please upload at least one proof of purchase document';
       loading.value = false;
+      scrollToError();
       return;
     }
 
     if (!formData.value.full_name || !formData.value.email || !formData.value.phone) {
       error.value = 'Please fill in all required fields';
       loading.value = false;
+      scrollToError();
       return;
     }
 
