@@ -194,6 +194,7 @@ async function handleRegistrationPayment(session: Stripe.Checkout.Session) {
         stripe_customer_id: session.customer as string,
         payment_status: 'completed',
         payment_amount: (session.amount_total || 0) / 100,
+        status: 'active',
       })
       .eq('id', registrationId)
 
