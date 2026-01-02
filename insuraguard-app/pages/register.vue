@@ -282,7 +282,38 @@ const pricingTiers: Record<string, { name: string; price: string; coverage: stri
 const selectedTierKey = ref<string | null>((route.query.age as string) || null);
 
 const selectTier = (key: string) => {
+  // Validate tier selection against commissioning date if date is provided
+  if (formData.value.commissioning_date) {
+    const commissioningDate = new Date(formData.value.commissioning_date);
+    const now = new Date();
+    const diffTime = Math.abs(now.getTime() - commissioningDate.getTime());
+    const diffMonths = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 30.44));
+    
+    // Check if selected tier matches system age
+    if (key === '0-12' && diffMonths > 12) {
+      error.value = 'Your system is older than 12 months. Please select the appropriate tier for your system age.';
+      return;
+    }
+    if (key === '12-24' && (diffMonths < 12 || diffMonths > 24)) {
+      error.value = 'This tier is only for systems aged 12-24 months. Please select the appropriate tier.';
+      return;
+    }
+    if (key === '24-36' && (diffMonths < 24 || diffMonths > 36)) {
+      error.value = 'This tier is only for systems aged 24-36 months. Please select the appropriate tier.';
+      return;
+    }
+    if (key === '36-48' && (diffMonths < 36 || diffMonths > 48)) {
+      error.value = 'This tier is only for systems aged 36-48 months. Please select the appropriate tier.';
+      return;
+    }
+    if (diffMonths > 48) {
+      error.value = 'Systems older than 48 months (4 years) are not eligible for registration.';
+      return;
+    }
+  }
+  
   selectedTierKey.value = key;
+  error.value = '';
 };
 
 const formData = ref({
@@ -349,6 +380,34 @@ const handleSubmit = async () => {
       return;
     }
     
+    // Final validation: Check tier matches commissioning date
+    if (formData.value.commissioning_date) {
+      const commissioningDate = new Date(formData.value.commissioning_date);
+      const now = new Date();
+      const diffTime = Math.abs(now.getTime() - commissioningDate.getTime());
+      const diffMonths = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 30.44));
+      
+      const tierRanges: Record<string, { min: number; max: number }> = {
+        '0-12': { min: 0, max: 12 },
+        '12-24': { min: 12, max: 24 },
+        '24-36': { min: 24, max: 36 },
+        '36-48': { min: 36, max: 48 }
+      };
+      
+      const range = tierRanges[selectedTierKey.value];
+      if (diffMonths < range.min || diffMonths > range.max) {
+        error.value = `Your system age (${Math.floor(diffMonths / 12)} years, ${diffMonths % 12} months) does not match the selected pricing tier. Please select the correct tier for your system age.`;
+        loading.value = false;
+        return;
+      }
+      
+      if (diffMonths >= 48) {
+        error.value = 'Systems older than 4 years are not eligible for registration.';
+        loading.value = false;
+        return;
+      }
+    }
+    
     error.value = '';
     
     if (selectedFiles.value.length === 0) {
@@ -410,6 +469,7 @@ const handleSubmit = async () => {
         battery_serial: formData.value.battery_serial || null,
         document_urls: documentUrls,
         payment_status: 'pending',
+        pricing_tier: selectedTierKey.value,
       });
 
     if (insertError) throw insertError;

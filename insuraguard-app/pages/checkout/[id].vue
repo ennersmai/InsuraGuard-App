@@ -133,47 +133,39 @@ const loading = ref(true);
 const error = ref('');
 const checkoutLoading = ref(false);
 
-const systemAgeMonths = computed(() => {
-  if (!registration.value?.commissioning_date) return 0;
-  const commissioningDate = new Date(registration.value.commissioning_date);
-  const now = new Date();
-  const diffTime = Math.abs(now.getTime() - commissioningDate.getTime());
-  const diffMonths = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 30.44));
-  return diffMonths;
+const pricingTierData = computed(() => {
+  const tier = registration.value?.pricing_tier || '0-12';
+  const tiers: Record<string, { name: string; price: number; coverage: string }> = {
+    '0-12': { name: 'Under 12 months', price: 99.99, coverage: '10 years' },
+    '12-24': { name: '1-2 years old', price: 199.99, coverage: '8-9 years' },
+    '24-36': { name: '2-3 years old', price: 289.00, coverage: '7-8 years' },
+    '36-48': { name: '3-4 years old', price: 499.99, coverage: '6-7 years' }
+  };
+  return tiers[tier] || tiers['0-12'];
 });
 
 const systemAgeText = computed(() => {
-  const months = systemAgeMonths.value;
-  if (months < 12) return 'Under 12 months';
-  if (months < 24) return '1-2 years old';
-  if (months < 36) return '2-3 years old';
-  if (months < 48) return '3-4 years old';
-  return 'Over 4 years (not eligible)';
+  return pricingTierData.value.name;
 });
 
 const calculatedPrice = computed(() => {
-  const months = systemAgeMonths.value;
-  if (months < 12) return 99.99;
-  if (months < 24) return 199.99;
-  if (months < 36) return 289.00;
-  if (months < 48) return 499.99;
-  return 0; // Not eligible
+  return pricingTierData.value.price;
 });
 
 const stripePriceId = computed(() => {
-  const months = systemAgeMonths.value;
+  const tier = registration.value?.pricing_tier || '0-12';
   const config = useRuntimeConfig();
-  if (months < 12) return config.public.stripePrice0_12;
-  if (months < 24) return config.public.stripePrice12_24;
-  if (months < 36) return config.public.stripePrice24_36;
-  if (months < 48) return config.public.stripePrice36_48;
-  return null; // Not eligible
+  const priceIds: Record<string, string> = {
+    '0-12': config.public.stripePrice0_12,
+    '12-24': config.public.stripePrice12_24,
+    '24-36': config.public.stripePrice24_36,
+    '36-48': config.public.stripePrice36_48
+  };
+  return priceIds[tier] || config.public.stripePrice0_12;
 });
 
 const coverageYears = computed(() => {
-  const months = systemAgeMonths.value;
-  const yearsFromCommissioning = Math.floor(months / 12);
-  return Math.max(10 - yearsFromCommissioning, 0);
+  return parseInt(pricingTierData.value.coverage.split(' ')[0]);
 });
 
 const fetchRegistration = async () => {

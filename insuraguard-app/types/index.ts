@@ -19,6 +19,7 @@ export interface Registration {
   pdf_url?: string;
   registration_date: string;
   status: 'active' | 'cancelled' | 'expired';
+  pricing_tier?: string;
   created_at: string;
   updated_at: string;
 }

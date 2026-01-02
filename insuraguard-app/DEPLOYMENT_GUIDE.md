@@ -123,31 +123,20 @@ You should see all secrets listed (values will be hidden).
 
 Create a `.env.production` file with these values:
 
-```env
-# Supabase
+# Supabase (Frontend needs these)
 SUPABASE_URL=https://gkgjckeqralugtncfwva.supabase.co
 SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
-SUPABASE_SERVICE_ROLE_KEY=YOUR_SUPABASE_SERVICE_ROLE_KEY
-
-# Stripe (LIVE MODE)
+# Stripe (Frontend needs these - LIVE MODE)
 STRIPE_PUBLISHABLE_KEY=pk_live_YOUR_LIVE_PUBLISHABLE_KEY
-STRIPE_SECRET_KEY=sk_live_YOUR_LIVE_SECRET_KEY
-STRIPE_WEBHOOK_SECRET=whsec_YOUR_LIVE_WEBHOOK_SECRET
-
-# Stripe Price IDs (LIVE MODE)
+# Stripe Price IDs (Frontend needs these - LIVE MODE)
 STRIPE_PRICE_0_12=price_live_YOUR_PRICE_ID
 STRIPE_PRICE_12_24=price_live_YOUR_PRICE_ID
 STRIPE_PRICE_24_36=price_live_YOUR_PRICE_ID
 STRIPE_PRICE_36_48=price_live_YOUR_PRICE_ID
 STRIPE_PRICE_EXCESS=price_live_YOUR_EXCESS_PRICE_ID
 STRIPE_PRICE_ADMIN=price_live_YOUR_ADMIN_PRICE_ID
-
-# SendGrid
-SENDGRID_API_KEY=SG.YOUR_SENDGRID_API_KEY
-
-# Site
+# Site URL (Frontend needs this)
 SITE_URL=https://insuraguard.co.uk
-```
 
 #### 3.2 Deploy to Vercel
 
