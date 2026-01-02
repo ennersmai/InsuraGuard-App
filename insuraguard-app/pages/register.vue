@@ -160,6 +160,7 @@
                 type="date"
                 required
                 :max="today"
+                @change="clearError"
                 class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-amber focus:border-amber sm:text-sm"
               />
             </div>
@@ -361,6 +362,10 @@ const handleFileChange = (event: Event) => {
 
 const removeFile = (index: number) => {
   selectedFiles.value.splice(index, 1);
+};
+
+const clearError = () => {
+  error.value = '';
 };
 
 const scrollToError = () => {
