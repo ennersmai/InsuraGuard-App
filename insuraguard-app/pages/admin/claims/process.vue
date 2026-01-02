@@ -5,7 +5,7 @@
     <div class="container-narrow section-padding">
       <div class="bg-white rounded-lg shadow-md p-8">
         <h1 class="text-3xl font-semibold text-charcoal mb-2">Process Email Claim</h1>
-        <p class="text-gray-600 mb-8">Create a claim record for claims submitted via email to support@insuraguard.co.uk</p>
+        <p class="text-gray-600 mb-8">Update claim details for PDF claims submitted via email to support@insuraguard.co.uk</p>
 
         <div v-if="success" class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-md mb-6">
           <p class="font-medium">{{ success }}</p>
@@ -22,8 +22,13 @@
             <h2 class="text-xl font-semibold text-charcoal mb-4">Customer Details</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Claim ID *</label>
+                <input v-model="form.claim_id" type="text" required class="w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="Enter claim ID from PDF" @blur="searchClaim">
+                <p class="text-xs text-gray-500 mt-1">The claim ID provided to the customer when they downloaded the PDF</p>
+              </div>
+              <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">URN *</label>
-                <input v-model="form.urn" type="text" required class="w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="URN-20260102-XXXX">
+                <input v-model="form.urn" type="text" required class="w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="URN-20260102-XXXX" readonly>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
@@ -195,6 +200,7 @@ const success = ref('')
 const generatedClaimId = ref('')
 
 const form = ref({
+  claim_id: '',
   urn: '',
   full_name: '',
   email: '',
@@ -221,6 +227,33 @@ const form = ref({
   excess_fee_paid_at: ''
 })
 
+const searchClaim = async () => {
+  if (!form.value.claim_id) return
+  
+  try {
+    const { data: existingClaim, error: searchError } = await supabase
+      .from('claims')
+      .select('*')
+      .eq('claim_reference', form.value.claim_id)
+      .single()
+
+    if (searchError || !existingClaim) {
+      error.value = 'Claim not found. Please verify the claim ID.'
+      return
+    }
+
+    // Pre-fill form with existing data
+    form.value.urn = existingClaim.urn || ''
+    form.value.full_name = existingClaim.full_name || ''
+    form.value.email = existingClaim.email || ''
+    form.value.phone = existingClaim.phone || ''
+    
+    success.value = `Found existing claim for URN ${existingClaim.urn}. Update the details below.`
+  } catch (e: any) {
+    error.value = 'Failed to search for claim: ' + e.message
+  }
+}
+
 const processEmailClaim = async () => {
   loading.value = true
   error.value = ''
@@ -228,20 +261,19 @@ const processEmailClaim = async () => {
   generatedClaimId.value = ''
 
   try {
-    // Get user_id from registration URN
-    const { data: registration, error: regError } = await supabase
-      .from('registrations')
-      .select('user_id')
-      .eq('urn', form.value.urn)
+    // Check if claim exists
+    const { data: existingClaim, error: claimError } = await supabase
+      .from('claims')
+      .select('*')
+      .eq('claim_reference', form.value.claim_id)
       .single()
 
-    if (regError || !registration) {
-      throw new Error('Registration not found for URN: ' + form.value.urn)
+    if (claimError || !existingClaim) {
+      throw new Error('Claim not found. Please verify the claim ID.')
     }
 
-    // Insert claim into database
+    // Update existing claim with PDF details
     const claimData: any = {
-      user_id: registration.user_id,
       urn: form.value.urn,
       full_name: form.value.full_name,
       email: form.value.email,
@@ -269,15 +301,16 @@ const processEmailClaim = async () => {
       excess_fee_paid_at: form.value.excess_fee_paid_at || null
     }
 
-    const { data: insertedClaim, error: insertError } = await supabase
+    const { data: updatedClaim, error: updateError } = await supabase
       .from('claims')
-      .insert(claimData)
+      .update(claimData)
+      .eq('claim_reference', form.value.claim_id)
       .select()
       .single()
 
-    if (insertError || !insertedClaim) throw new Error('Failed to create claim')
+    if (updateError || !updatedClaim) throw new Error('Failed to update claim')
 
-    generatedClaimId.value = (insertedClaim as any).claim_reference || (insertedClaim as any).id
+    generatedClaimId.value = form.value.claim_id
 
     // Send confirmation email to customer
     const { error: emailError } = await supabase.functions.invoke('send-claim-confirmation', {
@@ -295,7 +328,7 @@ const processEmailClaim = async () => {
       console.error('Failed to send confirmation email:', emailError)
       success.value = `Claim created successfully (${generatedClaimId.value}), but failed to send confirmation email.`
     } else {
-      success.value = `Claim created and confirmation email sent to ${form.value.email}`
+      success.value = `Claim ${generatedClaimId.value} updated successfully and confirmation email sent to ${form.value.email}`
     }
 
     // Reset form
