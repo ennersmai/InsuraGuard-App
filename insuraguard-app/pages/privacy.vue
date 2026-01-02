@@ -19,7 +19,7 @@
         Piccadilly Plaza<br>
         New York Street<br>
         Manchester, M1 4BT<br>
-        Email: privacy@insuraguard.com</p>
+        Email: privacy@insuraguard.co.uk</p>
       </section>
 
       <section>
@@ -112,7 +112,7 @@
         </ul>
 
         <h3 class="text-xl font-semibold text-charcoal mt-6 mb-3">6.2 Insurance Partners</h3>
-        <p>+ We share relevant information with our insurance partners to maintain your coverage and process claims.</p>
+        <p>We share relevant information with our insurance partners to maintain your coverage and process claims.</p>
 
         <h3 class="text-xl font-semibold text-charcoal mt-6 mb-3">6.3 Legal or Regulatory Purposes</h3>
         <p>We may disclose your information:</p>
@@ -146,7 +146,7 @@
           <li><strong>Right to Object:</strong> Object to certain types of processing</li>
           <li><strong>Right to Withdraw Consent:</strong> Withdraw consent at any time</li>
         </ul>
-        <p class="mt-4">To exercise these rights, download our <NuxtLink to="/dsar" class="text-amber hover:text-amber/90">DSAR form</NuxtLink> or contact privacy@insuraguard.com.</p>
+        <p class="mt-4">To exercise these rights, download our <NuxtLink to="/dsar" class="text-amber hover:text-amber/90">DSAR form</NuxtLink> or contact privacy@insuraguard.co.uk.</p>
         <p class="mt-2">We won't ever charge you for a copy of your personal data but we may ask you for proof of your identity before we disclose any information. Once we've verified your identity, we'll send you a copy of the personal data we hold within one month.</p>
       </section>
 
@@ -212,7 +212,7 @@
           InsuraGuard<br>
           [Company Address]<br>
           Tel: [Phone Number]<br>
-          Email: privacy@insuraguard.com
+          Email: privacy@insuraguard.co.uk
         </p>
       </section>
 

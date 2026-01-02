@@ -1,4 +1,5 @@
 <template>
+  <div>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="mb-8">
       <div class="flex justify-between items-center">
@@ -139,6 +140,35 @@
         </ul>
       </div>
     </div>
+  </div>
+
+  <!-- CTA Section -->
+  <section class="section-padding bg-charcoal">
+    <div class="px-6 lg:relative">
+      <!-- Logo - static on mobile, absolute on desktop -->
+      <div class="lg:absolute lg:left-6 lg:top-0 text-left mb-6 lg:mb-0">
+        <div class="inline-block mb-2">
+          <img 
+            src="/InsuraGuard-logo-transparent_white-1200.png" 
+            alt="InsuraGuard" 
+            class="h-14 md:h-16 w-auto max-w-[140px] md:max-w-[160px] object-contain"
+          />
+        </div>
+        <p class="text-gray-400 text-sm leading-relaxed max-w-xs">
+          Insurance-backed protection for your clean energy investment.
+        </p>
+      </div>
+
+      <!-- CTA Content centered relative to full width -->
+      <div class="text-center lg:relative">
+        <h2 class="text-3xl font-semibold text-white mb-4">Need to register another system?</h2>
+        <p class="text-gray-300 mb-6">Protect your clean energy investment today</p>
+        <NuxtLink to="/register" class="btn-primary">
+          Register System
+        </NuxtLink>
+      </div>
+    </div>
+  </section>
   </div>
 </template>
 

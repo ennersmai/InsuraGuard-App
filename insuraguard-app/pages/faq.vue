@@ -65,11 +65,11 @@
       <div class="px-6 lg:relative">
         <!-- Logo - static on mobile, absolute on desktop -->
         <div class="lg:absolute lg:left-6 lg:top-0 text-left mb-6 lg:mb-0">
-          <div class="inline-block bg-white rounded-lg px-4 py-2.5 mb-2">
+          <div class="inline-block mb-2">
             <img 
-              src="/InsuraGuard-logo-transparent-1200.png" 
+              src="/InsuraGuard-logo-transparent_white-1200.png" 
               alt="InsuraGuard" 
-              class="h-12 w-auto max-w-[120px] object-contain"
+              class="h-14 md:h-16 w-auto max-w-[140px] md:max-w-[160px] object-contain"
             />
           </div>
           <p class="text-gray-400 text-sm leading-relaxed max-w-xs">
@@ -174,7 +174,7 @@ const faqs = [
       <li>Upload supporting documents (evidence that your installer has ceased trading)</li>
       <li>Submit the form online</li>
     </ol>
-    <p class="mt-2">Alternatively, you can download the PDF claim form and submit it via email to claims@insuraguard.com.</p>
+    <p class="mt-2">Alternatively, you can download the PDF claim form and submit it via email to support@insuraguard.co.uk.</p>
     <p class="mt-2">Our team will review your claim and respond within 10 working days.</p>`
   },
   {
@@ -220,7 +220,7 @@ const faqs = [
       <li>Visit our <a href="/dsar" class="text-amber hover:text-amber/90 underline">DSAR page</a> and download the form</li>
       <li>Complete the form with your request details</li>
       <li>Provide proof of identity</li>
-      <li>Email to privacy@insuraguard.com or call +44 (0)161 520 1169</li>
+      <li>Email to support@insuraguard.co.uk or call +44 (0)161 520 1169</li>
     </ol>
     <p class="mt-2">We will respond to your request within 30 days.</p>`
   }

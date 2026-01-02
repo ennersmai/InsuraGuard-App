@@ -252,11 +252,11 @@
       <div class="px-6 lg:relative">
         <!-- Logo - static on mobile, absolute on desktop -->
         <div class="lg:absolute lg:left-6 lg:top-0 text-left mb-6 lg:mb-0">
-          <div class="inline-block bg-white rounded-lg px-4 py-2.5 mb-2">
+          <div class="inline-block mb-2">
             <img 
-              src="/InsuraGuard-logo-transparent-1200.png" 
+              src="/InsuraGuard-logo-transparent_white-1200.png" 
               alt="InsuraGuard" 
-              class="h-12 w-auto max-w-[120px] object-contain"
+              class="h-14 md:h-16 w-auto max-w-[140px] md:max-w-[160px] object-contain"
             />
           </div>
           <p class="text-gray-400 text-sm leading-relaxed max-w-xs">

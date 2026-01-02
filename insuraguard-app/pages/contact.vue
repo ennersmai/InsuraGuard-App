@@ -84,9 +84,9 @@
             <div class="mt-8 pt-8 border-t border-gray-100">
               <h3 class="font-semibold text-charcoal mb-4">Specific Enquiries</h3>
               <div class="space-y-2 text-sm text-gray-600">
-                <p><span class="font-medium text-charcoal">Claims:</span> <a href="mailto:claims@insuraguard.com" class="hover:text-amber">claims@insuraguard.com</a> | <a href="tel:+441615201169" class="hover:text-amber">+44 (0)161 520 1169</a></p>
-                <p><span class="font-medium text-charcoal">Privacy/GDPR:</span> <a href="mailto:privacy@insuraguard.com" class="hover:text-amber">privacy@insuraguard.com</a> | <a href="tel:+441615201169" class="hover:text-amber">+44 (0)161 520 1169</a></p>
-                <p><span class="font-medium text-charcoal">Technical Support:</span> <a href="mailto:support@insuraguard.com" class="hover:text-amber">support@insuraguard.com</a></p>
+                <p><span class="font-medium text-charcoal">Claims:</span> <a href="mailto:support@insuraguard.co.uk" class="hover:text-amber">support@insuraguard.co.uk</a> | <a href="tel:+441615201169" class="hover:text-amber">+44 (0)161 520 1169</a></p>
+                <p><span class="font-medium text-charcoal">Privacy/GDPR:</span> <a href="mailto:support@insuraguard.co.uk" class="hover:text-amber">support@insuraguard.co.uk</a> | <a href="tel:+441615201169" class="hover:text-amber">+44 (0)161 520 1169</a></p>
+                <p><span class="font-medium text-charcoal">Technical Support:</span> <a href="mailto:support@insuraguard.co.uk" class="hover:text-amber">support@insuraguard.co.uk</a></p>
               </div>
             </div>
           </div>
@@ -133,11 +133,11 @@
       <div class="px-6 lg:relative">
         <!-- Logo - static on mobile, absolute on desktop -->
         <div class="lg:absolute lg:left-6 lg:top-0 text-left mb-6 lg:mb-0">
-          <div class="inline-block bg-white rounded-lg px-4 py-2.5 mb-2">
+          <div class="inline-block mb-2">
             <img 
-              src="/InsuraGuard-logo-transparent-1200.png" 
+              src="/InsuraGuard-logo-transparent_white-1200.png" 
               alt="InsuraGuard" 
-              class="h-12 w-auto max-w-[120px] object-contain"
+              class="h-14 md:h-16 w-auto max-w-[140px] md:max-w-[160px] object-contain"
             />
           </div>
           <p class="text-gray-400 text-sm leading-relaxed max-w-xs">

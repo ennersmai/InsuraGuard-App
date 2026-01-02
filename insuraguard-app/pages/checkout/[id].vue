@@ -205,13 +205,6 @@ const handleCheckout = async () => {
   error.value = '';
 
   try {
-    // Check if Stripe is configured
-    if (!config.public.stripePublishableKey || config.public.stripePublishableKey === 'pk_test_xxxxx') {
-      // Mock payment flow
-      await mockPayment();
-      return;
-    }
-
     // Real Stripe payment flow
     const { data, error: functionError } = await supabase.functions.invoke('create-checkout-session', {
       body: {
@@ -236,58 +229,6 @@ const handleCheckout = async () => {
   }
 };
 
-const mockPayment = async () => {
-  try {
-    // Simulate payment processing delay
-    await new Promise(resolve => setTimeout(resolve, 2000));
-
-    // Update registration with mock payment data
-    const { data: templates } = await supabase
-      .from('admin_templates')
-      .select('*');
-
-    const pdfLegalText = templates?.find(t => t.template_type === 'pdf_legal_text')?.content || 'Standard terms apply.';
-    const underwriterInfo = templates?.find(t => t.template_type === 'underwriter_info')?.content || 'Underwriter information';
-
-    // Generate mock URN
-    const year = new Date().getFullYear();
-    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-    let code = '';
-    for (let i = 0; i < 5; i++) {
-      code += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    const urn = `IG-${year}-${code}`;
-
-    // Update registration
-    const { error: updateError } = await supabase
-      .from('registrations')
-      .update({
-        urn,
-        stripe_payment_id: `mock_payment_${Date.now()}`,
-        payment_status: 'completed',
-        payment_amount: calculatedPrice.value,
-      })
-      .eq('id', route.params.id);
-
-    if (updateError) throw updateError;
-
-    // Generate certificate
-    const { error: certError } = await supabase.functions.invoke('generate-certificate', {
-      body: { registrationId: route.params.id }
-    });
-
-    if (certError) {
-      console.error('Certificate generation error:', certError);
-      // Don't block success page if certificate fails
-    }
-
-    // Redirect to success page
-    navigateTo(`/success?session_id=mock_${route.params.id}`);
-  } catch (e: any) {
-    error.value = e.message || 'Mock payment failed';
-    checkoutLoading.value = false;
-  }
-};
 
 onMounted(() => {
   fetchRegistration();

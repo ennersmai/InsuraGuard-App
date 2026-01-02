@@ -41,7 +41,7 @@
         <ol class="list-decimal ml-6 space-y-3 text-gray-600">
           <li>Download and complete the DSAR form above</li>
           <li>Provide proof of identity (e.g., copy of passport or driving license)</li>
-          <li>Email everything to: <a href="mailto:privacy@insuraguard.com" class="text-amber hover:text-amber/90">privacy@insuraguard.com</a> or call <a href="tel:+441615201169" class="text-amber hover:text-amber/90">+44 (0)161 520 1169</a></li>
+          <li>Email everything to: <a href="mailto:support@insuraguard.co.uk" class="text-amber hover:text-amber/90">support@insuraguard.co.uk</a> or call <a href="tel:+441615201169" class="text-amber hover:text-amber/90">+44 (0)161 520 1169</a></li>
           <li>Include "DSAR Request" in the email subject line</li>
         </ol>
         <div class="mt-6 p-4 bg-amber/10 border border-amber/20 rounded-lg">
@@ -82,7 +82,7 @@
         <h3 class="font-medium text-charcoal mb-2">Questions?</h3>
         <p class="text-gray-600 text-sm">
           If you have questions about your data rights or the DSAR process, please contact our Data Protection Officer at 
-          <a href="mailto:privacy@insuraguard.com" class="text-amber hover:text-amber/90">privacy@insuraguard.com</a> or 
+          <a href="mailto:support@insuraguard.co.uk" class="text-amber hover:text-amber/90">support@insuraguard.co.uk</a> or 
           call <a href="tel:+441615201169" class="text-amber hover:text-amber/90">+44 (0)161 520 1169</a>.
         </p>
         <p class="text-gray-600 text-sm mt-2">

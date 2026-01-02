@@ -1,6 +1,7 @@
 -- Create storage buckets
 INSERT INTO storage.buckets (id, name, public) VALUES
-('insuraguard-documents', 'insuraguard-documents', false);
+('insuraguard-documents', 'insuraguard-documents', false)
+ON CONFLICT (id) DO NOTHING;
 
 -- Storage policies for proof-of-purchase
 CREATE POLICY "Users can upload their own documents"

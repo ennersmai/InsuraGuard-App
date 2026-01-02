@@ -1,6 +1,6 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3'
-import { PDFDocument, rgb, StandardFonts } from 'https://cdn.skypack.dev/pdf-lib@1.17.1'
+import { PDFDocument, rgb, StandardFonts } from 'https://esm.sh/pdf-lib@1.17.1'
 import { corsHeaders } from '../_shared/cors.ts'
 
 const supabase = createClient(
@@ -22,10 +22,8 @@ serve(async (req) => {
   }
 
   try {
-    // Parse request body first (can only be read once)
-    console.log('Parsing request body...')
     const { registrationId } = await req.json()
-    console.log('Registration ID:', registrationId)
+    console.log('Certificate generation for registration ID:', registrationId)
 
     if (!registrationId) {
       return new Response(

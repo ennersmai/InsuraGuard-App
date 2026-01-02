@@ -7,7 +7,7 @@
 
       <section>
         <h2 class="text-2xl font-semibold text-charcoal mt-8 mb-4">1. General</h2>
-        <p>These terms of use apply to www.insuraguard.com (the 'Website') and any associated mobile applications.</p>
+        <p>These terms of use apply to https://www.insuraguard.co.uk (the 'Website') and any associated mobile applications.</p>
         <p class="mt-2">The Website is owned and operated by InsuraGuard ('InsuraGuard', 'us', 'we' or 'our').</p>
         <p class="mt-2">'You' and 'your' means you as the user of the Website and/or purchaser of our services.</p>
       </section>
