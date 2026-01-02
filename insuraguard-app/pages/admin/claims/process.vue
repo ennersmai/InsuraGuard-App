@@ -200,7 +200,7 @@ const success = ref('')
 const generatedClaimId = ref('')
 
 const form = ref({
-  claim_id: '',
+  claim_id:'',
   urn: '',
   full_name: '',
   email: '',

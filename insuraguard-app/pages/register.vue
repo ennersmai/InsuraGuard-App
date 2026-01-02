@@ -287,8 +287,22 @@ const selectTier = (key: string) => {
   if (formData.value.commissioning_date) {
     const commissioningDate = new Date(formData.value.commissioning_date);
     const now = new Date();
-    const diffTime = Math.abs(now.getTime() - commissioningDate.getTime());
-    const diffMonths = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 30.44));
+    
+    // Calculate months difference properly
+    let yearsDiff = now.getFullYear() - commissioningDate.getFullYear();
+    let monthsDiff = now.getMonth() - commissioningDate.getMonth();
+    let diffMonths = yearsDiff * 12 + monthsDiff;
+    
+    // Adjust for day of month - only if we're in a partial month
+    if (now.getDate() < commissioningDate.getDate() && monthsDiff >= 0) {
+      diffMonths--;
+    }
+    
+    // Check if date is in the future
+    if (diffMonths < 0) {
+      error.value = 'Commissioning date cannot be in the future.';
+      return;
+    }
     
     // Check if selected tier matches system age
     if (key === '0-12' && diffMonths > 12) {
@@ -399,8 +413,24 @@ const handleSubmit = async () => {
     if (formData.value.commissioning_date) {
       const commissioningDate = new Date(formData.value.commissioning_date);
       const now = new Date();
-      const diffTime = Math.abs(now.getTime() - commissioningDate.getTime());
-      const diffMonths = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 30.44));
+      
+      // Calculate months difference properly
+      let yearsDiff = now.getFullYear() - commissioningDate.getFullYear();
+      let monthsDiff = now.getMonth() - commissioningDate.getMonth();
+      let diffMonths = yearsDiff * 12 + monthsDiff;
+      
+      // Adjust for day of month - only if we're in a partial month
+      if (now.getDate() < commissioningDate.getDate() && monthsDiff >= 0) {
+        diffMonths--;
+      }
+      
+      // Check if date is in the future
+      if (diffMonths < 0) {
+        error.value = 'Commissioning date cannot be in the future.';
+        loading.value = false;
+        scrollToError();
+        return;
+      }
       
       const tierRanges: Record<string, { min: number; max: number }> = {
         '0-12': { min: 0, max: 12 },
@@ -410,8 +440,11 @@ const handleSubmit = async () => {
       };
       
       const range = tierRanges[selectedTierKey.value];
+      const years = Math.floor(diffMonths / 12);
+      const months = diffMonths % 12;
+      
       if (diffMonths < range.min || diffMonths > range.max) {
-        error.value = `Your system age (${Math.floor(diffMonths / 12)} years, ${diffMonths % 12} months) does not match the selected pricing tier. Please select the correct tier for your system age.`;
+        error.value = `Your system age (${years} year${years !== 1 ? 's' : ''}, ${months} month${months !== 1 ? 's' : ''}) does not match the selected pricing tier. Please select the correct tier for your system age.`;
         loading.value = false;
         scrollToError();
         return;
