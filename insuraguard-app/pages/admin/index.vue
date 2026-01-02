@@ -107,6 +107,9 @@
       <button @click="exportToCSV" class="btn-primary whitespace-nowrap">
         Export to CSV
       </button>
+      <NuxtLink to="/admin/claims/process" class="btn-secondary whitespace-nowrap">
+        Process Claims
+      </NuxtLink>
       <NuxtLink to="/admin/templates" class="btn-secondary whitespace-nowrap">
         Manage Templates
       </NuxtLink>
