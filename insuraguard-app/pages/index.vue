@@ -5,7 +5,7 @@
       <!-- Hero Background Image -->
       <div class="absolute inset-0 z-0">
         <img 
-          src="/hero.png" 
+          src="/hero.webp" 
           alt="" 
           class="w-full h-full object-cover opacity-85"
         />
