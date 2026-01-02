@@ -53,7 +53,7 @@ export default defineNuxtConfig({
     // Fix manifest import error
     buildAssetsDir: '/_nuxt/',
     head: {
-      title: 'InsuraGuard - Insurance Backed Clean Energy Protection',
+      title: 'InsuraGuard - Insurance-Backed Guarantee for Clean Energy Systems',
       htmlAttrs: {
         lang: 'en'
       },
@@ -62,15 +62,24 @@ export default defineNuxtConfig({
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { 
           name: 'description', 
-          content: '10 year insurance backed guarantee for solar and battery storage systems. Protect your clean energy investment with InsuraGuard.' 
+          content: '10-year insurance-backed guarantee protection if your installer ceases to trade. Register your solar PV, battery storage, or clean energy system in minutes. Trusted by homeowners across the UK.' 
         },
         { name: 'format-detection', content: 'telephone=no' },
+        { name: 'keywords', content: 'solar panel insurance, battery storage guarantee, clean energy protection, installer insurance, solar PV warranty, renewable energy insurance UK' },
         { property: 'og:site_name', content: 'InsuraGuard' },
+        { property: 'og:title', content: 'InsuraGuard - Insurance Protection for Clean Energy Systems' },
+        { property: 'og:description', content: '10-year guarantee protection for your clean energy installation. Register in minutes, protected for a decade.' },
         { property: 'og:type', content: 'website' },
-        { name: 'twitter:card', content: 'summary_large_image' }
+        { property: 'og:url', content: 'https://insuraguard.co.uk' },
+        { property: 'og:image', content: 'https://insuraguard.co.uk/hero.webp' },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:title', content: 'InsuraGuard - Clean Energy Insurance Protection' },
+        { name: 'twitter:description', content: '10-year insurance-backed guarantee for solar and battery systems. Register in minutes.' },
+        { name: 'twitter:image', content: 'https://insuraguard.co.uk/hero.webp' }
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico?v=20251231' },
+        { rel: 'canonical', href: 'https://insuraguard.co.uk' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'dns-prefetch', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
