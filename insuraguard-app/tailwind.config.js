@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'media', // Enable dark mode based on prefers-color-scheme
   content: [
     "./components/**/*.{js,vue,ts}",
     "./layouts/**/*.vue",
